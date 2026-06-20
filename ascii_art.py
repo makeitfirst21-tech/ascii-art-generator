@@ -1,3 +1,4 @@
+import os
 import sys
 
 COLORS = {
@@ -116,7 +117,7 @@ def main():
         save = input("Save to file? (y/n): ").strip().lower()
         if save == 'y':
             filename = f"{''.join(c for c in text if c.isalnum() or c == ' ').strip().replace(' ', '_')}_{style}.txt"
-            filepath = f"C:\\Users\\makei\\Documents\\ascii-art-generator\\{filename}"
+            filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
             with open(filepath, 'w', encoding='utf-8') as f:
                 f.write(f"Text: {text}  |  Style: {style}  |  Color: {color}\n\n")
                 f.write("\n".join(rows) + "\n")
