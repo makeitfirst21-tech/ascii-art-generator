@@ -4,3 +4,7 @@
 *.md
 __pycache__/
 *.pyc
+
+# Jordan ships its own documentation -- the blanket *.md rule above would eat it
+!jordan/*.md
+!examples/*.md
