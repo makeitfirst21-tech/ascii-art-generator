@@ -503,7 +503,86 @@ argue with the interval, not with Jordan.
 
 ---
 
-## 6. House rules
+## 6. The daily card, and how both of us get graded
+
+`jordan.card`, `jordan.ledger`, `jordan.research`
+
+### Forecasting and betting are different skills
+Jordan names a game and states a probability **every day**, whatever is on. That
+number goes in the ledger and gets scored. Whether any money goes down is a
+separate decision, and most days the answer is no.
+
+This matters because the two skills improve differently. Forecasting is free and
+you can practise it daily. Betting costs vig and should happen rarely. Conflating
+them is how a good handicapper goes broke.
+
+### Why win-loss is a useless scoreboard
+Two forecasters going 17-11 can be miles apart in quality. The ledger scores the
+probabilities, using the rules weather forecasters are graded on:
+
+| Metric | What it measures | Baseline |
+|---|---|---|
+| **Brier** | mean squared error of the stated probability | 0.250 = saying 50% to everything |
+| **Log loss** | same, but punishes confident wrongness brutally | 0.693 = coin flip |
+| **Calibration** | when you say 60%, does it land 60%? | gap of 0 |
+| **Skill vs market** | your Brier against the de-vigged market's Brier | 0 = the market is doing the work |
+
+**Skill vs market is the one that matters.** Beating a coin flip is trivial.
+Beating the closing market's own probability is the entire job, and a negative
+skill score means you are an expensive index fund tracking the line.
+
+Two forecasters with identical 17-11 records and Brier scores of 0.162 and 0.183
+are not equally good, and after a hundred picks it will be obvious in the money
+even though the records still look the same.
+
+### Is the gap real?
+`bootstrap_brier_gap` resamples both sides' picks and reports how often one
+actually beats the other. **Anything between 20% and 80% means you do not know
+yet.** A large genuine gap gets called at 30 picks; a marginal one over 40 picks
+correctly does not. The tool will tell you it cannot tell.
+
+### The information gate
+You cannot make a game a sure thing. Even with perfect information the outcome
+stays random -- that is what a game is. What information buys you is a better
+probability, and the honest way to run a card is to be explicit about how much
+of the picture you have.
+
+So every sport carries a weighted checklist, and what you have not checked raises
+the edge Jordan demands before staking anything:
+
+| Research completeness | Edge required | Stake cap |
+|---|---|---|
+| 90%+ | 2.0 points | full quarter-Kelly |
+| 75-90% | 3.5 points | 60% of it |
+| 60-75% | 6.0 points | 35% of it |
+| under 60% | — | **no bet at any edge** |
+
+The heaviest items are the ones that move prices, not the ones that are hard to
+look up: **confirmed starting QB** in the NFL, **injury and load-management
+status** in the NBA, **both starters confirmed** in MLB. Miss those and the card
+passes no matter how good the number looks.
+
+"Barring injuries" is not a disclaimer you attach after a loss. It is an input,
+and if you do not have it you do not have the bet.
+
+### Running it
+
+```bash
+python3 -m jordan checklist nfl                       # what you need to know
+python3 -m jordan card slate.json --log               # Jordan's forecast, logged
+python3 -m jordan pick --author you --sport nfl \
+    --desc "SEA -3.5" --price -110 --prob 0.58 --market -110 -110
+python3 -m jordan grade 7 --result win --closing -118
+python3 -m jordan scoreboard                          # head to head
+python3 -m jordan calibration                         # are your numbers honest?
+```
+
+Always log `--market` (the two-way price). Without it there is no skill score,
+and without a skill score you are only proving you can beat a coin.
+
+---
+
+## 7. House rules
 
 1. The default answer is **PASS**.
 2. No probability without a method behind it.
@@ -518,7 +597,7 @@ argue with the interval, not with Jordan.
 
 ---
 
-## 7. What Jordan is not
+## 8. What Jordan is not
 
 Not a tipster, not a data feed, and not a guarantee. Every number here is an
 estimate from a model that can be wrong, fed by inputs you supply — garbage

@@ -9,6 +9,9 @@ Four pillars, four modules:
     jordan.correlation  correlation priors and SGP construction
     jordan.odds         de-vigging, EV, Kelly, arbitrage
     jordan.keynumbers   NFL key numbers and the price of a half point
+    jordan.research     what you must know before you may have an opinion
+    jordan.card         the daily card: one forecast a day, bet or not
+    jordan.ledger       pick history and proper scoring (Brier, calibration)
 
 `jordan.persona` holds who Jordan is and the house rules he will not break.
 Read jordan/KNOWLEDGE.md before trusting any number this package prints.
@@ -29,9 +32,14 @@ from .market import MarketTracker, Snapshot, arbitrage, middle, book_weight
 from .keynumbers import (margin_mass, is_key_number, half_point_value,
                          buy_points, key_number_report)
 from .parlay import analyse_parlay, grade_leg, best_subset, record_grade
+from .research import checklist, completeness, confidence, missing
+from .card import Candidate, build as build_card, required_edge
+from .ledger import (Ledger, Pick, brier, log_loss, skill_score,
+                     calibration, record as ledger_record,
+                     bootstrap_brier_gap)
 from .persona import brief, DOCTRINES, HOUSE_RULES, DISCLAIMER
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 __all__ = [
     "american_to_decimal", "american_to_prob", "decimal_to_american", "devig",
@@ -47,5 +55,9 @@ __all__ = [
     "margin_mass", "is_key_number", "half_point_value", "buy_points",
     "key_number_report",
     "analyse_parlay", "grade_leg", "best_subset", "record_grade",
+    "checklist", "completeness", "confidence", "missing",
+    "Candidate", "build_card", "required_edge",
+    "Ledger", "Pick", "brier", "log_loss", "skill_score", "calibration",
+    "ledger_record", "bootstrap_brier_gap",
     "brief", "DOCTRINES", "HOUSE_RULES", "DISCLAIMER",
 ]

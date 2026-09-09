@@ -8,3 +8,7 @@ __pycache__/
 # Jordan ships its own documentation -- the blanket *.md rule above would eat it
 !jordan/*.md
 !examples/*.md
+
+# Your pick history is yours -- it does not belong in the repo
+jordan_ledger.json
+jordan_ledger.json.tmp

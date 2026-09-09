@@ -2,14 +2,17 @@
 
 import math
 import os
+import random
+import shutil
 import sys
+import tempfile
 import time
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from jordan import (correlation, keynumbers, market, odds, parlay, persona,
-                    simulate, stats)
+from jordan import (card, correlation, keynumbers, ledger, market, odds,
+                    parlay, persona, research, simulate, stats)
 
 
 class TestOdds(unittest.TestCase):
@@ -748,6 +751,324 @@ class TestPersona(unittest.TestCase):
     def test_bankroll_caps_are_conservative(self):
         self.assertLessEqual(persona.BANKROLL["kelly_multiplier"], 0.25)
         self.assertLessEqual(persona.BANKROLL["single_bet_cap"], 0.02)
+
+
+class TestResearch(unittest.TestCase):
+
+    def test_every_sport_has_a_checklist(self):
+        for sport in ("nfl", "nba", "mlb", "generic", "cricket"):
+            items = research.checklist(sport)
+            self.assertTrue(items)
+            for i in items:
+                self.assertTrue(i.why, "%s/%s has no rationale" % (sport, i.key))
+
+    def test_completeness_scales_with_what_you_know(self):
+        keys = [i.key for i in research.checklist("nfl")]
+        self.assertAlmostEqual(research.completeness("nfl", keys), 1.0, places=9)
+        self.assertAlmostEqual(research.completeness("nfl", []), 0.0, places=9)
+        half = research.completeness("nfl", keys[:5])
+        self.assertTrue(0.0 < half < 1.0)
+
+    def test_completeness_accepts_a_dict(self):
+        got = research.completeness("nfl", {"qb_status": True, "weather": False})
+        expect = research.completeness("nfl", ["qb_status"])
+        self.assertAlmostEqual(got, expect, places=9)
+
+    def test_missing_is_ordered_by_weight(self):
+        gaps = research.missing("nfl", [])
+        weights = [i.weight for i in gaps]
+        self.assertEqual(weights, sorted(weights, reverse=True))
+
+    def test_qb_status_is_the_heaviest_nfl_item(self):
+        top = research.missing("nfl", [])[0]
+        self.assertEqual(top.key, "qb_status")
+
+    def test_knowing_nothing_forbids_betting(self):
+        conf = research.confidence("nfl", [])
+        self.assertEqual(conf["stake_multiplier"], 0.0)
+        self.assertEqual(conf["label"], "Insufficient")
+
+    def test_knowing_everything_allows_full_stake(self):
+        keys = [i.key for i in research.checklist("nba")]
+        conf = research.confidence("nba", keys)
+        self.assertEqual(conf["stake_multiplier"], 1.0)
+
+    def test_stake_multiplier_is_monotone_in_completeness(self):
+        keys = [i.key for i in research.checklist("mlb")]
+        mults = [research.confidence("mlb", keys[:n])["stake_multiplier"]
+                 for n in range(len(keys) + 1)]
+        self.assertEqual(mults, sorted(mults))
+
+    def test_required_edge_falls_as_you_learn_more(self):
+        self.assertLess(card.required_edge(0.95), card.required_edge(0.80))
+        self.assertLess(card.required_edge(0.80), card.required_edge(0.65))
+        self.assertEqual(card.required_edge(0.10), 1.0)
+        # within a band the requirement is flat, by design
+        self.assertEqual(card.required_edge(0.70), card.required_edge(0.62))
+
+
+class TestLedger(unittest.TestCase):
+
+    def setUp(self):
+        self.dir = tempfile.mkdtemp()
+        self.path = os.path.join(self.dir, "ledger.json")
+
+    def tearDown(self):
+        shutil.rmtree(self.dir, ignore_errors=True)
+
+    def _seeded(self, n=20, seed=3):
+        led = ledger.Ledger(self.path)
+        rng = random.Random(seed)
+        for i in range(n):
+            truth = rng.uniform(0.3, 0.7)
+            hit = rng.random() < truth
+            for author, noise in (("jordan", 0.04), ("you", 0.22)):
+                p = min(max(truth + rng.gauss(0, noise), 0.03), 0.97)
+                pick = led.add(author, "nfl", "g%d" % i, -110, p,
+                               market_prob=truth)
+                led.grade(pick.id, "win" if hit else "loss")
+        return led
+
+    def test_round_trip_through_disk(self):
+        led = ledger.Ledger(self.path)
+        led.add("you", "nba", "Lakers -4", -115, 0.56, market_prob=0.53)
+        led.save()
+        again = ledger.Ledger(self.path)
+        self.assertEqual(len(again.picks), 1)
+        self.assertEqual(again.picks[0].description, "Lakers -4")
+        self.assertAlmostEqual(again.picks[0].prob, 0.56, places=9)
+
+    def test_ids_increment(self):
+        led = ledger.Ledger(self.path)
+        a = led.add("you", "nfl", "a", -110, 0.5)
+        b = led.add("you", "nfl", "b", -110, 0.5)
+        self.assertEqual(b.id, a.id + 1)
+
+    def test_certainty_is_rejected(self):
+        led = ledger.Ledger(self.path)
+        for bad in (0.0, 1.0, -0.2, 1.5):
+            with self.assertRaises(ValueError):
+                led.add("you", "nfl", "sure thing", -110, bad)
+
+    def test_corrupt_ledger_refuses_rather_than_overwrites(self):
+        with open(self.path, "w") as fh:
+            fh.write("{not json at all")
+        with self.assertRaises(ValueError):
+            ledger.Ledger(self.path)
+        # and the damaged file is left exactly as it was
+        with open(self.path) as fh:
+            self.assertEqual(fh.read(), "{not json at all")
+
+    def test_empty_file_loads_as_empty(self):
+        open(self.path, "w").close()
+        self.assertEqual(ledger.Ledger(self.path).picks, [])
+
+    def test_save_is_atomic(self):
+        led = ledger.Ledger(self.path)
+        led.add("you", "nfl", "x", -110, 0.5)
+        led.save()
+        self.assertFalse(os.path.exists(self.path + ".tmp"))
+
+    def test_profit_and_push(self):
+        led = ledger.Ledger(self.path)
+        w = led.add("you", "nfl", "w", 100, 0.5, stake=2.0)
+        l = led.add("you", "nfl", "l", -110, 0.5, stake=2.0)
+        p = led.add("you", "nfl", "p", -110, 0.5, stake=2.0)
+        led.grade(w.id, "win"); led.grade(l.id, "loss"); led.grade(p.id, "push")
+        self.assertAlmostEqual(w.profit(), 2.0, places=9)
+        self.assertAlmostEqual(l.profit(), -2.0, places=9)
+        self.assertAlmostEqual(p.profit(), 0.0, places=9)
+        self.assertIsNone(p.outcome)
+
+    def test_pushes_are_excluded_from_scoring(self):
+        led = ledger.Ledger(self.path)
+        a = led.add("you", "nfl", "a", -110, 0.9)
+        b = led.add("you", "nfl", "b", -110, 0.9)
+        led.grade(a.id, "win"); led.grade(b.id, "push")
+        self.assertAlmostEqual(ledger.brier(led.picks), (0.9 - 1) ** 2, places=9)
+
+    def test_brier_of_a_perfect_forecaster_is_zero(self):
+        led = ledger.Ledger(self.path)
+        for i in range(5):
+            p = led.add("oracle", "nfl", "g%d" % i, -110, 0.999)
+            led.grade(p.id, "win")
+        self.assertLess(ledger.brier(led.picks), 0.0001)
+
+    def test_coin_flip_baselines(self):
+        led = ledger.Ledger(self.path)
+        for i in range(100):
+            p = led.add("flip", "nfl", "g%d" % i, -110, 0.5)
+            led.grade(p.id, "win" if i % 2 == 0 else "loss")
+        self.assertAlmostEqual(ledger.brier(led.picks), 0.25, places=6)
+        self.assertAlmostEqual(ledger.log_loss(led.picks), math.log(2), places=6)
+
+    def test_log_loss_punishes_confident_wrongness(self):
+        led = ledger.Ledger(self.path)
+        bold = led.add("bold", "nfl", "a", -110, 0.97)
+        meek = led.add("meek", "nfl", "b", -110, 0.55)
+        led.grade(bold.id, "loss"); led.grade(meek.id, "loss")
+        self.assertGreater(ledger.log_loss([bold]), ledger.log_loss([meek]))
+
+    def test_skill_score_positive_when_beating_the_market(self):
+        led = ledger.Ledger(self.path)
+        for i in range(30):
+            hit = i % 3 != 0                      # 2/3 of the time
+            p = led.add("sharp", "nfl", "g%d" % i, -110,
+                        0.67 if hit else 0.33, market_prob=0.5)
+            led.grade(p.id, "win" if hit else "loss")
+        self.assertGreater(ledger.skill_score(led.picks), 0)
+
+    def test_skill_score_negative_when_the_market_is_better(self):
+        led = ledger.Ledger(self.path)
+        rng = random.Random(9)
+        for i in range(40):
+            truth = rng.uniform(0.3, 0.7)
+            hit = rng.random() < truth
+            p = led.add("noisy", "nfl", "g%d" % i, -110,
+                        min(max(truth + rng.gauss(0, 0.3), 0.03), 0.97),
+                        market_prob=truth)
+            led.grade(p.id, "win" if hit else "loss")
+        self.assertLess(ledger.skill_score(led.picks), 0)
+
+    def test_calibration_bins_sum_to_the_graded_picks(self):
+        led = self._seeded(20)
+        rows = ledger.calibration(led.by_author("jordan"), bins=5)
+        self.assertEqual(sum(r["n"] for r in rows),
+                         len([p for p in led.by_author("jordan") if p.graded]))
+
+    def test_calibration_detects_overconfidence(self):
+        led = ledger.Ledger(self.path)
+        for i in range(40):
+            p = led.add("overconfident", "nfl", "g%d" % i, -110, 0.85)
+            led.grade(p.id, "win" if i % 2 == 0 else "loss")   # really 50%
+        rows = [r for r in ledger.calibration(led.picks, bins=5) if r["n"]]
+        self.assertTrue(any(r["gap"] < -0.25 for r in rows))
+
+    def test_record_summarises(self):
+        led = self._seeded(10)
+        r = ledger.record(led.by_author("you"))
+        self.assertEqual(r["n"], 10)
+        self.assertIsNotNone(r["brier"])
+        self.assertIsNotNone(r["win_pct"])
+
+    def test_clv_recorded_on_grading(self):
+        led = ledger.Ledger(self.path)
+        p = led.add("you", "nfl", "x", -105, 0.55)
+        led.grade(p.id, "win", closing_price=-120)
+        self.assertAlmostEqual(p.clv(), 15.0, places=9)
+
+    def test_bootstrap_detects_a_real_gap(self):
+        """A sharp forecaster against a wild one, with enough picks to tell."""
+        led = ledger.Ledger(self.path)
+        rng = random.Random(5)
+        for i in range(60):
+            truth = rng.uniform(0.3, 0.7)
+            hit = rng.random() < truth
+            for author, noise in (("jordan", 0.03), ("you", 0.35)):
+                p = min(max(truth + rng.gauss(0, noise), 0.03), 0.97)
+                pick = led.add(author, "nfl", "g%d" % i, -110, p)
+                led.grade(pick.id, "win" if hit else "loss")
+        gap = ledger.bootstrap_brier_gap(led.by_author("jordan"),
+                                         led.by_author("you"))
+        self.assertGreater(gap["a_better_pct"], 80.0)
+        self.assertTrue(gap["conclusive"])
+
+    def test_bootstrap_is_not_fooled_by_a_marginal_gap(self):
+        """A small real difference over 40 picks should NOT be called."""
+        led = self._seeded(40, seed=5)
+        gap = ledger.bootstrap_brier_gap(led.by_author("jordan"),
+                                         led.by_author("you"))
+        self.assertFalse(gap["conclusive"])
+
+    def test_bootstrap_stays_honest_when_there_is_no_gap(self):
+        led = ledger.Ledger(self.path)
+        rng = random.Random(4)
+        for i in range(120):
+            truth = rng.uniform(0.3, 0.7)
+            hit = rng.random() < truth
+            for author in ("a", "b"):
+                p = min(max(truth + rng.gauss(0, 0.05), 0.03), 0.97)
+                pick = led.add(author, "nfl", "g%d" % i, -110, p)
+                led.grade(pick.id, "win" if hit else "loss")
+        gap = ledger.bootstrap_brier_gap(led.by_author("a"), led.by_author("b"))
+        self.assertFalse(gap["conclusive"])
+
+    def test_bootstrap_needs_a_sample(self):
+        led = ledger.Ledger(self.path)
+        for a in ("x", "y"):
+            p = led.add(a, "nfl", "g", -110, 0.5)
+            led.grade(p.id, "win")
+        self.assertIsNone(ledger.bootstrap_brier_gap(led.by_author("x"),
+                                                     led.by_author("y")))
+
+
+class TestCard(unittest.TestCase):
+
+    def _cands(self):
+        return [
+            card.Candidate("thin edge", -110, 0.531, "nfl", [-110, -110]),
+            card.Candidate("no edge", -110, 0.50, "nfl", [-110, -110]),
+            card.Candidate("bad", -110, 0.44, "nfl", [-110, -110]),
+        ]
+
+    def _full_known(self, sport="nfl"):
+        return [i.key for i in research.checklist(sport)]
+
+    def test_card_needs_candidates(self):
+        with self.assertRaises(ValueError):
+            card.build([], "2026-09-09", "nfl")
+
+    def test_best_ev_becomes_the_forecast(self):
+        built = card.build(self._cands(), "2026-09-09", "nfl", self._full_known())
+        self.assertEqual(built.pick.description, "thin edge")
+
+    def test_forecast_is_made_even_when_there_is_no_bet(self):
+        """Every day produces something to grade, bet or not."""
+        cands = [card.Candidate("all bad", -110, 0.40, "nfl", [-110, -110])]
+        built = card.build(cands, "2026-09-09", "nfl", self._full_known())
+        self.assertIn("NO BET", built.verdict)
+        self.assertEqual(built.stake, 0.0)
+        self.assertIsNotNone(built.pick.prob)      # still a forecast to score
+
+    def test_ignorance_blocks_the_bet_however_good_the_number(self):
+        cands = [card.Candidate("huge edge", 200, 0.70, "nfl", [200, -240])]
+        built = card.build(cands, "2026-09-09", "nfl", known=[])
+        self.assertIn("NO BET", built.verdict)
+        self.assertEqual(built.stake, 0.0)
+
+    def test_same_edge_is_bettable_once_you_have_done_the_work(self):
+        cands = [card.Candidate("huge edge", 200, 0.70, "nfl", [200, -240])]
+        built = card.build(cands, "2026-09-09", "nfl", self._full_known(),
+                           bankroll=1000)
+        self.assertEqual(built.verdict, "BET")
+        self.assertGreater(built.stake, 0)
+
+    def test_stake_respects_the_information_scaling(self):
+        cands = [card.Candidate("huge edge", 200, 0.70, "nfl", [200, -240])]
+        full = card.build(cands, "2026-09-09", "nfl", self._full_known(),
+                          bankroll=1000)
+        partial_keys = ["qb_status", "injury_report", "line_movement",
+                        "snap_share", "pace_tendency", "key_numbers", "weather"]
+        partial = card.build(cands, "2026-09-09", "nfl", partial_keys,
+                             bankroll=1000)
+        self.assertGreater(full.stake, partial.stake)
+
+    def test_large_disagreement_is_flagged(self):
+        cands = [card.Candidate("bold", -110, 0.75, "nfl", [-110, -110])]
+        built = card.build(cands, "2026-09-09", "nfl", self._full_known())
+        self.assertTrue(any("disagrees with the market" in r for r in built.reasons))
+
+    def test_card_renders(self):
+        built = card.build(self._cands(), "2026-09-09", "nfl", self._full_known())
+        text = built.render()
+        for section in ("THE FORECAST", "INFORMATION", "THE BET"):
+            self.assertIn(section, text)
+
+    def test_candidate_from_spec(self):
+        c = card.Candidate.from_spec({"description": "x", "price": -110,
+                                      "prob": 0.55, "market": [-110, -110]})
+        self.assertAlmostEqual(c.market_prob, 0.5, places=6)
+        self.assertAlmostEqual(c.disagreement(), 0.05, places=6)
 
 
 class TestCli(unittest.TestCase):

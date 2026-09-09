@@ -25,6 +25,15 @@ python3 -m jordan keys                       # NFL key numbers, half-point value
 python3 -m jordan keys --buy -3              # is buying that half point worth it?
 python3 -m jordan middle -3.5 -110 -2.5 -110 --sport nfl
 
+# the daily card
+python3 -m jordan checklist nfl              # what you need to know first
+python3 -m jordan card slate.json --log      # Jordan forecasts one game, logged
+python3 -m jordan pick --author you --sport nfl \
+    --desc "SEA -3.5" --price -110 --prob 0.58 --market -110 -110
+python3 -m jordan grade 7 --result win --closing -118
+python3 -m jordan scoreboard                 # Brier, log loss, skill vs market
+python3 -m jordan calibration                # when you say 60%, is it 60%?
+
 python3 -m jordan sgp examples/ticket_nfl_stack.json --search
 python3 -m jordan market examples/market_nfl_side.json
 ```
@@ -38,6 +47,7 @@ python3 -m jordan market examples/market_nfl_side.json
 | Correlation Data (the SGP weapon) | `jordan.correlation` | empirical priors by sport and relationship, sign-flipped by side, repaired to a legal matrix, sampled through a Gaussian copula |
 | Market Inefficiencies & +EV | `jordan.odds` | four de-vig methods plus a conservative stress test, EV in percent and cents, fractional Kelly, arbitrage and properly priced middles |
 | Key numbers | `jordan.keynumbers` | the NFL margin distribution, what a half point is worth at each number, and whether buying it is worth the ask |
+| The daily card | `jordan.card`, `jordan.ledger`, `jordan.research` | one forecast a day whether or not it is bettable, a research checklist that gates the stake, and proper scoring of both forecasters (Brier, log loss, calibration, skill vs the market) |
 
 ## As a library
 
