@@ -81,14 +81,12 @@ def grade_leg(leg, usage_stability=0.6, signal_strength=0.0, devig_method="power
 
     # 2. Distance from the projection, in standard deviations. Legs far out on
     #    the tail are lottery tickets no matter how nice the price looks.
-    z = 0.0
     m = leg.marginal
-    if hasattr(m, "mu") and hasattr(m, "sigma") and m.sigma:
-        z = (leg.line - m.mu) / m.sigma
-    elif hasattr(m, "mean") and callable(m.mean):
-        mean = m.mean()
-        if mean:
-            z = (leg.line - mean) / max(math.sqrt(abs(mean)) * 1.2, 1e-9)
+    try:
+        sd = m.sd()
+    except NotImplementedError:
+        sd = None
+    z = (leg.line - m.mean()) / sd if sd else 0.0
     tail = abs(z)
     tail_score = max(0.0, 1.0 - max(0.0, tail - 0.35) / 1.6)
     if tail > 1.25:
@@ -143,7 +141,8 @@ def grade_leg(leg, usage_stability=0.6, signal_strength=0.0, devig_method="power
 
 class ParlayReport:
     def __init__(self, legs, grades, sim, offered_price, book_price_implied,
-                 true_prob, ev_pct, kelly, verdict, reasons, bankroll):
+                 true_prob, ev_pct, kelly, verdict, reasons, bankroll,
+                 effective_prob=None):
         self.legs = legs
         self.grades = grades
         self.sim = sim
@@ -155,6 +154,7 @@ class ParlayReport:
         self.verdict = verdict
         self.reasons = reasons
         self.bankroll = bankroll
+        self.effective_prob = effective_prob if effective_prob is not None else true_prob
 
     @property
     def fair_price(self):
@@ -166,7 +166,7 @@ class ParlayReport:
         out = [line, "JORDAN -- PARLAY REPORT".center(width), line, ""]
         out.append("LEGS")
         out.append(thin)
-        for g in self.grades:
+        for i, g in enumerate(self.grades):
             leg = g.leg
             out.append("  %-34s %-5s %6s   %5.1f%% true   EV %+6.2f%%   grade %s (%.0f)"
                        % (leg.label[:34],
@@ -176,18 +176,33 @@ class ParlayReport:
                           g.ev_pct,
                           g.letter,
                           g.score))
+            if self.sim.effective_lines and getattr(leg.marginal, "continuous", True):
+                eff = self.sim.effective_lines[i]
+                if abs(eff - leg.line) > 0.05 * max(abs(leg.line), 1.0):
+                    out.append("      line %g, but model and market together price it "
+                               "like a %.1f" % (leg.line, eff))
+            if self.sim.push_probs and self.sim.push_probs[i] > 0.005:
+                out.append("      %.1f%% chance of landing on the number and pushing"
+                           % (100 * self.sim.push_probs[i]))
             for note in g.notes:
                 out.append("      - " + note)
         out.append("")
 
-        pairs = correlation.describe_matrix(self.sim.correlation,
-                                            [l.label for l in self.legs])
+        labels = [l.label for l in self.legs]
+        pairs = correlation.describe_matrix(self.sim.correlation, labels)
         if pairs:
-            out.append("CORRELATION")
+            realized = self.sim.realized_bet_correlation()
+            index = {l: i for i, l in enumerate(labels)}
+            out.append("CORRELATION       stat rho -> realized rho between the BETS")
             out.append(thin)
             for rho, a, b in pairs[:8]:
-                tag = ("helps" if rho > 0.08 else "hurts" if rho < -0.08 else "independent")
-                out.append("  %-26s x %-26s %+.2f  (%s)" % (a[:26], b[:26], rho, tag))
+                r = realized[index[a]][index[b]]
+                tag = ("helps" if r > 0.03 else "hurts" if r < -0.03 else "independent")
+                out.append("  %-24s x %-24s %+.2f -> %+.2f  (%s)"
+                           % (a[:24], b[:24], rho, r, tag))
+            out.append("  Sides matter: betting opposite sides of two positively")
+            out.append("  correlated stats turns the relationship negative, and")
+            out.append("  thresholding at a line always shrinks it.")
             out.append("")
 
         out.append("PRICING")
@@ -202,9 +217,13 @@ class ParlayReport:
             out.append("  Fair price ................ %s" % odds.fmt_american(self.fair_price))
         else:
             out.append("  Fair price ................ n/a (never hit in simulation)")
-        out.append("  Expected value ............ %+.2f%%" % self.ev_pct)
+        if self.sim.push_rate > 0.005:
+            out.append("  Push somewhere on ticket .. %.2f%% of trials (leg drops out)"
+                       % (100 * self.sim.push_rate))
+        out.append("  Expected value ............ %+.2f%%  (simulated payouts, "
+                   "pushes included)" % self.ev_pct)
         out.append("  Full Kelly ................ %.2f%% of bankroll" % (100 * self.kelly))
-        stake = odds.kelly_stake(self.true_prob, self.offered_price, self.bankroll)
+        stake = odds.kelly_stake(self.effective_prob, self.offered_price, self.bankroll)
         units = 100.0 * stake / self.bankroll if self.bankroll else 0.0
         out.append("  Recommended stake ......... %.2f of a %.2f bankroll "
                    "(%.2f units, quarter Kelly, 2%% cap)"
@@ -230,23 +249,33 @@ class ParlayReport:
 
 def analyse_parlay(legs, offered_price=None, sport="nfl", overrides=None,
                    relationships=None, bankroll=100.0, trials=40000, seed=None,
-                   stability=None, signals=None, devig_method="power"):
+                   stability=None, signals=None, devig_method="power",
+                   context=None):
     """Full parlay analysis: correlation, simulation, pricing, verdict.
 
     `offered_price` is the book's actual same-game-parlay price. Leave it None
     and the straight-multiplication price is assumed, which is what you get on
     an uncorrelated cross-game parlay.
     """
-    matrix = correlation.build_matrix(legs, sport, overrides, relationships)
-    sim = simulate.Simulation(legs, matrix, trials=trials, seed=seed).run()
-
+    matrix = correlation.build_matrix(legs, sport, overrides, relationships,
+                                      context=context)
     if offered_price is None:
         offered_price = odds.parlay_american([l.price for l in legs])
 
+    sim = simulate.Simulation(legs, matrix, trials=trials, seed=seed,
+                              devig_method=devig_method).run(offered_price)
+
     true_prob = sim.joint_prob
     book_implied = odds.american_to_prob(offered_price)
-    ev = odds.ev_percent(true_prob, offered_price)
-    kelly = odds.kelly_fraction(true_prob, offered_price)
+
+    # EV comes from the simulation, not from a closed-form formula, so that a
+    # pushed leg reducing the ticket is priced rather than assumed away.
+    ev = 100.0 * sim.ev_per_unit
+    dec = odds.american_to_decimal(offered_price)
+    # Kelly needs a binary bet. Collapse the push-reduced payouts into the
+    # equivalent win probability at this price.
+    effective_prob = (sim.ev_per_unit + 1.0) / dec
+    kelly = odds.kelly_fraction(effective_prob, offered_price)
 
     # correlation potential per leg = mean |rho| with the rest of the ticket
     n = len(legs)
@@ -267,7 +296,7 @@ def analyse_parlay(legs, offered_price=None, sport="nfl", overrides=None,
 
     verdict, reasons = _verdict(legs, grades, sim, ev, offered_price, true_prob)
     return ParlayReport(legs, grades, sim, offered_price, book_implied, true_prob,
-                        ev, kelly, verdict, reasons, bankroll)
+                        ev, kelly, verdict, reasons, bankroll, effective_prob)
 
 
 def _verdict(legs, grades, sim, ev, offered_price, true_prob):
@@ -283,6 +312,10 @@ def _verdict(legs, grades, sim, ev, offered_price, true_prob):
     mult = sim.correlation_multiplier
     se = sim.standard_error
     edge_prob = true_prob - odds.american_to_prob(offered_price)
+    if getattr(sim, "push_rate", 0.0) > 0.01:
+        reasons.append("Pushes are live on %.1f%% of trials -- a pushed leg drops out "
+                       "and shrinks the payout. That is priced in below."
+                       % (100 * sim.push_rate))
 
     TIERS = ["PLAY", "THIN -- small stake only", "PASS", "NO BET"]
     if ev > 4.0:

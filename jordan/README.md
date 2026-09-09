@@ -21,6 +21,9 @@ python3 -m jordan parlay -110 -110 -110      # what a parlay really costs
 python3 -m jordan stacks nfl                 # correlation priors and stacks
 python3 -m jordan record 7 3                 # what your record actually proves
 python3 -m jordan arb 115 -105
+python3 -m jordan keys                       # NFL key numbers, half-point values
+python3 -m jordan keys --buy -3              # is buying that half point worth it?
+python3 -m jordan middle -3.5 -110 -2.5 -110 --sport nfl
 
 python3 -m jordan sgp examples/ticket_nfl_stack.json --search
 python3 -m jordan market examples/market_nfl_side.json
@@ -33,7 +36,8 @@ python3 -m jordan market examples/market_nfl_side.json
 | Real-Time Tracking & Market Signals | `jordan.market` | line history, limit-weighted sharp consensus, steam, reverse line movement, handle/ticket divergence, CLV |
 | Advanced Simulation & Projection Models | `jordan.simulate` | normal / lognormal / negative-binomial / Bernoulli marginals through a Monte Carlo engine, blended against the de-vigged market |
 | Correlation Data (the SGP weapon) | `jordan.correlation` | empirical priors by sport and relationship, sign-flipped by side, repaired to a legal matrix, sampled through a Gaussian copula |
-| Market Inefficiencies & +EV | `jordan.odds` | four de-vig methods plus a conservative stress test, EV in percent and cents, fractional Kelly, arbitrage and middles |
+| Market Inefficiencies & +EV | `jordan.odds` | four de-vig methods plus a conservative stress test, EV in percent and cents, fractional Kelly, arbitrage and properly priced middles |
+| Key numbers | `jordan.keynumbers` | the NFL margin distribution, what a half point is worth at each number, and whether buying it is worth the ask |
 
 ## As a library
 
@@ -75,7 +79,14 @@ print(report.render())
 - `stability` — 0–1, how reliable the leg's *driver* is (snaps, minutes, targets)
 - `signal` — 0–1, market agreement, from `jordan.market`
 - `relationships` — `same_player`, `same_team` or `opponent`, keyed `"i-j"`
-- `overrides` — your own correlation, replacing the prior
+- `overrides` — your own correlation, replacing the prior. **On the stat scale**,
+  not the bet scale: give the correlation between the statistics, and let the
+  simulation work out what your chosen sides do to the sign.
+
+Two things the engine does that most parlay tools do not: every leg is evaluated
+at its blended model/market probability (so the leg grades and the ticket price
+are the same number), and a leg that lands exactly on a whole-number line pushes
+and drops out of the ticket rather than killing it.
 
 ## Tests
 

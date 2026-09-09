@@ -224,8 +224,12 @@ PILLARS = [
      "over/under sides, repaired to a legal matrix, and sampled through a Gaussian "
      "copula so the joint probability is honest."),
     ("Market Inefficiencies & Line Discrepancies (+EV)", "jordan.odds / jordan.market",
-     "Five de-vig methods, stale-line outlier detection against sharp consensus, "
-     "arbitrage and middles, EV in percent and cents, and fractional Kelly sizing."),
+     "Four de-vig methods plus a conservative stress test, stale-line outlier "
+     "detection against sharp consensus, arbitrage, properly priced middles, EV "
+     "in percent and cents, and fractional Kelly sizing."),
+    ("Key Numbers", "jordan.keynumbers",
+     "The NFL margin distribution, what a half point is actually worth at each "
+     "number, and whether buying it at the offered price is worth the money."),
 ]
 
 DISCLAIMER = (

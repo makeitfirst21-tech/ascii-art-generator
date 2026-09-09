@@ -92,22 +92,73 @@ def prior(sport, stat_a, stat_b, relationship):
 
 
 def flip_for_sides(rho, side_a, side_b):
-    """A correlation between two stats becomes a correlation between two *bets*.
+    """Sign of the relationship between two *bets*, given the stat correlation.
 
-    Over/over keeps the sign; over/under flips it. Books know this. The
-    profitable version of the trade is finding a pair the book's own model
-    treats as independent when the sign is obvious.
+    Over/over keeps the sign; over/under flips it. Use this to reason about a
+    pair on paper -- "these two overs help each other, this over and that under
+    fight" -- and to read a book's SGP price.
+
+    Do NOT use it to build the matrix you hand to `Simulation`. That class
+    samples the stats themselves and works out the bet relationship by checking
+    them against the lines, so pre-flipping the sign applies it twice and
+    inverts the answer. `build_matrix` deliberately does not call this.
     """
     a_up = side_a in ("over", "yes")
     b_up = side_b in ("over", "yes")
     return rho if a_up == b_up else -rho
 
 
-def build_matrix(legs, sport="nfl", overrides=None, relationships=None):
-    """Correlation matrix for a list of legs.
+def context_scale(context):
+    """Scale the priors to the game environment.
+
+    Correlations are not constants. A quarterback and his WR1 move together far
+    more tightly in a projected shootout, where one team is throwing on every
+    down, than in a 37-point rock fight where the ball is on the ground and the
+    sample of pass attempts is small.
+
+    `context` is a dict with any of:
+        pace        1.0 = league average (NBA possessions, NFL plays)
+        total       projected game total
+        base_total  the league-average total for the sport
+        spread      absolute projected margin -- blowouts decouple everything
+                    once the starters sit
+
+    Returns a multiplier, clamped to [0.6, 1.4]. This is a documented heuristic,
+    not a fitted model: it moves the priors in the direction the game script
+    argues for, and refuses to move them far.
+    """
+    if not context:
+        return 1.0
+    scale = 1.0
+    total = context.get("total")
+    base = context.get("base_total")
+    if total and base:
+        scale *= 1.0 + 0.35 * ((float(total) / float(base)) - 1.0)
+    pace = context.get("pace")
+    if pace:
+        scale *= 1.0 + 0.25 * (float(pace) - 1.0)
+    spread = context.get("spread")
+    if spread is not None:
+        # Beyond about two touchdowns, garbage time starts breaking the links
+        # between starters' stat lines.
+        scale *= 1.0 - min(max((abs(float(spread)) - 14.0) / 20.0, 0.0), 0.3)
+    return max(0.6, min(1.4, scale))
+
+
+def build_matrix(legs, sport="nfl", overrides=None, relationships=None,
+                 context=None):
+    """STAT-level correlation matrix for a list of legs.
+
+    The returned matrix describes how the underlying statistics move together,
+    independent of which side of each line you are betting. The simulation
+    derives the bet-level relationship from it. Overrides are read on the same
+    scale -- give the correlation between the stats, not between the bets.
 
     `legs` may carry `.stat` and `.entity` attributes; otherwise pass
     `relationships` as {(i, j): "same_team"} and `overrides` as {(i, j): rho}.
+
+    `context` optionally scales the priors to the game environment -- see
+    `context_scale`.
     """
     n = len(legs)
     overrides = overrides or {}
@@ -124,8 +175,9 @@ def build_matrix(legs, sport="nfl", overrides=None, relationships=None):
                 stat_a = getattr(legs[i], "stat", None)
                 stat_b = getattr(legs[j], "stat", None)
                 if stat_a and stat_b:
+                    # Stat scale, deliberately unflipped -- see flip_for_sides.
                     rho = prior(sport, stat_a, stat_b, rel)
-                    rho = flip_for_sides(rho, legs[i].side, legs[j].side)
+                    rho *= context_scale(context)
                 else:
                     rho = 0.0
             m[i][j] = m[j][i] = max(min(rho, 0.98), -0.98)

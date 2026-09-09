@@ -232,6 +232,71 @@ def cmd_stacks(args):
     return 0
 
 
+def cmd_keys(args):
+    from . import keynumbers
+    print("=" * 78)
+    print("NFL KEY NUMBERS".center(78))
+    print("=" * 78)
+    print("Final margins are not smooth. A half point is worth what the number")
+    print("next to it is worth, and nothing else.")
+    print()
+    print("  margin   share of games   key    half point worth")
+    print("  " + "-" * 60)
+    for row in keynumbers.key_number_report(favorite_share=args.favorite_share):
+        if row["mass"] < 0.02 and not row["key"]:
+            continue
+        print("  %6d   %12.1f%%   %-5s  %.3f prob (~%.0f cents)"
+              % (row["margin"], 100 * row["mass"], "YES" if row["key"] else "",
+                 row["half_point_prob"], row["half_point_cents"]))
+    print()
+    if args.buy is not None:
+        spread = args.buy
+        push = keynumbers.half_point_value(spread, favorite_share=args.favorite_share)
+        res = keynumbers.buy_points(args.win_prob, push, args.price, args.bought_price)
+        print("BUYING THE HALF POINT off %g" % spread)
+        print("-" * 78)
+        print("  Push probability at %g ....... %.3f" % (spread, push))
+        print("  EV at %-7s ................ %+.4f per unit"
+              % (odds.fmt_american(args.price), res["ev_before"]))
+        print("  EV at %-7s ................ %+.4f per unit"
+              % (odds.fmt_american(args.bought_price), res["ev_after"]))
+        print("  Gain ......................... %+.4f" % res["gain"])
+        if res["breakeven_price"]:
+            print("  Break-even price for the buy .. %s"
+                  % odds.fmt_american(res["breakeven_price"]))
+        print()
+        print("  %s" % ("Worth it." if res["worth_it"]
+                        else "Not worth it at that price. Pass the buy."))
+    print("=" * 78)
+    return 0
+
+
+def cmd_middle(args):
+    res = market.middle(args.low_line, args.low_price, args.high_line,
+                        args.high_price, sport=args.sport,
+                        favorite_share=args.favorite_share)
+    if not res:
+        print("Not a middle: the high line must sit above the low line.")
+        return 1
+    print("Middle %g / %g  (%g points wide)" % (args.low_line, args.high_line,
+                                                res["width"]))
+    print("Priced from : %s" % res["priced_from"])
+    print("Lands inside: %.2f%%   (break-even needs %.2f%%)"
+          % (100 * res["middle_prob"], 100 * (res["breakeven_middle_prob"] or 0)))
+    print("EV          : %+.2f%% of total outlay" % res["ev_pct"])
+    if res["key_numbers_spanned"]:
+        print("Key numbers : %s  (%.1f%% of games land there)"
+              % (", ".join(str(n) for n in res["key_numbers_spanned"]),
+                 100 * res["key_number_mass"]))
+    else:
+        print("Key numbers : none spanned -- this gap is mostly dead space")
+    print()
+    print("Verdict     : %s" % ("worth it" if res["worth_it"] else
+                                "not worth it; the vig on the losing side outweighs "
+                                "the middle"))
+    return 0
+
+
 def cmd_record(args):
     r = parlay.record_grade(args.wins, args.losses, args.pushes)
     print("Record      : %d-%d (%d bets)" % (args.wins, args.losses, r["n"]))
@@ -321,6 +386,26 @@ def build_parser():
     s = sub.add_parser("stacks", help="correlation priors and stack guidance")
     s.add_argument("sport", nargs="?", default="nfl", help="nfl, nba or mlb")
     s.set_defaults(func=cmd_stacks)
+
+    s = sub.add_parser("keys", help="NFL key numbers and the price of a half point")
+    s.add_argument("--favorite-share", type=float, default=0.60,
+                   help="share of a margin that goes to the favourite (default 0.60)")
+    s.add_argument("--buy", type=float, default=None,
+                   help="spread you are buying off, e.g. -3")
+    s.add_argument("--win-prob", type=float, default=0.48,
+                   help="your win probability at the original number")
+    s.add_argument("--price", type=float, default=-110)
+    s.add_argument("--bought-price", type=float, default=-130)
+    s.set_defaults(func=cmd_keys)
+
+    s = sub.add_parser("middle", help="price a middle properly")
+    s.add_argument("low_line", type=float)
+    s.add_argument("low_price", type=float)
+    s.add_argument("high_line", type=float)
+    s.add_argument("high_price", type=float)
+    s.add_argument("--sport", default="nfl")
+    s.add_argument("--favorite-share", type=float, default=0.60)
+    s.set_defaults(func=cmd_middle)
 
     s = sub.add_parser("record", help="what a win-loss record actually proves")
     s.add_argument("wins", type=int)

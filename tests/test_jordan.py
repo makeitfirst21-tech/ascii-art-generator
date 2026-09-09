@@ -8,7 +8,8 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from jordan import correlation, market, odds, parlay, persona, simulate, stats
+from jordan import (correlation, keynumbers, market, odds, parlay, persona,
+                    simulate, stats)
 
 
 class TestOdds(unittest.TestCase):
@@ -232,6 +233,84 @@ class TestSimulate(unittest.TestCase):
             p = simulate.spread_to_win_prob(spread)
             self.assertAlmostEqual(simulate.win_prob_to_spread(p), spread, places=6)
 
+    def test_simulation_honours_the_model_market_blend(self):
+        """The joint probability must use the same number the leg grade shows."""
+        leg = simulate.Leg("x", simulate.NormalStat(100, 20), 90, "over", -110,
+                           market_prices=[+200, -260], weight_model=0.5)
+        blended = leg.blended_prob()
+        self.assertLess(blended, leg.model_prob() - 0.1)   # market pulls it down hard
+        res = simulate.Simulation([leg], trials=40000, seed=1).run()
+        self.assertAlmostEqual(res.leg_probs[0], blended, delta=0.01)
+
+    def test_effective_line_reports_where_the_blend_lands(self):
+        leg = simulate.Leg("x", simulate.NormalStat(100, 20), 90, "over", -110,
+                           market_prices=[+200, -260], weight_model=0.5)
+        res = simulate.Simulation([leg], trials=4000, seed=1).run()
+        # market says he is worse than the model, so the real line is higher
+        self.assertGreater(res.effective_lines[0], 90)
+
+    def test_bet_level_sign_is_correct_for_opposite_sides(self):
+        """QB over + RB under should HELP each other; both overs should fight."""
+        def build(rb_side):
+            qb = simulate.leg_from_spec({"label": "qb", "stat": "pass_yards",
+                                         "dist": "normal", "mean": 270, "sd": 60,
+                                         "line": 250, "side": "over"})
+            rb = simulate.leg_from_spec({"label": "rb", "stat": "rush_yards",
+                                         "dist": "normal", "mean": 70, "sd": 25,
+                                         "line": 65, "side": rb_side})
+            m = correlation.build_matrix([qb, rb], "nfl",
+                                         relationships={(0, 1): "same_team"})
+            return simulate.Simulation([qb, rb], m, trials=40000, seed=2).run()
+        self.assertGreater(build("under").correlation_multiplier, 1.02)
+        self.assertLess(build("over").correlation_multiplier, 0.98)
+
+    def test_realized_bet_correlation_flips_with_the_side(self):
+        def rho(rb_side):
+            qb = simulate.leg_from_spec({"stat": "pass_yards", "dist": "normal",
+                                         "mean": 270, "sd": 60, "line": 250, "side": "over"})
+            rb = simulate.leg_from_spec({"stat": "rush_yards", "dist": "normal",
+                                         "mean": 70, "sd": 25, "line": 65, "side": rb_side})
+            m = correlation.build_matrix([qb, rb], "nfl",
+                                         relationships={(0, 1): "same_team"})
+            res = simulate.Simulation([qb, rb], m, trials=20000, seed=3).run()
+            return res.realized_bet_correlation()[0][1]
+        self.assertGreater(rho("under"), 0)
+        self.assertLess(rho("over"), 0)
+
+    def test_push_probability_is_simulated_on_whole_number_lines(self):
+        leg = simulate.Leg("rec", simulate.CountStat(6.0, 8.0), 6, "over", -110)
+        sim = simulate.Simulation([leg], trials=30000, seed=4)
+        self.assertGreater(sim.push_probs[0], 0.05)
+        res = sim.run()
+        self.assertGreater(res.push_rate, 0.05)
+        # win + push + loss must account for everything
+        self.assertLess(res.leg_probs[0] + res.push_rate, 1.0)
+
+    def test_no_push_on_a_half_point_line(self):
+        leg = simulate.Leg("rec", simulate.CountStat(6.0, 8.0), 5.5, "over", -110)
+        sim = simulate.Simulation([leg], trials=2000, seed=4)
+        self.assertEqual(sim.push_probs[0], 0.0)
+
+    def test_push_reduces_the_parlay_instead_of_killing_it(self):
+        """A pushed leg drops out; the ticket pays on the rest."""
+        legs = [simulate.Leg("a", simulate.CountStat(6.0, 8.0), 6, "over", -110),
+                simulate.Leg("b", simulate.NormalStat(100, 20), 90, "over", -110)]
+        sim = simulate.Simulation(legs, trials=30000, seed=5)
+        with_push = sim.run(offered_price=260).ev_per_unit
+        # same legs on half-point lines cannot push
+        legs2 = [simulate.Leg("a", simulate.CountStat(6.0, 8.0), 5.5, "over", -110),
+                 simulate.Leg("b", simulate.NormalStat(100, 20), 90, "over", -110)]
+        no_push = simulate.Simulation(legs2, trials=30000, seed=5).run(
+            offered_price=260).ev_per_unit
+        self.assertNotAlmostEqual(with_push, no_push, places=3)
+
+    def test_simulated_ev_matches_the_closed_form_when_no_pushes(self):
+        legs = [simulate.Leg("a", simulate.NormalStat(100, 20), 100, "over", -110),
+                simulate.Leg("b", simulate.NormalStat(50, 10), 50, "over", -110)]
+        res = simulate.Simulation(legs, trials=60000, seed=6).run(offered_price=300)
+        closed = odds.expected_value(res.joint_prob, 300)
+        self.assertAlmostEqual(res.ev_per_unit, closed, delta=0.02)
+
     def test_leg_from_spec(self):
         leg = simulate.leg_from_spec({
             "label": "WR yards", "stat": "rec_yards", "dist": "lognormal",
@@ -278,8 +357,36 @@ class TestCorrelation(unittest.TestCase):
             self.assertAlmostEqual(m[i][i], 1.0, places=9)
             for j in range(3):
                 self.assertAlmostEqual(m[i][j], m[j][i], places=9)
-        # rb leg is an under, so the negative qb/rb prior flips positive
-        self.assertGreater(m[0][2], 0)
+
+    def test_build_matrix_is_on_the_stat_scale_not_the_bet_scale(self):
+        """The matrix must NOT be pre-flipped for over/under.
+
+        The simulation samples stats and checks them against the lines, so it
+        derives the bet relationship itself. Flipping here too would apply the
+        sign twice and invert the answer.
+        """
+        qb = simulate.leg_from_spec({"stat": "pass_yards", "side": "over",
+                                     "dist": "normal", "mean": 270, "sd": 60, "line": 250})
+        rb_under = simulate.leg_from_spec({"stat": "rush_yards", "side": "under",
+                                           "dist": "normal", "mean": 70, "sd": 25, "line": 65})
+        rb_over = simulate.leg_from_spec({"stat": "rush_yards", "side": "over",
+                                          "dist": "normal", "mean": 70, "sd": 25, "line": 65})
+        raw = correlation.prior("nfl", "pass_yards", "rush_yards", "same_team")
+        for other in (rb_under, rb_over):
+            m = correlation.build_matrix([qb, other], "nfl",
+                                         relationships={(0, 1): "same_team"})
+            self.assertAlmostEqual(m[0][1], raw, places=9)
+
+    def test_context_scaling(self):
+        self.assertEqual(correlation.context_scale(None), 1.0)
+        shootout = correlation.context_scale({"total": 54, "base_total": 44})
+        rock_fight = correlation.context_scale({"total": 36, "base_total": 44})
+        self.assertGreater(shootout, 1.0)
+        self.assertLess(rock_fight, 1.0)
+        # blowouts decouple, and the scale is clamped
+        self.assertLess(correlation.context_scale({"spread": 24}), 1.0)
+        self.assertGreaterEqual(correlation.context_scale({"total": 200, "base_total": 20}), 0.6)
+        self.assertLessEqual(correlation.context_scale({"total": 200, "base_total": 20}), 1.4)
 
     def test_overrides_beat_priors(self):
         legs = [simulate.leg_from_spec(
@@ -410,7 +517,7 @@ class TestMarket(unittest.TestCase):
     def test_middle(self):
         m = market.middle(-2.5, -110, 3.5, -110)
         self.assertAlmostEqual(m["width"], 6.0, places=9)
-        self.assertGreater(m["middle_prob_estimate"], 0)
+        self.assertGreater(m["middle_prob"], 0)
 
 
 class TestParlay(unittest.TestCase):
@@ -510,6 +617,111 @@ class TestParlay(unittest.TestCase):
 
     def test_record_grade_with_no_bets(self):
         self.assertEqual(parlay.record_grade(0, 0)["n"], 0)
+
+
+class TestCents(unittest.TestCase):
+    """American odds cannot be subtracted across the century boundary."""
+
+    def test_cents_scale_is_monotone(self):
+        prices = [-500, -200, -110, -101, 100, 110, 200, 500]
+        scaled = [odds.cents_scale(p) for p in prices]
+        self.assertEqual(scaled, sorted(scaled))
+
+    def test_plus_and_minus_100_are_the_same_point(self):
+        self.assertAlmostEqual(odds.cents_scale(100), odds.cents_scale(-100), places=9)
+
+    def test_ten_cent_lines(self):
+        self.assertAlmostEqual(odds.cents_between(100, -110), 10.0, places=9)
+        self.assertAlmostEqual(odds.cents_between(-110, -120), 10.0, places=9)
+        self.assertAlmostEqual(odds.cents_between(110, 100), 10.0, places=9)
+
+    def test_edge_in_cents_across_the_boundary(self):
+        """-110 against a fair +100 is ten cents of juice, not two hundred."""
+        self.assertAlmostEqual(odds.edge_in_cents(0.5, -110), -10.0, places=9)
+        self.assertAlmostEqual(odds.edge_in_cents(0.5, 120), 20.0, places=9)
+
+
+class TestKeyNumbers(unittest.TestCase):
+
+    def test_three_is_the_most_common_nfl_margin(self):
+        pmf = keynumbers.margin_pmf("nfl")
+        top = max(pmf.items(), key=lambda kv: kv[1])[0]
+        self.assertEqual(top, 3)
+        self.assertGreater(pmf[3], pmf[7])
+        self.assertGreater(pmf[7], pmf[11])
+
+    def test_key_numbers_identified(self):
+        self.assertTrue(keynumbers.is_key_number(3))
+        self.assertTrue(keynumbers.is_key_number(-7))
+        self.assertFalse(keynumbers.is_key_number(11))
+
+    def test_key_number_logic_is_nfl_only(self):
+        with self.assertRaises(ValueError):
+            keynumbers.margin_pmf("nba")
+
+    def test_half_point_off_three_is_worth_more_than_off_eight(self):
+        self.assertGreater(keynumbers.half_point_value(-3),
+                           keynumbers.half_point_value(-8))
+        self.assertGreater(keynumbers.half_point_value(-7),
+                           keynumbers.half_point_value(-11))
+
+    def test_half_point_off_three_is_worth_roughly_25_cents(self):
+        """The industry rule of thumb, reproduced from the margin table."""
+        rows = {r["margin"]: r for r in keynumbers.key_number_report()}
+        self.assertTrue(20 <= rows[3]["half_point_cents"] <= 32)
+
+    def test_buying_at_the_breakeven_price_is_a_wash(self):
+        res = keynumbers.buy_points(0.48, 0.057, -110, -130)
+        at_be = keynumbers.buy_points(0.48, 0.057, -110, res["breakeven_price"])
+        self.assertAlmostEqual(at_be["gain"], 0.0, delta=0.002)
+
+    def test_buying_a_worthless_point_is_rejected(self):
+        cheap = keynumbers.buy_points(0.50, 0.021, -110, -130)
+        self.assertFalse(cheap["worth_it"])
+
+    def test_buying_is_worth_it_when_the_price_is_right(self):
+        res = keynumbers.buy_points(0.48, 0.057, -110, -112)
+        self.assertTrue(res["worth_it"])
+
+
+class TestMiddles(unittest.TestCase):
+
+    def test_middle_requires_a_gap(self):
+        self.assertIsNone(market.middle(3.5, -110, 2.5, -110))
+
+    def test_breakeven_middle_prob_at_standard_prices(self):
+        res = market.middle(-2.5, -110, 3.5, -110)
+        self.assertAlmostEqual(res["breakeven_middle_prob"], 0.0476, delta=0.004)
+
+    def test_nfl_middles_are_priced_off_the_margin_distribution(self):
+        res = market.middle(-3.5, -110, -2.5, -110, sport="nfl")
+        self.assertEqual(res["priced_from"], "nfl margin distribution")
+        plain = market.middle(-3.5, -110, -2.5, -110)
+        self.assertEqual(plain["priced_from"], "normal approximation")
+
+    def test_a_middle_spanning_three_beats_one_spanning_two(self):
+        """The whole point of key numbers, and what the normal approximation
+        cannot see."""
+        spans_three = market.middle(-3.5, -110, -2.5, -110, sport="nfl")
+        spans_two = market.middle(-2.5, -110, -1.5, -110, sport="nfl")
+        self.assertGreater(spans_three["middle_prob"], 2 * spans_two["middle_prob"])
+        self.assertGreater(spans_three["ev_pct"], spans_two["ev_pct"])
+        self.assertEqual(spans_three["key_numbers_spanned"], [3])
+        self.assertEqual(spans_two["key_numbers_spanned"], [])
+
+    def test_wide_middle_is_worth_it(self):
+        self.assertTrue(market.middle(-2.5, -110, 3.5, -110, sport="nfl")["worth_it"])
+
+    def test_narrow_middle_is_not_free_money(self):
+        res = market.middle(-2.5, -110, -1.5, -110, sport="nfl")
+        self.assertFalse(res["worth_it"])
+        self.assertLess(res["ev_pct"], 0)
+
+    def test_probabilities_account_for_everything(self):
+        for sport in (None, "nfl"):
+            res = market.middle(-2.5, -110, 3.5, -110, sport=sport)
+            total = res["middle_prob"] + res["prob_above"] + res["prob_below"]
+            self.assertAlmostEqual(total, 1.0, places=6)
 
 
 class TestPersona(unittest.TestCase):

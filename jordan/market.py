@@ -11,7 +11,8 @@ import time
 from collections import defaultdict
 
 from .odds import (american_to_prob, devig, prob_to_american, fmt_american,
-                   american_to_decimal, hold)
+                   american_to_decimal, hold,
+                   cents_between as odds_cents_between)
 
 # ---------------------------------------------------------------------------
 # Not all books are evidence.
@@ -363,7 +364,7 @@ class MarketTracker:
             return None
         bet_p = american_to_prob(bet_price)
         close_p = american_to_prob(closing_price)
-        cents = bet_price - closing_price
+        cents = odds_cents_between(bet_price, closing_price)
         return {
             "bet_price": bet_price,
             "closing_price": closing_price,
@@ -402,22 +403,105 @@ def arbitrage(price_a, price_b, bankroll=1000.0):
     }
 
 
-def middle(line_a, price_a, line_b, price_b, sd=13.2):
-    """Buy both sides of a spread/total with a gap between them.
+def middle(low_line, low_price, high_line, high_price, center=None, sd=13.2,
+           sport=None, stake=1.0, favorite_share=0.60):
+    """Buy both sides with a gap between them; win both if the result lands inside.
 
-    Win both if the result lands in the middle. Books hate them, which is the
-    recommendation.
+    You are betting the OVER (or the favourite) at `low_line` and the UNDER (or
+    the dog) at `high_line`, with low_line < high_line. Three outcomes, and the
+    only correct way to judge one is to price all three:
+
+        result inside the gap   both bets win
+        result above the gap    the low-line bet wins, the other loses
+        result below the gap    the high-line bet wins, the other loses
+
+    Note what that means: a middle is not "free" -- outside the gap you pay the
+    vig on the loser, which is a small guaranteed bleed against a large
+    occasional score. The old comparison of middle probability against the
+    overround is not the same calculation and gets the answer wrong on any
+    non-standard price.
+
+    `center` is what the market expects the result to be; it defaults to the
+    midpoint of the two lines, which is the right assumption if you bought both
+    sides around the current number.
     """
-    lo, hi = sorted((float(line_a), float(line_b)))
-    width = hi - lo
-    if width <= 0:
+    lo, hi = float(low_line), float(high_line)
+    if hi <= lo:
         return None
+    if center is None:
+        center = 0.5 * (lo + hi)
+
     from .stats import norm_cdf
-    p_middle = norm_cdf(hi / sd) - norm_cdf(lo / sd)
-    cost = american_to_prob(price_a) + american_to_prob(price_b) - 1.0
+    z_lo = (lo - center) / sd
+    z_hi = (hi - center) / sd
+    p_low = norm_cdf(z_lo)                    # result below the gap
+    p_mid = norm_cdf(z_hi) - norm_cdf(z_lo)   # inside -- both win
+    p_high = 1.0 - norm_cdf(z_hi)             # above the gap
+
+    d_low = american_to_decimal(low_price)    # the over / favourite side
+    d_high = american_to_decimal(high_price)  # the under / dog side
+
+    ev = stake * (
+        p_mid * ((d_low - 1.0) + (d_high - 1.0))
+        + p_high * ((d_low - 1.0) - 1.0)
+        + p_low * ((d_high - 1.0) - 1.0))
+    outlay = 2.0 * stake
+
+    # On an NFL spread the gap is won by landing on specific integer margins,
+    # and those integers are wildly unequal. The normal approximation cannot see
+    # that -- it prices a gap spanning 3 the same as one spanning 2. So when the
+    # sport is known, price the gap off the margin distribution instead.
+    spanned, key_mass, discrete_mid = [], 0.0, None
+    if sport and sport.lower() == "nfl":
+        from . import keynumbers
+        discrete_mid = 0.0
+        for n in range(int(math.floor(lo)) + 1, int(math.ceil(hi))):
+            share = favorite_share if n > 0 else (1.0 - favorite_share)
+            mass = keynumbers.margin_mass(n) * (1.0 if n == 0 else share)
+            discrete_mid += mass
+            if keynumbers.is_key_number(n):
+                spanned.append(abs(n))
+                key_mass += mass
+        # Rebalance the outside outcomes around the better middle estimate.
+        remaining = max(0.0, 1.0 - discrete_mid)
+        outside = p_high + p_low
+        if outside > 0:
+            p_high = remaining * p_high / outside
+            p_low = remaining * p_low / outside
+        p_mid = discrete_mid
+        ev = stake * (
+            p_mid * ((d_low - 1.0) + (d_high - 1.0))
+            + p_high * ((d_low - 1.0) - 1.0)
+            + p_low * ((d_high - 1.0) - 1.0))
+
     return {
-        "width": width,
-        "middle_prob_estimate": abs(p_middle),
-        "cost_pct": 100.0 * cost,
-        "worth_it": abs(p_middle) > cost * 1.0,
+        "width": hi - lo,
+        "middle_prob": p_mid,
+        "priced_from": "nfl margin distribution" if discrete_mid is not None
+                       else "normal approximation",
+        "prob_above": p_high,
+        "prob_below": p_low,
+        "ev": ev,
+        "ev_pct": 100.0 * ev / outlay,
+        "outlay": outlay,
+        "worth_it": ev > 0,
+        "breakeven_middle_prob": _breakeven_middle_prob(d_low, d_high),
+        "key_numbers_spanned": spanned,
+        "key_number_mass": key_mass,
     }
+
+
+def _breakeven_middle_prob(d_low, d_high):
+    """How often the middle must land to break even at these two prices.
+
+    For two -110s it is about 4.8%. Quote this at anyone calling a middle free
+    money.
+    """
+    # EV = p*(a+b) + (1-p)*(worst case one side wins) ... solved for p, assuming
+    # the outside outcomes split evenly between the two sides.
+    a, b = d_low - 1.0, d_high - 1.0
+    win_both = a + b
+    outside = 0.5 * ((a - 1.0) + (b - 1.0))
+    if win_both - outside <= 0:
+        return None
+    return max(0.0, -outside / (win_both - outside))

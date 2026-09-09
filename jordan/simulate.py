@@ -10,6 +10,7 @@ lot of times.
 import math
 import random
 
+from . import odds as odds_module
 from . import stats
 from .odds import prob_to_american
 
@@ -21,12 +22,21 @@ class Marginal:
     into a value."""
 
     name = "marginal"
+    continuous = True   # False for stats where an "effective line" is meaningless
 
     def ppf(self, u):
         raise NotImplementedError
 
     def mean(self):
         raise NotImplementedError
+
+    def sd(self):
+        """Standard deviation on the stat's own scale."""
+        raise NotImplementedError
+
+    def push_prob(self, line):
+        """P(stat lands exactly on the line). Zero for continuous stats."""
+        return 0.0
 
     def prob_over(self, line, samples=200000, rng=None):
         """Analytic where possible, otherwise sampled."""
@@ -53,6 +63,9 @@ class NormalStat(Marginal):
     def mean(self):
         return self.mu
 
+    def sd(self):
+        return self.sigma
+
     def prob_over(self, line, samples=None, rng=None):
         return 1.0 - stats.norm_cdf((line - self.mu) / self.sigma)
 
@@ -76,12 +89,16 @@ class LognormalStat(Marginal):
         self.sigma_log = math.sqrt(math.log(1.0 + var / (mu * mu)))
         self.mu_log = math.log(mu) - 0.5 * self.sigma_log ** 2
         self._mean = mu
+        self._sd = sigma
 
     def ppf(self, u):
         return math.exp(self.mu_log + self.sigma_log * stats.norm_ppf(u))
 
     def mean(self):
         return self._mean
+
+    def sd(self):
+        return self._sd
 
     def prob_over(self, line, samples=None, rng=None):
         if line <= 0:
@@ -97,6 +114,7 @@ class CountStat(Marginal):
     """
 
     name = "count"
+    continuous = False
 
     def __init__(self, mean, variance=None):
         self.mu = float(mean)
@@ -108,11 +126,23 @@ class CountStat(Marginal):
     def mean(self):
         return self.mu
 
-    def prob_over(self, line, samples=None, rng=None):
-        """P(X > line). Summing the pmf directly beats inverting the cdf here."""
-        k = math.floor(line)
+    def sd(self):
+        return math.sqrt(self.var)
+
+    def push_prob(self, line):
+        """A count stat on a whole-number line can land exactly on it."""
+        if abs(line - round(line)) > 1e-9:
+            return 0.0
+        k = int(round(line))
+        if k < 0:
+            return 0.0
+        return max(0.0, self._cdf(k) - self._cdf(k - 1))
+
+    def _cdf(self, k):
+        if k < 0:
+            return 0.0
         if self.var <= self.mu:
-            return 1.0 - stats.poisson_cdf(k, self.mu)
+            return stats.poisson_cdf(k, self.mu)
         p = self.mu / self.var
         r = self.mu * p / (1.0 - p)
         prob = p ** r
@@ -120,13 +150,18 @@ class CountStat(Marginal):
         for i in range(1, int(k) + 1):
             prob *= (r + i - 1.0) / i * (1.0 - p)
             total += prob
-        return max(0.0, 1.0 - total)
+        return min(total, 1.0)
+
+    def prob_over(self, line, samples=None, rng=None):
+        """P(X > line). Summing the pmf directly beats inverting the cdf here."""
+        return max(0.0, 1.0 - self._cdf(math.floor(line)))
 
 
 class BernoulliStat(Marginal):
     """Anytime touchdown, to record a sack, first basket."""
 
     name = "bernoulli"
+    continuous = False
 
     def __init__(self, prob):
         self.p = min(max(float(prob), 0.0), 1.0)
@@ -136,6 +171,9 @@ class BernoulliStat(Marginal):
 
     def mean(self):
         return self.p
+
+    def sd(self):
+        return math.sqrt(self.p * (1.0 - self.p))
 
     def prob_over(self, line=0.5, samples=None, rng=None):
         return self.p
@@ -202,49 +240,159 @@ class Leg:
 
 
 class Simulation:
-    """Monte Carlo over a set of legs with an optional correlation matrix."""
+    """Monte Carlo over a set of legs with an optional correlation matrix.
 
-    def __init__(self, legs, correlation=None, trials=50000, seed=None):
+    Two things are worth understanding about how this works, because they are
+    where naive parlay tools go wrong.
+
+    **The correlation matrix is on the STAT scale, not the bet scale.** A +0.55
+    between passing yards and receiving yards stays +0.55 here, whichever side of
+    each line you are betting. The simulation derives the bet-level relationship
+    itself by sampling stats and checking them against the lines -- so flipping
+    the sign for an over/under pair before handing it over would flip it twice
+    and invert the answer. `correlation.flip_for_sides` exists for reasoning
+    about bets on paper, not for feeding this class.
+
+    **Each leg is evaluated at its blended probability, not its raw model
+    probability.** The leg grades and the parlay price therefore agree, and the
+    market gets its say in the joint probability instead of being consulted for
+    display purposes and then discarded.
+    """
+
+    def __init__(self, legs, correlation=None, trials=50000, seed=None,
+                 devig_method="power"):
         self.legs = list(legs)
         self.trials = int(trials)
         self.rng = random.Random(seed)
+        self.devig_method = devig_method
         n = len(self.legs)
         if correlation is None:
             correlation = [[1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
         self.correlation = stats.nearest_correlation(correlation)
         self.copula = stats.GaussianCopula(self.correlation, rng=self.rng)
 
-    def run(self):
-        """Returns a SimResult with joint and marginal hit rates."""
+        # Target hit probability per leg -- model and market, blended.
+        self.target_probs = [leg.blended_prob(devig_method) for leg in self.legs]
+        # Probability the stat lands exactly on the line (whole-number lines on
+        # discrete stats only). A push voids the leg and reduces the parlay.
+        self.push_probs = [leg.marginal.push_prob(leg.line) for leg in self.legs]
+        # Keep the blend honest when a push is possible: win + push + lose = 1.
+        for i, (p, push) in enumerate(zip(self.target_probs, self.push_probs)):
+            if p + push > 1.0:
+                self.push_probs[i] = max(0.0, 1.0 - p)
+
+    def effective_line(self, index):
+        """The line the blended probability actually corresponds to.
+
+        If the model says 270 yards but the market disagrees, this reports the
+        number Jordan is really betting into -- often the most revealing single
+        figure in the whole report.
+        """
+        leg = self.legs[index]
+        p = self.target_probs[index]
+        u = (1.0 - p) if leg.side in ("over", "yes") else p
+        return leg.marginal.ppf(min(max(u, 1e-9), 1.0 - 1e-9))
+
+    def _outcome(self, index, u):
+        """1 win, 0 push, -1 loss, from a copula uniform.
+
+        The uniform is monotone in the stat, so the hit region sits at the top
+        for an over and the bottom for an under. That is what carries the
+        correlation sign through to the bet.
+        """
+        p = self.target_probs[index]
+        push = self.push_probs[index]
+        if self.legs[index].side in ("over", "yes"):
+            if u > 1.0 - p:
+                return 1
+            if u > 1.0 - p - push:
+                return 0
+            return -1
+        if u < p:
+            return 1
+        if u < p + push:
+            return 0
+        return -1
+
+    def run(self, offered_price=None):
+        """Simulate. `offered_price` lets the payout be graded per trial, with
+        pushed legs correctly removed from the ticket."""
         n = len(self.legs)
+        decimals = [odds_module.american_to_decimal(l.price) for l in self.legs]
+        full_decimal = 1.0
+        for d in decimals:
+            full_decimal *= d
+        offered_decimal = (odds_module.american_to_decimal(offered_price)
+                           if offered_price is not None else full_decimal)
+
         all_hit = 0
+        any_push = 0
         leg_hits = [0] * n
         hit_counts = [0] * (n + 1)
-        for _ in range(self.trials):
+        indicators = [[] for _ in range(n)]
+        payout_total = 0.0
+        sample_cap = min(self.trials, 20000)
+
+        for t in range(self.trials):
             us = self.copula.sample_uniforms()
-            hits = 0
-            for i, leg in enumerate(self.legs):
-                value = leg.marginal.ppf(us[i])
-                if leg.hits(value):
+            wins = 0
+            live = 0
+            pushed_decimal = 1.0
+            lost = False
+            pushed = False
+            for i in range(n):
+                out = self._outcome(i, us[i])
+                if t < sample_cap:
+                    indicators[i].append(1.0 if out > 0 else 0.0)
+                if out > 0:
                     leg_hits[i] += 1
-                    hits += 1
-            hit_counts[hits] += 1
-            if hits == n:
-                all_hit += 1
+                    wins += 1
+                    live += 1
+                elif out == 0:
+                    pushed = True
+                    pushed_decimal *= decimals[i]
+                else:
+                    lost = True
+                    live += 1
+            hit_counts[wins] += 1
+            if pushed:
+                any_push += 1
+            if not lost:
+                # Every surviving leg won. A pushed leg is removed from the
+                # ticket, so the payout shrinks by that leg's decimal.
+                if wins == n:
+                    all_hit += 1
+                payout_total += offered_decimal / pushed_decimal
+        ev_per_unit = payout_total / self.trials - 1.0
+
         return SimResult(self.legs, all_hit / self.trials,
                          [h / self.trials for h in leg_hits],
                          [c / self.trials for c in hit_counts],
-                         self.trials, self.correlation)
+                         self.trials, self.correlation,
+                         target_probs=list(self.target_probs),
+                         push_probs=list(self.push_probs),
+                         push_rate=any_push / self.trials,
+                         ev_per_unit=ev_per_unit,
+                         indicators=indicators,
+                         effective_lines=[self.effective_line(i) for i in range(n)])
 
 
 class SimResult:
-    def __init__(self, legs, joint_prob, leg_probs, hit_distribution, trials, correlation):
+    def __init__(self, legs, joint_prob, leg_probs, hit_distribution, trials,
+                 correlation, target_probs=None, push_probs=None, push_rate=0.0,
+                 ev_per_unit=None, indicators=None, effective_lines=None):
         self.legs = legs
         self.joint_prob = joint_prob
         self.leg_probs = leg_probs
         self.hit_distribution = hit_distribution
         self.trials = trials
         self.correlation = correlation
+        self.target_probs = target_probs or list(leg_probs)
+        self.push_probs = push_probs or [0.0] * len(legs)
+        self.push_rate = push_rate
+        self.ev_per_unit = ev_per_unit
+        self.indicators = indicators or []
+        self.effective_lines = effective_lines or []
 
     @property
     def independent_prob(self):
@@ -263,6 +411,25 @@ class SimResult:
         if ind <= 0:
             return 0.0
         return self.joint_prob / ind
+
+    def realized_bet_correlation(self):
+        """Measured correlation between the legs *as bets*, from the simulation.
+
+        Not the same number as the stat correlation that went in, and it should
+        not be: thresholding a continuous stat at a line attenuates the
+        relationship, and betting opposite sides inverts its sign. This is the
+        number that actually decides whether the ticket is worth more or less
+        than the product of its legs.
+        """
+        n = len(self.legs)
+        out = [[1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
+        if not self.indicators or len(self.indicators[0]) < 2:
+            return out
+        for i in range(n):
+            for j in range(i + 1, n):
+                rho = stats.pearson(self.indicators[i], self.indicators[j])
+                out[i][j] = out[j][i] = rho
+        return out
 
     @property
     def standard_error(self):

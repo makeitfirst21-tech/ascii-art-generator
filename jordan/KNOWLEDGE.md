@@ -272,6 +272,22 @@ Raise `weight_model` only where you genuinely know more than the market — a
 niche you have data on. Lower it on primary markets where a hundred sharp shops
 have already looked.
 
+### The blend has to reach the price, not just the display
+A leg's blended probability is worthless if the parlay maths quietly uses the raw
+model number instead. Jordan evaluates every leg in the simulation at its blended
+probability, so the leg grades and the ticket price are the same number. The
+report also prints the **effective line** — the number the blend actually
+corresponds to. If your model says 249.5 and the market drags the effective line
+to 262, that gap is the argument you are having with the market, stated plainly.
+
+### Pushes are not losses
+A whole-number line on a discrete stat can land exactly on the number. That leg
+voids and **drops out of the parlay**, shrinking the payout rather than killing
+the ticket. Jordan computes the push probability exactly from the count
+distribution and grades the payout per simulated trial with the pushed leg
+removed, which is what the book actually does. Half-point lines cannot push, and
+the tool says so rather than pretending otherwise.
+
 ### Respect your own error bars
 Every simulated probability carries a standard error. With 40,000 trials the
 95% interval on a 25% joint probability is about ±0.42%. **An edge smaller than
@@ -297,6 +313,33 @@ A +0.55 correlation between QB passing yards and WR1 receiving yards becomes
 **−0.55** if you take one over and one under. Books know this. The trade worth
 finding is a pair whose sign is obvious to you and treated as independent by
 the book's pricing.
+
+**Which scale a number is on matters, and getting it wrong inverts the answer.**
+The priors above, and every matrix `build_matrix` produces, are on the **stat**
+scale — they describe the statistics, not the bets, and they do not change when
+you switch a leg from over to under. The simulation samples the stats and checks
+them against the lines, so it derives the bet-level relationship itself. Flipping
+the sign before handing the matrix over applies it twice and produces exactly the
+wrong answer: QB-over plus RB-under would read as legs that fight each other when
+in fact they help.
+
+`flip_for_sides()` exists for reasoning on paper. It is deliberately not called
+by `build_matrix`.
+
+**Thresholding shrinks the relationship.** A +0.55 between two stats does not
+make the two *bets* 0.55-correlated. Cutting a continuous stat at a line throws
+away magnitude and keeps only "over or under", which attenuates the measured
+relationship — in practice a +0.55 stat correlation lands nearer +0.37 between
+the bets. Jordan's report shows both, because the second number is the one that
+decides whether the ticket beats the product of its legs.
+
+### Correlations are not constants
+The QB/WR1 relationship is tighter in a projected shootout, where one team is
+throwing on every down, than in a 37-point rock fight. It decays in a blowout
+once the starters sit. `context_scale()` moves the priors in the direction game
+script argues for — total relative to league average, pace, projected margin —
+and clamps the adjustment to ±40%, because it is a documented heuristic rather
+than a fitted model.
 
 ### Selected priors
 
@@ -391,10 +434,53 @@ you happened to pick.
    volume doesn't justify the attention. Bad prices survive longer.
 4. **Correlation mispricing in SGPs.** Pillar III.
 5. **Injury and weather latency.** The first ninety seconds after real news.
-6. **Middles.** Two sides with a gap; win both if the result lands inside.
+6. **Middles.** Two sides with a gap; win both if the result lands inside. Not
+   free money: outside the gap you pay the vig on the loser, so at -110/-110 the
+   middle must land about **4.8%** of the time just to break even. On an NFL
+   spread that is entirely a question of which integers the gap spans — see
+   below.
 7. **Arbitrage.** Real, small, and the fastest possible route to a limit cut.
    Better read as a *signal* that one of the two prices is stale — and the stale
    side is usually the better standalone bet.
+
+### Key numbers — the half point is not one price
+
+`jordan.keynumbers`
+
+NFL scoring comes in threes and sevens, so final margins pile up on specific
+numbers. A half point is worth what the number beside it is worth and nothing
+else:
+
+| Margin | Share of games | Key | Half point worth |
+|---|---|---|---|
+| 3 | 9.5% | yes | ~26 cents |
+| 7 | 7.3% | yes | ~19 cents |
+| 6 | 4.6% | yes | ~12 cents |
+| 10 | 4.6% | yes | ~12 cents |
+| 4 | 4.5% | yes | ~11 cents |
+| 14 | 3.4% | yes | ~9 cents |
+| 11 | 2.4% | no | ~6 cents |
+
+(Approximate historical shares — the right shape and roughly the right size, not
+a fit of this season. Replace them with your own counts if you have them.)
+
+The practical consequence: **-3 to -2.5 is one of the most valuable half points
+in sports, and books price it accordingly.** At a genuine 48% win rate with 5.7%
+of games landing on 3, buying that half point is worth it up to about **-123**.
+The standard -130 ask is a losing purchase. Buying off 8 or 11 at the same price
+is worse still. `python3 -m jordan keys --buy -3` runs the calculation.
+
+The same table decides middles: a one-point NFL middle spanning **3** lands about
+3.8% of the time; the identical-width middle spanning **2** lands about 1.4%. A
+normal approximation prices them the same and is simply wrong. Jordan prices NFL
+middles off the margin distribution instead.
+
+### Cents cannot be subtracted across the century
++100 and -100 are the same price but 200 apart as integers, so subtracting raw
+American odds across that boundary produces nonsense — a -110 against a fair
++100 is ten cents of juice, not two hundred and ten. Jordan maps prices onto a
+continuous scale (negative prices to `200 - |price|`) before differencing them,
+so every cents figure it quotes is real.
 
 ### Sizing
 Full Kelly is optimal only if your probability is exactly right. It never is.

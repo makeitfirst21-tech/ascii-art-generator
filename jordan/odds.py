@@ -220,12 +220,33 @@ def ev_percent(prob, american):
     return 100.0 * expected_value(prob, american)
 
 
+def cents_scale(american):
+    """Map an american price onto a continuous scale where cents are subtractable.
+
+    American odds have a discontinuity at the century: +100 and -100 are the
+    same price, but they are 200 apart as integers. Subtract two prices that
+    straddle it and you get nonsense -- -110 against a +100 fair number is ten
+    cents of juice, not two hundred and ten.
+
+    This maps positive prices to themselves and negative prices to
+    200 - |price|, giving one monotone axis: -150 -> 50, -110 -> 90,
+    +/-100 -> 100, +110 -> 110. Differences on it are cents.
+    """
+    american = float(american)
+    return american if american > 0 else 200.0 + american
+
+
+def cents_between(price_a, price_b):
+    """Signed cents from price_b to price_a. Positive means price_a is better."""
+    return cents_scale(price_a) - cents_scale(price_b)
+
+
 def edge_in_cents(prob, american):
     """How many cents of price the bettor is getting over fair.
 
     Reported the way traders talk: "I got +140 on a +125 fair number, 15 cents."
     """
-    return american - prob_to_american(prob)
+    return cents_between(american, prob_to_american(prob))
 
 
 def kelly_fraction(prob, american):
