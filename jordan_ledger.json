@@ -362,6 +362,48 @@
           "result": "pending"
         }
       ]
+    },
+    {
+      "id": 18,
+      "date": "2026-09-24",
+      "author": "you",
+      "sport": "mixed",
+      "description": "4-leg ML parlay: Cubs, D-backs, Packers, Yankees",
+      "price": 433.0,
+      "prob": 0.1623,
+      "stake": 1.0,
+      "market_prob": 0.1623,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "your ticket; no % stated, so prob is the de-vigged market; logged before first leg (Cubs 2:20pm ET)",
+      "confidence": null,
+      "legs": [
+        {
+          "leg": "Cubs ML",
+          "price": -198,
+          "prob": 0.6386,
+          "result": "pending"
+        },
+        {
+          "leg": "D-backs ML",
+          "price": -186,
+          "prob": 0.6311,
+          "result": "pending"
+        },
+        {
+          "leg": "Packers ML",
+          "price": -250,
+          "prob": 0.6973,
+          "result": "pending"
+        },
+        {
+          "leg": "Yankees ML",
+          "price": -155,
+          "prob": 0.5776,
+          "result": "pending"
+        }
+      ]
     }
   ]
 }
