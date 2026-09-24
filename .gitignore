@@ -9,6 +9,6 @@ __pycache__/
 !jordan/*.md
 !examples/*.md
 
-# Your pick history is yours -- it does not belong in the repo
-jordan_ledger.json
+# The pick ledger is tracked so its history survives session resets; only the
+# half-written temp file from an interrupted save is ignored.
 jordan_ledger.json.tmp
