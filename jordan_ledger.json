@@ -290,6 +290,78 @@
       "notes": "also considered; forecast only; price was an estimate",
       "confidence": 0.6507936507936508,
       "legs": []
+    },
+    {
+      "id": 17,
+      "date": "2026-09-24",
+      "author": "jordan",
+      "sport": "mixed",
+      "description": "9-leg ML parlay: CHC ARI BOS NYY ATL(MLB) GB HOU SEA LAD",
+      "price": 5116.0,
+      "prob": 0.0135,
+      "stake": 0.0,
+      "market_prob": 0.0135,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "probabilities are the de-vigged market (no claimed edge); -29.7% EV straight, +4.8% with a 50% profit boost; logged 1:45pm ET before first leg (2:20)",
+      "confidence": null,
+      "legs": [
+        {
+          "leg": "Cubs ML",
+          "price": -198,
+          "prob": 0.6386,
+          "result": "pending"
+        },
+        {
+          "leg": "D-backs ML",
+          "price": -186,
+          "prob": 0.6311,
+          "result": "pending"
+        },
+        {
+          "leg": "Red Sox ML",
+          "price": -126,
+          "prob": 0.537,
+          "result": "pending"
+        },
+        {
+          "leg": "Yankees ML",
+          "price": -155,
+          "prob": 0.5776,
+          "result": "pending"
+        },
+        {
+          "leg": "Braves ML",
+          "price": -225,
+          "prob": 0.6636,
+          "result": "pending"
+        },
+        {
+          "leg": "Packers ML",
+          "price": -250,
+          "prob": 0.6973,
+          "result": "pending"
+        },
+        {
+          "leg": "Astros ML",
+          "price": -160,
+          "prob": 0.5912,
+          "result": "pending"
+        },
+        {
+          "leg": "Mariners ML",
+          "price": -210,
+          "prob": 0.6465,
+          "result": "pending"
+        },
+        {
+          "leg": "Dodgers ML",
+          "price": -174,
+          "prob": 0.6097,
+          "result": "pending"
+        }
+      ]
     }
   ]
 }
