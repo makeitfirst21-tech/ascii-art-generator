@@ -1071,6 +1071,79 @@ class TestCard(unittest.TestCase):
         self.assertAlmostEqual(c.disagreement(), 0.05, places=6)
 
 
+class TestCardMarketAnchor(unittest.TestCase):
+    """The card weighs Jordan's number against the market's before it bets."""
+
+    def _full_known(self, sport="nfl"):
+        return [i.key for i in research.checklist(sport)]
+
+    def test_one_sided_fair_prob_strips_vig_and_longshots_carry_more(self):
+        short = card.fair_prob_one_sided(-225)
+        long_ = card.fair_prob_one_sided(240)
+        self.assertLess(short, odds.breakeven_prob(-225))
+        self.assertLess(long_, odds.breakeven_prob(240))
+        # Favourite-longshot bias: the longshot loses more of its raw number.
+        self.assertGreater(1 - long_ / odds.breakeven_prob(240),
+                           1 - short / odds.breakeven_prob(-225))
+
+    def test_one_sided_extreme_longshot_does_not_crash(self):
+        p = card.fair_prob_one_sided(2000)
+        self.assertAlmostEqual(p, odds.american_to_prob(2000) / 1.07, places=9)
+
+    def test_blend_moves_toward_market_as_research_drops(self):
+        c = card.Candidate("x", -110, 0.58, "nfl")
+        mk = c.market_prob
+        self.assertAlmostEqual(c.blended_prob(0.0), mk, places=9)
+        self.assertAlmostEqual(c.blended_prob(1.0), 0.5 * 0.58 + 0.5 * mk, places=9)
+        self.assertLess(c.blended_prob(0.67), c.blended_prob(1.0))
+
+    def test_edge_that_is_only_disagreement_is_not_bet(self):
+        """Clears the raw floor, but not once the market gets its say."""
+        c = card.Candidate("contrarian", -110, 0.55, "nfl", [-105, -115])
+        built = card.build([c], "2026-09-20", "nfl", self._full_known())
+        self.assertGreater(c.edge, card.required_edge(1.0))
+        self.assertLess(c.blended_ev_pct, 0)
+        self.assertIn("disagreement", built.verdict)
+        self.assertEqual(built.stake, 0.0)
+
+    def test_estimated_price_is_forecast_but_never_bet(self):
+        c = card.Candidate("guessed price", 200, 0.70, "nfl", [200, -240],
+                           price_verified=False)
+        built = card.build([c], "2026-09-20", "nfl", self._full_known())
+        self.assertIs(built.pick, c)
+        self.assertIn("not verified", built.verdict)
+        self.assertEqual(built.stake, 0.0)
+        self.assertIn("ESTIMATED", built.render())
+
+    def test_less_researched_guess_ranks_below_the_researched_one(self):
+        """Ranking on raw EV crowns the wildest estimate. Blended ranking does not."""
+        researched = card.Candidate("researched", 200, 0.40, "nfl")
+        guess = card.Candidate("guess", 200, 0.45, "nfl", known=[])
+        self.assertGreater(guess.ev_pct, researched.ev_pct)
+        built = card.build([guess, researched], "2026-09-20", "nfl",
+                           self._full_known())
+        self.assertEqual(built.pick.description, "researched")
+
+    def test_bet_is_staked_on_the_blended_probability(self):
+        c = card.Candidate("huge edge", 200, 0.70, "nfl", [200, -240])
+        built = card.build([c], "2026-09-20", "nfl", self._full_known(),
+                           bankroll=1000)
+        self.assertEqual(built.verdict, "BET")
+        raw_stake = odds.kelly_stake(0.70, 200, 1000, multiplier=0.25, cap=1.0)
+        blended_stake = odds.kelly_stake(c.blended, 200, 1000, multiplier=0.25,
+                                         cap=1.0)
+        self.assertLess(blended_stake, raw_stake)
+        self.assertLessEqual(built.stake, blended_stake + 1e-9)
+
+    def test_from_spec_reads_research_and_price_provenance(self):
+        c = card.Candidate.from_spec({"description": "x", "price": 130, "prob": 0.49,
+                                      "known": ["qb_status"],
+                                      "price_verified": False})
+        self.assertEqual(c.known, ["qb_status"])
+        self.assertFalse(c.price_verified)
+        self.assertIn("inferred", c.market_source)
+
+
 class TestCli(unittest.TestCase):
 
     def _run(self, argv):
@@ -1134,6 +1207,28 @@ class TestCli(unittest.TestCase):
         code, out = self._run(["market", snaps])
         self.assertEqual(code, 0)
         self.assertIn("SIGNALS", out)
+
+    def test_card_log_all_grades_every_candidate(self):
+        import json, tempfile
+        from jordan import ledger as ledger_mod
+        with tempfile.TemporaryDirectory() as d:
+            slate = os.path.join(d, "slate.json")
+            led_path = os.path.join(d, "ledger.json")
+            with open(slate, "w") as f:
+                json.dump({"date": "2026-09-20", "sport": "nfl", "known": [],
+                           "candidates": [
+                               {"description": "a", "price": -110, "prob": 0.58},
+                               {"description": "b", "price": 130, "prob": 0.49,
+                                "price_verified": False},
+                               {"description": "c", "price": 240, "prob": 0.35}]},
+                          f)
+            code, out = self._run(["card", slate, "--log-all", "--ledger", led_path])
+            self.assertEqual(code, 0)
+            picks = ledger_mod.Ledger(led_path).picks
+            self.assertEqual(len(picks), 3)
+            self.assertTrue(all(p.market_prob is not None for p in picks))
+            self.assertTrue(all(p.stake == 0.0 for p in picks))
+            self.assertTrue(any("estimate" in (p.notes or "") for p in picks))
 
     def test_no_command_prints_help(self):
         code, out = self._run([])

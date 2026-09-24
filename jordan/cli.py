@@ -320,20 +320,27 @@ def cmd_card(args):
                        bankroll=spec.get("bankroll", args.bankroll))
     print(built.render())
 
-    if args.log:
+    if args.log or args.log_all:
         led = ledger.Ledger(args.ledger)
-        p = built.pick
-        entry = led.add("jordan", sport, p.description, p.price, p.prob,
-                        stake=built.stake / spec.get("bankroll", args.bankroll)
-                        if spec.get("bankroll", args.bankroll) else 0.0,
-                        date=date, market_prob=p.market_prob, book=p.book,
-                        notes=built.verdict,
-                        confidence=built.confidence["completeness"])
+        bankroll = spec.get("bankroll", args.bankroll)
+        to_log = built.candidates if args.log_all else [built.pick]
+        logged = []
+        for c in to_log:
+            headline = c is built.pick
+            stake = built.stake / bankroll if (headline and bankroll) else 0.0
+            note = built.verdict if headline else "also considered; forecast only"
+            if not c.price_verified:
+                note += "; price was an estimate"
+            logged.append(led.add("jordan", c.sport if c.sport != "generic" else sport,
+                                  c.description, c.price, c.prob, stake=stake,
+                                  date=date, market_prob=c.market_prob, book=c.book,
+                                  notes=note, confidence=c.conf["completeness"]))
         led.save()
         print()
-        print("Logged as pick #%d in %s. Grade it with:" % (entry.id, args.ledger))
-        print("  python3 -m jordan grade %d --result win|loss|push --closing <price>"
-              % entry.id)
+        ids = ", ".join("#%d" % e.id for e in logged)
+        print("Logged %d forecast%s (%s) in %s. Grade each with:"
+              % (len(logged), "" if len(logged) == 1 else "s", ids, args.ledger))
+        print("  python3 -m jordan grade <id> --result win|loss|push --closing <price>")
     print()
     print(persona.DISCLAIMER)
     return 0
@@ -612,6 +619,9 @@ def build_parser():
     s.add_argument("--sport", default="generic")
     s.add_argument("--known", default="", help="comma-separated checklist keys you have")
     s.add_argument("--bankroll", type=float, default=1000.0)
+    s.add_argument("--log-all", action="store_true",
+                   help="log every candidate as a forecast, not just the headline "
+                        "-- seven graded forecasts a day calibrate seven times faster")
     s.add_argument("--log", action="store_true", help="log the forecast to the ledger")
     s.add_argument("--ledger", default=ledger.DEFAULT_PATH)
     s.set_defaults(func=cmd_card)

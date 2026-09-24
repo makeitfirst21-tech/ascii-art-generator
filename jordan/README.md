@@ -28,6 +28,7 @@ python3 -m jordan middle -3.5 -110 -2.5 -110 --sport nfl
 # the daily card
 python3 -m jordan checklist nfl              # what you need to know first
 python3 -m jordan card slate.json --log      # Jordan forecasts one game, logged
+python3 -m jordan card slate.json --log-all  # every candidate logged and graded
 python3 -m jordan pick --author you --sport nfl \
     --desc "SEA -3.5" --price -110 --prob 0.58 --market -110 -110
 python3 -m jordan grade 7 --result win --closing -118
@@ -37,6 +38,24 @@ python3 -m jordan calibration                # when you say 60%, is it 60%?
 python3 -m jordan sgp examples/ticket_nfl_stack.json --search
 python3 -m jordan market examples/market_nfl_side.json
 ```
+
+### Slate candidates
+
+```json
+{"description": "Swift anytime TD", "price": 130, "prob": 0.49,
+ "market": [120, -150], "known": ["qb_status", "weather"],
+ "price_verified": false}
+```
+
+`market` is the two-way market from a sharp book, if you have it. `known`
+overrides the card's research list for this candidate alone. `price_verified`
+is false for an estimated price: it can be forecast, never bet.
+
+The card bets on a **blended** probability: Jordan's number pulled toward the
+market's, with Jordan getting at most half the say and less as research gaps
+grow. Without `market`, the offered price stands in for it (one-sided props are
+de-vigged against an assumed 7% overround). An edge that exists only because
+Jordan disagrees with the market is reported, forecast, and not bet.
 
 ## The four pillars
 
