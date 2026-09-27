@@ -643,6 +643,23 @@
       "notes": "also considered; forecast only; price was an estimate",
       "confidence": 0.8888888888888888,
       "legs": []
+    },
+    {
+      "id": 33,
+      "date": "2026-09-27",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Jaxon Smith-Njigba anytime TD (SEA @ WAS)",
+      "price": 100.0,
+      "prob": 0.5,
+      "stake": 0.0,
+      "market_prob": 0.46693386773547096,
+      "book": "Fanatics",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "share 0.25 of 2.72 SEA TDs (implied 24.5: -7.5, 41.5); Mariota starting for WAS; WAS allowed 7 passing TDs in 2 games; Darnold back from injury (rust risk). Near fair at +100, no bet. Logged 11:31 ET before 1pm kickoff.",
+      "confidence": 0.6984126984126984,
+      "legs": []
     }
   ]
 }
