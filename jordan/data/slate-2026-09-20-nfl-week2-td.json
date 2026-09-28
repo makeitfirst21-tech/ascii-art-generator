@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-20",
+  "sport": "nfl",
+  "bankroll": 1000,
+  "known": ["qb_status", "injury_report", "weather", "snap_share", "rest_travel", "key_numbers"],
+  "candidates": [
+    {"description": "Saquon Barkley anytime TD (PHI @ TEN)", "price": -110, "prob": 0.58, "sport": "nfl",
+     "notes": "Led ALL RBs with 9 red zone opps in W1. A.J. Brown to IR concentrates offense. PHI -7 vs worst implied total on slate (TEN 16.25)."},
+    {"description": "Derrick Henry anytime TD (BAL vs NO)", "price": -225, "prob": 0.64, "sport": "nfl",
+     "notes": "25 of 32 RB opps, 163yds 3TD in W1. Highest implied total on slate (27.0). Flowers doubtful, Lane IR. Rain + 14mph wind."},
+    {"description": "Bucky Irving anytime TD (TB vs CLE)", "price": -133, "prob": 0.53, "sport": "nfl",
+     "notes": "60/40 split with Gainwell caps goal-line monopoly. TB -8.5, implied 25.0. CLE run D 22nd. Rain in Tampa."},
+    {"description": "D'Andre Swift anytime TD (CHI vs MIN)", "price": 130, "prob": 0.49, "sport": "nfl",
+     "notes": "CHI implied 26.5, highest-total game (47.5). Rain + wind 11-17mph favors run. BUT limited practice all week (ankle/knee)."},
+    {"description": "Ja'Marr Chase anytime TD (CIN @ HOU)", "price": 115, "prob": 0.51, "sport": "nfl",
+     "notes": "Burrow full practice Friday. Alpha target share. HOU without Nico Collins on other side."},
+    {"description": "Chris Olave anytime TD (NO @ BAL)", "price": 210, "prob": 0.34, "sport": "nfl",
+     "notes": "NO implied only 18.5 but chasing 8.5 pts = volume. Rain + 14mph wind cuts efficiency. Historically low TD rate for his yardage."},
+    {"description": "Matthew Golden anytime TD (GB @ NYJ)", "price": 240, "prob": 0.35, "sport": "nfl",
+     "notes": "Josh Jacobs on commissioner exempt list = GB leans pass. NYJ without Minkah Fitzpatrick. Crowded WR room is the risk."}
+  ]
+}
