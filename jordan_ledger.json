@@ -672,9 +672,9 @@
       "stake": 0.0,
       "market_prob": 0.3917,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "No 2+ TD price found; price field is the market-implied fair 2+ price (Poisson on lambda backed out of the -330 anytime price, no vig). Logged 11:45 ET before 1pm kickoff.",
+      "notes": "No 2+ TD price found; price field is the market-implied fair 2+ price (Poisson on lambda backed out of the -330 anytime price, no vig). Logged 11:45 ET before 1pm kickoff.; scored exactly 1 TD",
       "confidence": 0.6666666666666666,
       "legs": []
     },
@@ -689,9 +689,9 @@
       "stake": 0.0,
       "market_prob": 0.2655,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "No 2+ TD price found; price field is the market-implied fair 2+ price (Poisson on lambda backed out of the -210 anytime price, no vig). Logged 11:45 ET before 1pm kickoff.",
+      "notes": "No 2+ TD price found; price field is the market-implied fair 2+ price (Poisson on lambda backed out of the -210 anytime price, no vig). Logged 11:45 ET before 1pm kickoff.; scored exactly 1 TD",
       "confidence": 0.6666666666666666,
       "legs": []
     },
@@ -706,9 +706,9 @@
       "stake": 0.0,
       "market_prob": 0.27,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "No 2+ TD price found; price field is the market-implied fair 2+ price (Poisson on lambda backed out of the -215 anytime price, no vig). Logged 11:45 ET before 1pm kickoff.",
+      "notes": "No 2+ TD price found; price field is the market-implied fair 2+ price (Poisson on lambda backed out of the -215 anytime price, no vig). Logged 11:45 ET before 1pm kickoff.; scored exactly 1 TD",
       "confidence": 0.6666666666666666,
       "legs": []
     },
@@ -723,9 +723,9 @@
       "stake": 0.0,
       "market_prob": 0.1671,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "No 2+ TD price found; price field is the market-implied fair 2+ price (Poisson on lambda backed out of the -125 anytime price, no vig). Logged 11:45 ET before 1pm kickoff.",
+      "notes": "No 2+ TD price found; price field is the market-implied fair 2+ price (Poisson on lambda backed out of the -125 anytime price, no vig). Logged 11:45 ET before 1pm kickoff.; scored exactly 1 TD",
       "confidence": 0.6666666666666666,
       "legs": []
     }
