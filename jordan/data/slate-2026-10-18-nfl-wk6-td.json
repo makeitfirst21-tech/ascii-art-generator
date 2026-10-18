@@ -1,0 +1,110 @@
+{
+ "date": "2026-10-18",
+ "sport": "nfl",
+ "bankroll": 1000,
+ "known": [
+  "qb_status",
+  "injury_report",
+  "weather",
+  "snap_share",
+  "rest_travel",
+  "key_numbers"
+ ],
+ "context": "Week 6 Sunday. Team TDs ~ implied/9; P = 1 - exp(-teamTDs x share). Lamar Jackson and Jalen Hurts out; Caleb Williams back. Line movement not checked. Priced 12:05 ET.",
+ "candidates": [
+  {
+   "description": "Jonathan Taylor anytime TD (TEN @ IND, 1pm)",
+   "price": -225,
+   "prob": 0.682,
+   "sport": "nfl",
+   "book": "BetMGM (earlier; -235 later)",
+   "notes": "implied 25.8, share 0.40, lambda 1.14. Colts WRs thin: Dulin out, Pierce IR, Warren Q. Dome. Season-low 45 yds last week."
+  },
+  {
+   "description": "Bijan Robinson anytime TD (CHI @ ATL, 1pm)",
+   "price": -250,
+   "prob": 0.656,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 24.0, share 0.40, lambda 1.07. Total 47.5-52.5 across books; Brian Robinson Jr. vultures short TDs. Dome. Range -230 to -280."
+  },
+  {
+   "description": "Kyren Williams anytime TD (ARI @ LAR, 4:05)",
+   "price": -250,
+   "prob": 0.643,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 32.0, share 0.29, lambda 1.03. LAR -12.5 / 51.5; no injury designation found; late-blowout backup carries trim share. -210 elsewhere."
+  },
+  {
+   "description": "Puka Nacua anytime TD (ARI @ LAR, 4:05)",
+   "price": -160,
+   "prob": 0.543,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 32.0, share 0.22, lambda 0.78. No designation found."
+  },
+  {
+   "description": "Davante Adams anytime TD (ARI @ LAR, 4:05)",
+   "price": -125,
+   "prob": 0.526,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 32.0, share 0.21, lambda 0.75. No designation found."
+  },
+  {
+   "description": "James Cook anytime TD (BUF @ LV, 4:25)",
+   "price": -150,
+   "prob": 0.574,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 29.5, share 0.26, lambda 0.85. Dome. Allen takes goal-line sneaks."
+  },
+  {
+   "description": "Josh Allen anytime TD (BUF @ LV, 4:25)",
+   "price": -150,
+   "prob": 0.498,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 29.5, share 0.21, lambda 0.69. Practiced fully. Dome."
+  },
+  {
+   "description": "Ashton Jeanty anytime TD (BUF @ LV, 4:25)",
+   "price": -125,
+   "prob": 0.551,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 24.0, share 0.30, lambda 0.80. Full practice Friday. Dome."
+  },
+  {
+   "description": "Javonte Williams anytime TD (DAL vs GB, SNF)",
+   "price": -210,
+   "prob": 0.626,
+   "sport": "nfl",
+   "book": "bet365",
+   "notes": "implied 26.0, share 0.34, lambda 0.98. Weather at Lambeau not checked.",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ]
+  },
+  {
+   "description": "Christian Watson anytime TD (DAL vs GB, SNF)",
+   "price": 130,
+   "prob": 0.474,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 27.5, share 0.21, lambda 0.64. 6 TD in 5 games, scored in 4 of 5; Reed IR, Skyy Moore out. +110 Fanatics, +115/+120 bet365. Josh Jacobs status unconfirmed. Weather not checked.",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ]
+  }
+ ]
+}
