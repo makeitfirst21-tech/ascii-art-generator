@@ -1,0 +1,82 @@
+{
+  "name": "Team A -2.5 (NFL Week 3) -- tracking Team A",
+  "bet_price": -104,
+  "snapshots": [
+    {
+      "book": "pinnacle",
+      "price": -103,
+      "timestamp": 1788977002,
+      "limit": 20000,
+      "opposite": -109,
+      "ticket_pct": 33,
+      "handle_pct": 61
+    },
+    {
+      "book": "pinnacle",
+      "price": -119,
+      "timestamp": 1788983922,
+      "limit": 40000,
+      "opposite": 107,
+      "ticket_pct": 33,
+      "handle_pct": 61
+    },
+    {
+      "book": "circa",
+      "price": -105,
+      "timestamp": 1788977002,
+      "limit": 15000,
+      "opposite": -107,
+      "ticket_pct": 31,
+      "handle_pct": 58
+    },
+    {
+      "book": "circa",
+      "price": -121,
+      "timestamp": 1788983962,
+      "limit": 25000,
+      "opposite": 109,
+      "ticket_pct": 31,
+      "handle_pct": 58
+    },
+    {
+      "book": "draftkings",
+      "price": -107,
+      "timestamp": 1788977002,
+      "opposite": -113,
+      "ticket_pct": 34,
+      "handle_pct": 59
+    },
+    {
+      "book": "draftkings",
+      "price": -120,
+      "timestamp": 1788984002,
+      "opposite": 100,
+      "ticket_pct": 34,
+      "handle_pct": 59
+    },
+    {
+      "book": "betmgm",
+      "price": -110,
+      "timestamp": 1788977002,
+      "opposite": -110
+    },
+    {
+      "book": "betmgm",
+      "price": -118,
+      "timestamp": 1788984022,
+      "opposite": -102
+    },
+    {
+      "book": "espnbet",
+      "price": -108,
+      "timestamp": 1788984042,
+      "opposite": -112
+    },
+    {
+      "book": "fanatics",
+      "price": -102,
+      "timestamp": 1788980602,
+      "opposite": -118
+    }
+  ]
+}
