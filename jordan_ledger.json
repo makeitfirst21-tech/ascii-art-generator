@@ -1051,6 +1051,92 @@
       "notes": "also considered; forecast only",
       "confidence": 0.8888888888888888,
       "legs": []
+    },
+    {
+      "id": 57,
+      "date": "2026-10-22",
+      "author": "you",
+      "sport": "nfl",
+      "description": "17-leg SGP NE @ CHI (TNF)",
+      "price": 7254.0,
+      "prob": 0.0032,
+      "stake": 1.0,
+      "market_prob": null,
+      "book": "sportsbook app (bet id us-pa:01m5jf6sjbev89a07thjwq5edc)",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "$1 + 3c Bet Protect+, pays $73.54. Placed 2:50 PM ET, before kickoff. No % stated; prob is Jordan's correlated estimate (naive 0.10%, x3.2 correlation). Book cash-out at placement $0.34.",
+      "confidence": null,
+      "legs": [
+        {
+          "leg": "Caleb Williams 225+ pass yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Drake Maye 200+ pass yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Colston Loveland 25+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "A.J. Brown 40+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Rome Odunze 15+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Hunter Henry 10+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "D'Andre Swift 40+ rush yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Rome Odunze 2+ rec",
+          "result": "pending"
+        },
+        {
+          "leg": "Colston Loveland 3+ rec",
+          "result": "pending"
+        },
+        {
+          "leg": "Hunter Henry 2+ rec",
+          "result": "pending"
+        },
+        {
+          "leg": "Drake Maye 1+ pass TD",
+          "result": "pending"
+        },
+        {
+          "leg": "Caleb Williams 2+ pass TD",
+          "result": "pending"
+        },
+        {
+          "leg": "D'Andre Swift anytime TD",
+          "result": "pending"
+        },
+        {
+          "leg": "Rome Odunze anytime TD",
+          "result": "pending"
+        },
+        {
+          "leg": "Drake Maye 15+ rush yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Rhamondre Stevenson 25+ rush yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Caleb Williams under 19.5 rush yds",
+          "result": "pending"
+        }
+      ]
     }
   ]
 }
