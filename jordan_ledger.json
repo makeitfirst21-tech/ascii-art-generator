@@ -910,7 +910,7 @@
       "stake": 0.001412222222222156,
       "market_prob": 0.5751633986928104,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "BET",
       "confidence": 0.8888888888888888,
@@ -927,7 +927,7 @@
       "stake": 0.0,
       "market_prob": 0.3397260273972603,
       "book": "bet365",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.8888888888888888,
@@ -944,7 +944,7 @@
       "stake": 0.0,
       "market_prob": 0.3222379603399434,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.8888888888888888,
@@ -961,7 +961,7 @@
       "stake": 0.0,
       "market_prob": 0.3397260273972603,
       "book": "bet365",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.8888888888888888,
@@ -978,7 +978,7 @@
       "stake": 0.0,
       "market_prob": 0.4788135593220338,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.8888888888888888,
@@ -995,7 +995,7 @@
       "stake": 0.0,
       "market_prob": 0.39781977773058685,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.8888888888888888,
@@ -1012,7 +1012,7 @@
       "stake": 0.0,
       "market_prob": 0.17444165351550395,
       "book": "DraftKings",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.8888888888888888,
@@ -1029,7 +1029,7 @@
       "stake": 0.0,
       "market_prob": 0.24996011169875315,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.8888888888888888,
@@ -1046,7 +1046,7 @@
       "stake": 0.0,
       "market_prob": 0.1972962490027765,
       "book": "bet365",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.8888888888888888,
@@ -1063,78 +1063,95 @@
       "stake": 1.0,
       "market_prob": null,
       "book": "sportsbook app (bet id us-pa:01m5jf6sjbev89a07thjwq5edc)",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "$1 + 3c Bet Protect+, pays $73.54. Placed 2:50 PM ET, before kickoff. No % stated; prob is Jordan's correlated estimate (naive 0.10%, x3.2 correlation). Book cash-out at placement $0.34.",
+      "notes": "$1 + 3c Bet Protect+, pays $73.54. Placed 2:50 PM ET, before kickoff. No % stated; prob is Jordan's correlated estimate (naive 0.10%, x3.2 correlation). Book cash-out at placement $0.34.; 15 of 17 legs hit. Lost on Odunze anytime TD and Stevenson 25+ rush yds (22).",
       "confidence": null,
       "legs": [
         {
           "leg": "Caleb Williams 225+ pass yds",
-          "result": "pending"
+          "result": "win",
+          "actual": "308"
         },
         {
           "leg": "Drake Maye 200+ pass yds",
-          "result": "pending"
+          "result": "win",
+          "actual": "321"
         },
         {
           "leg": "Colston Loveland 25+ rec yds",
-          "result": "pending"
+          "result": "win",
+          "actual": "69"
         },
         {
           "leg": "A.J. Brown 40+ rec yds",
-          "result": "pending"
+          "result": "win",
+          "actual": "48"
         },
         {
           "leg": "Rome Odunze 15+ rec yds",
-          "result": "pending"
+          "result": "win",
+          "actual": "69"
         },
         {
           "leg": "Hunter Henry 10+ rec yds",
-          "result": "pending"
+          "result": "win",
+          "actual": "71"
         },
         {
           "leg": "D'Andre Swift 40+ rush yds",
-          "result": "pending"
+          "result": "win",
+          "actual": "78"
         },
         {
           "leg": "Rome Odunze 2+ rec",
-          "result": "pending"
+          "result": "win",
+          "actual": "4"
         },
         {
           "leg": "Colston Loveland 3+ rec",
-          "result": "pending"
+          "result": "win",
+          "actual": "7"
         },
         {
           "leg": "Hunter Henry 2+ rec",
-          "result": "pending"
+          "result": "win",
+          "actual": "7"
         },
         {
           "leg": "Drake Maye 1+ pass TD",
-          "result": "pending"
+          "result": "win",
+          "actual": "2"
         },
         {
           "leg": "Caleb Williams 2+ pass TD",
-          "result": "pending"
+          "result": "win",
+          "actual": "2"
         },
         {
           "leg": "D'Andre Swift anytime TD",
-          "result": "pending"
+          "result": "win",
+          "actual": "1 rush TD"
         },
         {
           "leg": "Rome Odunze anytime TD",
-          "result": "pending"
+          "result": "loss",
+          "actual": "0"
         },
         {
           "leg": "Drake Maye 15+ rush yds",
-          "result": "pending"
+          "result": "win",
+          "actual": "26"
         },
         {
           "leg": "Rhamondre Stevenson 25+ rush yds",
-          "result": "pending"
+          "result": "loss",
+          "actual": "22"
         },
         {
           "leg": "Caleb Williams under 19.5 rush yds",
-          "result": "pending"
+          "result": "win",
+          "actual": "18"
         }
       ]
     }
