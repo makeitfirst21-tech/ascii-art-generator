@@ -2247,6 +2247,57 @@
           "result": "pending"
         }
       ]
+    },
+    {
+      "id": 106,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Bengals ML (CIN @ BAL)",
+      "price": 133.0,
+      "prob": 0.48,
+      "stake": 0.0025828274833577993,
+      "market_prob": 0.41204842367521644,
+      "book": "bet365",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "BET",
+      "confidence": 0.7936507936507936,
+      "legs": []
+    },
+    {
+      "id": 107,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Falcons ML (SF @ ATL)",
+      "price": 124.0,
+      "prob": 0.46,
+      "stake": 0.0,
+      "market_prob": 0.4279403644395361,
+      "book": "ESPN listing",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "also considered; forecast only",
+      "confidence": 0.7936507936507936,
+      "legs": []
+    },
+    {
+      "id": 108,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Chiefs ML (KC @ SEA)",
+      "price": 120.0,
+      "prob": 0.45,
+      "stake": 0.0,
+      "market_prob": 0.43795620437956206,
+      "book": "range +110 to +128",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "also considered; forecast only",
+      "confidence": 0.7936507936507936,
+      "legs": []
     }
   ]
 }
