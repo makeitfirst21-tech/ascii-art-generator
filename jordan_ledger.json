@@ -2157,6 +2157,96 @@
           "result": "pending"
         }
       ]
+    },
+    {
+      "id": 104,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Home-run 4-leg TD ticket: Justin Jefferson anytime TD, Ja'Marr Chase anytime TD, George Kittle anytime TD, Woody Marks anytime TD",
+      "price": 2283.0,
+      "prob": 0.0424,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "Prob is blended (Jordan weighted against market). Gibbs 2+ price assumed +160 (not verified). Cross-game, no correlation.",
+      "confidence": null,
+      "legs": [
+        {
+          "leg": "Justin Jefferson anytime TD (IND @ MIN)",
+          "price": 165,
+          "prob": 0.399,
+          "result": "pending"
+        },
+        {
+          "leg": "Ja'Marr Chase anytime TD (CIN @ BAL)",
+          "price": 120,
+          "prob": 0.444,
+          "result": "pending"
+        },
+        {
+          "leg": "George Kittle anytime TD (SF @ ATL)",
+          "price": 123,
+          "prob": 0.44,
+          "result": "pending"
+        },
+        {
+          "leg": "Woody Marks anytime TD (NYG @ HOU)",
+          "price": -120,
+          "prob": 0.544,
+          "result": "pending"
+        }
+      ]
+    },
+    {
+      "id": 105,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Grand-slam 5-leg TD ticket: Justin Jefferson anytime TD, Ja'Marr Chase anytime TD, George Kittle anytime TD, Woody Marks anytime TD, Jahmyr Gibbs 2+ TDs",
+      "price": 6097.0,
+      "prob": 0.0166,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "Prob is blended (Jordan weighted against market). Gibbs 2+ price assumed +160 (not verified). Cross-game, no correlation.",
+      "confidence": null,
+      "legs": [
+        {
+          "leg": "Justin Jefferson anytime TD (IND @ MIN)",
+          "price": 165,
+          "prob": 0.399,
+          "result": "pending"
+        },
+        {
+          "leg": "Ja'Marr Chase anytime TD (CIN @ BAL)",
+          "price": 120,
+          "prob": 0.444,
+          "result": "pending"
+        },
+        {
+          "leg": "George Kittle anytime TD (SF @ ATL)",
+          "price": 123,
+          "prob": 0.44,
+          "result": "pending"
+        },
+        {
+          "leg": "Woody Marks anytime TD (NYG @ HOU)",
+          "price": -120,
+          "prob": 0.544,
+          "result": "pending"
+        },
+        {
+          "leg": "Jahmyr Gibbs 2+ TDs (GB @ DET)",
+          "price": 160,
+          "prob": 0.391,
+          "result": "pending"
+        }
+      ]
     }
   ]
 }
