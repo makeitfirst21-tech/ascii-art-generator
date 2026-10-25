@@ -1702,6 +1702,171 @@
           "result": "pending"
         }
       ]
+    },
+    {
+      "id": 86,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Ja'Marr Chase 50+ rec yds (CIN @ BAL)",
+      "price": -372.0,
+      "prob": 0.788,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 50+ alt; fair price. line 83.5; career 120/game vs BAL. Lognormal sigma 0.60, -2% injury/early-exit. Logged ~2:05 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 87,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Drake London 50+ rec yds (SF @ ATL)",
+      "price": -309.0,
+      "prob": 0.756,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 50+ alt; fair price. no line; 110/game but only 2 of 5 over 100. Lognormal sigma 0.60, -2% injury/early-exit. Logged ~2:05 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 88,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Tetairoa McMillan 50+ rec yds (TB @ CAR)",
+      "price": -278.0,
+      "prob": 0.736,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 50+ alt; fair price. no line; 32-471 in 5 games. Lognormal sigma 0.60, -2% injury/early-exit. Logged ~2:05 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 89,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Justin Jefferson 50+ rec yds (IND @ MIN)",
+      "price": -249.0,
+      "prob": 0.714,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 50+ alt; fair price. no line; IND 9th-most yds/target; MIN run-heavy with a lead. Lognormal sigma 0.60, -2% injury/early-exit. Logged ~2:05 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 90,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Christian Watson 50+ rec yds (GB @ DET)",
+      "price": -216.0,
+      "prob": 0.684,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 50+ alt; fair price. line 69.5-75.5; DET allows ~195/game to WRs; boom-or-bust deep role. Lognormal sigma 0.70, -2% injury/early-exit. Logged ~2:05 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 91,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Amon-Ra St. Brown 50+ rec yds (GB @ DET)",
+      "price": -214.0,
+      "prob": 0.682,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 50+ alt; fair price. no line; 10+ targets in 4 of 5; GB top coverage grade. Lognormal sigma 0.60, -2% injury/early-exit. Logged ~2:05 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 92,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Matthew Golden 50+ rec yds (GB @ DET)",
+      "price": -140.0,
+      "prob": 0.584,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 50+ alt; fair price. no line; 397 yds in 6, 6-104 last week. Lognormal sigma 0.60, -2% injury/early-exit. Logged ~2:05 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 93,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "7-leg 50+ rec yds parlay: Chase, London, McMillan, Jefferson, Watson, St. Brown, Golden",
+      "price": 1074.0,
+      "prob": 0.0852,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "fair price; no book price.",
+      "confidence": null,
+      "legs": [
+        {
+          "leg": "Ja'Marr Chase 50+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Drake London 50+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Tetairoa McMillan 50+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Justin Jefferson 50+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Christian Watson 50+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Amon-Ra St. Brown 50+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Matthew Golden 50+ rec yds",
+          "result": "pending"
+        }
+      ]
     }
   ]
 }
