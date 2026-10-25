@@ -1307,6 +1307,178 @@
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
       "legs": []
+    },
+    {
+      "id": 67,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Jordan Love 200+ pass yds (GB @ DET)",
+      "price": -962.0,
+      "prob": 0.906,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price found for the 200+ alt; price is Jordan's fair price. Kalshi 59% on 275+; model ~290; DET allows most pass yds. Normal model, sd 65. Logged 1:45 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 68,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Joe Burrow 200+ pass yds (CIN @ BAL)",
+      "price": -443.0,
+      "prob": 0.816,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price found for the 200+ alt; price is Jordan's fair price. line 260.5; Lamar out. Normal model, sd 65. Logged 1:45 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 69,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Bryce Young 200+ pass yds (TB @ CAR)",
+      "price": -387.0,
+      "prob": 0.795,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price found for the 200+ alt; price is Jordan's fair price. lines 250.5-256.5; averaging ~310. Normal model, sd 65. Logged 1:45 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 70,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "C.J. Stroud 200+ pass yds (NYG @ HOU)",
+      "price": -366.0,
+      "prob": 0.786,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price found for the 200+ alt; price is Jordan's fair price. line 255.5, cleared it 5 of 6; HOU -10.5 blowout risk. Normal model, sd 65. Logged 1:45 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 71,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Jared Goff 200+ pass yds (GB @ DET)",
+      "price": -377.0,
+      "prob": 0.79,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price found for the 200+ alt; price is Jordan's fair price. model ~252; 36.5 attempts line. Normal model, sd 65. Logged 1:45 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 72,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Matthew Stafford 200+ pass yds (LAR @ LV)",
+      "price": -329.0,
+      "prob": 0.767,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price found for the 200+ alt; price is Jordan's fair price. line 253.5; Adams out, Puka Q. Normal model, sd 65. Logged 1:45 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 73,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Brock Purdy 200+ pass yds (SF @ ATL)",
+      "price": -279.0,
+      "prob": 0.736,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price found for the 200+ alt; price is Jordan's fair price. line 240.5-241.5; Evans/Deebo out; ATL 42.7% pressure. Normal model, sd 65. Logged 1:45 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 74,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "7-leg 200+ pass yds parlay: Love, Burrow, Young, Stroud, Goff, Stafford, Purdy",
+      "price": 375.0,
+      "prob": 0.2105,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "fair price; no book price. Built for the user's 7-QB request.",
+      "confidence": null,
+      "legs": [
+        {
+          "leg": "Jordan Love 200+ pass yds",
+          "prob": 0.906,
+          "result": "pending"
+        },
+        {
+          "leg": "Joe Burrow 200+ pass yds",
+          "prob": 0.816,
+          "result": "pending"
+        },
+        {
+          "leg": "Bryce Young 200+ pass yds",
+          "prob": 0.795,
+          "result": "pending"
+        },
+        {
+          "leg": "C.J. Stroud 200+ pass yds",
+          "prob": 0.786,
+          "result": "pending"
+        },
+        {
+          "leg": "Jared Goff 200+ pass yds",
+          "prob": 0.79,
+          "result": "pending"
+        },
+        {
+          "leg": "Matthew Stafford 200+ pass yds",
+          "prob": 0.767,
+          "result": "pending"
+        },
+        {
+          "leg": "Brock Purdy 200+ pass yds",
+          "prob": 0.736,
+          "result": "pending"
+        }
+      ]
     }
   ]
 }
