@@ -1867,6 +1867,188 @@
           "result": "pending"
         }
       ]
+    },
+    {
+      "id": 94,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "George Kittle 30+ rec yds (SF @ ATL)",
+      "price": -780.0,
+      "prob": 0.886,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 30+ alt; fair price. line 69.5; Evans and Deebo out; 70+ in 3 of 6. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 95,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Trey McBride 30+ rec yds (DEN @ ARI)",
+      "price": -737.0,
+      "prob": 0.881,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 30+ alt; fair price. receptions line 7.5; yards estimated. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 96,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Brock Bowers 30+ rec yds (LAR @ LV)",
+      "price": -566.0,
+      "prob": 0.85,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 30+ alt; fair price. line 70.5; hamstring/calf, trending to play; LAR pass D 2nd-best. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 97,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Tucker Kraft 30+ rec yds (GB @ DET)",
+      "price": -373.0,
+      "prob": 0.788,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 30+ alt; fair price. line 49.5; DET allows the most fantasy pts to TEs; projected 64. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 98,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Sam LaPorta 30+ rec yds (GB @ DET)",
+      "price": -289.0,
+      "prob": 0.743,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 30+ alt; fair price. no line; GB top coverage grade; shootout game. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 99,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Travis Kelce 30+ rec yds (KC @ SEA)",
+      "price": -282.0,
+      "prob": 0.738,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 30+ alt; fair price. line 46.5; 299 yds in 6; SEA best pass D. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 100,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Tyler Higbee 30+ rec yds (LAR @ LV)",
+      "price": -219.0,
+      "prob": 0.687,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 30+ alt; fair price. no line; Adams out, Puka Q. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 101,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "T.J. Hockenson 30+ rec yds (IND @ MIN)",
+      "price": -186.0,
+      "prob": 0.65,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "no book price for the 30+ alt; fair price. no line; back from concussion; IND soft vs pass. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 102,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "7-leg 30+ rec yds TE parlay: George Kittle, Trey McBride, Brock Bowers, Tucker Kraft, Sam LaPorta, Travis Kelce, Tyler Higbee",
+      "price": 408.0,
+      "prob": 0.197,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "fair price; no book price.",
+      "confidence": null,
+      "legs": [
+        {
+          "leg": "George Kittle 30+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Trey McBride 30+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Brock Bowers 30+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Tucker Kraft 30+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Sam LaPorta 30+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Travis Kelce 30+ rec yds",
+          "result": "pending"
+        },
+        {
+          "leg": "Tyler Higbee 30+ rec yds",
+          "result": "pending"
+        }
+      ]
     }
   ]
 }
