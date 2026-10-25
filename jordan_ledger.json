@@ -2049,6 +2049,114 @@
           "result": "pending"
         }
       ]
+    },
+    {
+      "id": 103,
+      "date": "2026-10-25",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "15-leg all-75%+ parlay (QB/RB/WR/TE boards)",
+      "price": 1443.0,
+      "prob": 0.0648,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "fair price; no book price. Built for the user's request. Correlated sim (Love-Kraft .4, Burrow-Chase .5, Love-Goff .3). Drake London (76%) left off as the 16th.",
+      "confidence": null,
+      "legs": [
+        {
+          "leg": "Jordan Love 200+ pass yds",
+          "prob": 0.91,
+          "game": "GB@DET",
+          "result": "pending"
+        },
+        {
+          "leg": "George Kittle 30+ rec yds",
+          "prob": 0.89,
+          "game": "SF@ATL",
+          "result": "pending"
+        },
+        {
+          "leg": "Trey McBride 30+ rec yds",
+          "prob": 0.88,
+          "game": "DEN@ARI",
+          "result": "pending"
+        },
+        {
+          "leg": "Bijan Robinson 50+ rush yds",
+          "prob": 0.86,
+          "game": "SF@ATL",
+          "result": "pending"
+        },
+        {
+          "leg": "Brock Bowers 30+ rec yds",
+          "prob": 0.85,
+          "game": "LAR@LV",
+          "result": "pending"
+        },
+        {
+          "leg": "Jahmyr Gibbs 50+ rush yds",
+          "prob": 0.84,
+          "game": "GB@DET",
+          "result": "pending"
+        },
+        {
+          "leg": "Joe Burrow 200+ pass yds",
+          "prob": 0.82,
+          "game": "CIN@BAL",
+          "result": "pending"
+        },
+        {
+          "leg": "Derrick Henry 50+ rush yds",
+          "prob": 0.82,
+          "game": "CIN@BAL",
+          "result": "pending"
+        },
+        {
+          "leg": "Jonathan Taylor 50+ rush yds",
+          "prob": 0.81,
+          "game": "IND@MIN",
+          "result": "pending"
+        },
+        {
+          "leg": "Bryce Young 200+ pass yds",
+          "prob": 0.79,
+          "game": "TB@CAR",
+          "result": "pending"
+        },
+        {
+          "leg": "C.J. Stroud 200+ pass yds",
+          "prob": 0.79,
+          "game": "NYG@HOU",
+          "result": "pending"
+        },
+        {
+          "leg": "Jared Goff 200+ pass yds",
+          "prob": 0.79,
+          "game": "GB@DET",
+          "result": "pending"
+        },
+        {
+          "leg": "Tucker Kraft 30+ rec yds",
+          "prob": 0.79,
+          "game": "GB@DET",
+          "result": "pending"
+        },
+        {
+          "leg": "Ja'Marr Chase 50+ rec yds",
+          "prob": 0.79,
+          "game": "CIN@BAL",
+          "result": "pending"
+        },
+        {
+          "leg": "Matthew Stafford 200+ pass yds",
+          "prob": 0.77,
+          "game": "LAR@LV",
+          "result": "pending"
+        }
+      ]
     }
   ]
 }
