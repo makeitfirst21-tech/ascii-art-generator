@@ -1166,7 +1166,7 @@
       "stake": 0.005333920944639834,
       "market_prob": 0.38134501417160527,
       "book": "FanDuel",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "BET",
       "confidence": 0.7619047619047619,
@@ -1183,7 +1183,7 @@
       "stake": 0.0,
       "market_prob": 0.5281576830249397,
       "book": "FanDuel",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.5079365079365079,
@@ -1200,7 +1200,7 @@
       "stake": 0.0,
       "market_prob": 0.41923394524550595,
       "book": "WynnBET",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -1217,7 +1217,7 @@
       "stake": 0.0,
       "market_prob": 0.4248366013071895,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -1234,7 +1234,7 @@
       "stake": 0.0,
       "market_prob": 0.6278445488377769,
       "book": "Fanatics",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -1251,7 +1251,7 @@
       "stake": 0.0,
       "market_prob": 0.7414588900218722,
       "book": "various",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -1268,7 +1268,7 @@
       "stake": 0.0,
       "market_prob": 0.5951417004048584,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -1285,7 +1285,7 @@
       "stake": 0.0,
       "market_prob": 0.6231155778894473,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -1302,7 +1302,7 @@
       "stake": 0.0,
       "market_prob": 0.6421382241109372,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -1319,7 +1319,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price found for the 200+ alt; price is Jordan's fair price. Kalshi 59% on 275+; model ~290; DET allows most pass yds. Normal model, sd 65. Logged 1:45 AM ET.",
       "confidence": null,
@@ -1336,7 +1336,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price found for the 200+ alt; price is Jordan's fair price. line 260.5; Lamar out. Normal model, sd 65. Logged 1:45 AM ET.",
       "confidence": null,
@@ -1353,7 +1353,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price found for the 200+ alt; price is Jordan's fair price. lines 250.5-256.5; averaging ~310. Normal model, sd 65. Logged 1:45 AM ET.",
       "confidence": null,
@@ -1370,7 +1370,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price found for the 200+ alt; price is Jordan's fair price. line 255.5, cleared it 5 of 6; HOU -10.5 blowout risk. Normal model, sd 65. Logged 1:45 AM ET.",
       "confidence": null,
@@ -1387,7 +1387,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price found for the 200+ alt; price is Jordan's fair price. model ~252; 36.5 attempts line. Normal model, sd 65. Logged 1:45 AM ET.",
       "confidence": null,
@@ -1404,7 +1404,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price found for the 200+ alt; price is Jordan's fair price. line 253.5; Adams out, Puka Q. Normal model, sd 65. Logged 1:45 AM ET.",
       "confidence": null,
@@ -1421,7 +1421,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price found for the 200+ alt; price is Jordan's fair price. line 240.5-241.5; Evans/Deebo out; ATL 42.7% pressure. Normal model, sd 65. Logged 1:45 AM ET.",
       "confidence": null,
@@ -1438,45 +1438,45 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "fair price; no book price. Built for the user's 7-QB request.",
+      "notes": "fair price; no book price. Built for the user's 7-QB request.; 4 of 7 legs hit. Lost on Bryce Young 200+ pass yds (163), C.J. Stroud 200+ pass yds (153), Matthew Stafford 200+ pass yds (195).",
       "confidence": null,
       "legs": [
         {
           "leg": "Jordan Love 200+ pass yds",
           "prob": 0.906,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Joe Burrow 200+ pass yds",
           "prob": 0.816,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Bryce Young 200+ pass yds",
           "prob": 0.795,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "C.J. Stroud 200+ pass yds",
           "prob": 0.786,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Jared Goff 200+ pass yds",
           "prob": 0.79,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Matthew Stafford 200+ pass yds",
           "prob": 0.767,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Brock Purdy 200+ pass yds",
           "prob": 0.736,
-          "result": "pending"
+          "result": "win"
         }
       ]
     },
@@ -1491,7 +1491,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. no line; 641 yds at 5.9 ypc; Brian Robinson Jr. OUT; SF run D 7th (90.2). Lognormal, sigma 0.45. Logged ~1:55 AM ET.",
       "confidence": null,
@@ -1508,7 +1508,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. no line; Huntley starting = run-heavy. Lognormal, sigma 0.45. Logged ~1:55 AM ET.",
       "confidence": null,
@@ -1525,7 +1525,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. line 93.5; GB held him under 70 in 6 straight meetings. Lognormal, sigma 0.45. Logged ~1:55 AM ET.",
       "confidence": null,
@@ -1542,7 +1542,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. target 89.5 (estimate); MIN run D strong; IND +6.5 underdog. Lognormal, sigma 0.45. Logged ~1:55 AM ET.",
       "confidence": null,
@@ -1559,7 +1559,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. no line; -125 to out-rush teammates; Adams out. Lognormal, sigma 0.45. Logged ~1:55 AM ET.",
       "confidence": null,
@@ -1576,7 +1576,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. line 59.5-60.5; ATL run D 4th (83.2). Lognormal, sigma 0.45. Logged ~1:55 AM ET.",
       "confidence": null,
@@ -1593,7 +1593,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. line 59.5. Lognormal, sigma 0.45. Logged ~1:55 AM ET.",
       "confidence": null,
@@ -1610,7 +1610,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. no line; 3.2 ypc; LAR run D 26th (127). Lognormal, sigma 0.45. Logged ~1:55 AM ET.",
       "confidence": null,
@@ -1627,7 +1627,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. line 52.5; NYG allows 135.5 (29th); 3.5 ypc. Lognormal, sigma 0.45. Logged ~1:55 AM ET.",
       "confidence": null,
@@ -1644,7 +1644,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. line 49.5; NYJ 151/game last 4. Lognormal, sigma 0.45. Logged ~1:55 AM ET.",
       "confidence": null,
@@ -1661,45 +1661,45 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "fair price; no book price. Built for the user's 7-RB request.",
+      "notes": "fair price; no book price. Built for the user's 7-RB request.; 5 of 7 legs hit. Lost on Derrick Henry 50+ rush yds (45), Christian McCaffrey 50+ rush yds (39).",
       "confidence": null,
       "legs": [
         {
           "leg": "Bijan Robinson 50+ rush yds",
           "prob": 0.855,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Derrick Henry 50+ rush yds",
           "prob": 0.822,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Jahmyr Gibbs 50+ rush yds",
           "prob": 0.844,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Jonathan Taylor 50+ rush yds",
           "prob": 0.814,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Kyren Williams 50+ rush yds",
           "prob": 0.739,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Christian McCaffrey 50+ rush yds",
           "prob": 0.672,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Bucky Irving 50+ rush yds",
           "prob": 0.659,
-          "result": "pending"
+          "result": "win"
         }
       ]
     },
@@ -1714,7 +1714,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. line 83.5; career 120/game vs BAL. Lognormal sigma 0.60, -2% injury/early-exit. Logged ~2:05 AM ET.",
       "confidence": null,
@@ -1731,7 +1731,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. no line; 110/game but only 2 of 5 over 100. Lognormal sigma 0.60, -2% injury/early-exit. Logged ~2:05 AM ET.",
       "confidence": null,
@@ -1748,7 +1748,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. no line; 32-471 in 5 games. Lognormal sigma 0.60, -2% injury/early-exit. Logged ~2:05 AM ET.",
       "confidence": null,
@@ -1765,7 +1765,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. no line; IND 9th-most yds/target; MIN run-heavy with a lead. Lognormal sigma 0.60, -2% injury/early-exit. Logged ~2:05 AM ET.",
       "confidence": null,
@@ -1782,7 +1782,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. line 69.5-75.5; DET allows ~195/game to WRs; boom-or-bust deep role. Lognormal sigma 0.70, -2% injury/early-exit. Logged ~2:05 AM ET.",
       "confidence": null,
@@ -1799,7 +1799,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. no line; 10+ targets in 4 of 5; GB top coverage grade. Lognormal sigma 0.60, -2% injury/early-exit. Logged ~2:05 AM ET.",
       "confidence": null,
@@ -1816,7 +1816,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the 50+ alt; fair price. no line; 397 yds in 6, 6-104 last week. Lognormal sigma 0.60, -2% injury/early-exit. Logged ~2:05 AM ET.",
       "confidence": null,
@@ -1833,38 +1833,38 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "fair price; no book price.",
+      "notes": "fair price; no book price.; 4 of 7 legs hit. Lost on Tetairoa McMillan 50+ rec yds (40), Justin Jefferson 50+ rec yds (44), Matthew Golden 50+ rec yds (39).",
       "confidence": null,
       "legs": [
         {
           "leg": "Ja'Marr Chase 50+ rec yds",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Drake London 50+ rec yds",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Tetairoa McMillan 50+ rec yds",
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Justin Jefferson 50+ rec yds",
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Christian Watson 50+ rec yds",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Amon-Ra St. Brown 50+ rec yds",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Matthew Golden 50+ rec yds",
-          "result": "pending"
+          "result": "loss"
         }
       ]
     },
@@ -1879,7 +1879,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 30+ alt; fair price. line 69.5; Evans and Deebo out; 70+ in 3 of 6. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
       "confidence": null,
@@ -1896,7 +1896,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 30+ alt; fair price. receptions line 7.5; yards estimated. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
       "confidence": null,
@@ -1913,7 +1913,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 30+ alt; fair price. line 70.5; hamstring/calf, trending to play; LAR pass D 2nd-best. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
       "confidence": null,
@@ -1930,7 +1930,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 30+ alt; fair price. line 49.5; DET allows the most fantasy pts to TEs; projected 64. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
       "confidence": null,
@@ -1947,7 +1947,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the 30+ alt; fair price. no line; GB top coverage grade; shootout game. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
       "confidence": null,
@@ -1964,7 +1964,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 30+ alt; fair price. line 46.5; 299 yds in 6; SEA best pass D. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
       "confidence": null,
@@ -1981,7 +1981,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the 30+ alt; fair price. no line; Adams out, Puka Q. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
       "confidence": null,
@@ -1998,7 +1998,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the 30+ alt; fair price. no line; back from concussion; IND soft vs pass. Lognormal sigma 0.65. Logged ~2:15 AM ET.",
       "confidence": null,
@@ -2015,38 +2015,38 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "fair price; no book price.",
+      "notes": "fair price; no book price.; 5 of 7 legs hit. Lost on Sam LaPorta 30+ rec yds (18), Tyler Higbee 30+ rec yds (14).",
       "confidence": null,
       "legs": [
         {
           "leg": "George Kittle 30+ rec yds",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Trey McBride 30+ rec yds",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Brock Bowers 30+ rec yds",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Tucker Kraft 30+ rec yds",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Sam LaPorta 30+ rec yds",
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Travis Kelce 30+ rec yds",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Tyler Higbee 30+ rec yds",
-          "result": "pending"
+          "result": "loss"
         }
       ]
     },
@@ -2061,100 +2061,100 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "fair price; no book price. Built for the user's request. Correlated sim (Love-Kraft .4, Burrow-Chase .5, Love-Goff .3). Drake London (76%) left off as the 16th.",
+      "notes": "fair price; no book price. Built for the user's request. Correlated sim (Love-Kraft .4, Burrow-Chase .5, Love-Goff .3). Drake London (76%) left off as the 16th.; 11 of 15 legs hit. Lost on Derrick Henry 50+ rush yds (45), Bryce Young 200+ pass yds (163), C.J. Stroud 200+ pass yds (153), Matthew Stafford 200+ pass yds (195).",
       "confidence": null,
       "legs": [
         {
           "leg": "Jordan Love 200+ pass yds",
           "prob": 0.91,
           "game": "GB@DET",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "George Kittle 30+ rec yds",
           "prob": 0.89,
           "game": "SF@ATL",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Trey McBride 30+ rec yds",
           "prob": 0.88,
           "game": "DEN@ARI",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Bijan Robinson 50+ rush yds",
           "prob": 0.86,
           "game": "SF@ATL",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Brock Bowers 30+ rec yds",
           "prob": 0.85,
           "game": "LAR@LV",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Jahmyr Gibbs 50+ rush yds",
           "prob": 0.84,
           "game": "GB@DET",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Joe Burrow 200+ pass yds",
           "prob": 0.82,
           "game": "CIN@BAL",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Derrick Henry 50+ rush yds",
           "prob": 0.82,
           "game": "CIN@BAL",
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Jonathan Taylor 50+ rush yds",
           "prob": 0.81,
           "game": "IND@MIN",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Bryce Young 200+ pass yds",
           "prob": 0.79,
           "game": "TB@CAR",
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "C.J. Stroud 200+ pass yds",
           "prob": 0.79,
           "game": "NYG@HOU",
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Jared Goff 200+ pass yds",
           "prob": 0.79,
           "game": "GB@DET",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Tucker Kraft 30+ rec yds",
           "prob": 0.79,
           "game": "GB@DET",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Ja'Marr Chase 50+ rec yds",
           "prob": 0.79,
           "game": "CIN@BAL",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Matthew Stafford 200+ pass yds",
           "prob": 0.77,
           "game": "LAR@LV",
-          "result": "pending"
+          "result": "loss"
         }
       ]
     },
@@ -2169,34 +2169,34 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "Prob is blended (Jordan weighted against market). Gibbs 2+ price assumed +160 (not verified). Cross-game, no correlation.",
+      "notes": "Prob is blended (Jordan weighted against market). Gibbs 2+ price assumed +160 (not verified). Cross-game, no correlation.; 1 of 4 legs hit. Lost on Justin Jefferson anytime TD (4-44, no TD), George Kittle anytime TD (8-88, no TD), Woody Marks anytime TD (19-66, no TD).",
       "confidence": null,
       "legs": [
         {
           "leg": "Justin Jefferson anytime TD (IND @ MIN)",
           "price": 165,
           "prob": 0.399,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Ja'Marr Chase anytime TD (CIN @ BAL)",
           "price": 120,
           "prob": 0.444,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "George Kittle anytime TD (SF @ ATL)",
           "price": 123,
           "prob": 0.44,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Woody Marks anytime TD (NYG @ HOU)",
           "price": -120,
           "prob": 0.544,
-          "result": "pending"
+          "result": "loss"
         }
       ]
     },
@@ -2211,40 +2211,40 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "Prob is blended (Jordan weighted against market). Gibbs 2+ price assumed +160 (not verified). Cross-game, no correlation.",
+      "notes": "Prob is blended (Jordan weighted against market). Gibbs 2+ price assumed +160 (not verified). Cross-game, no correlation.; 1 of 5 legs hit. Lost on Justin Jefferson anytime TD (4-44, no TD), George Kittle anytime TD (8-88, no TD), Woody Marks anytime TD (19-66, no TD), Jahmyr Gibbs 2+ TDs (0 TDs).",
       "confidence": null,
       "legs": [
         {
           "leg": "Justin Jefferson anytime TD (IND @ MIN)",
           "price": 165,
           "prob": 0.399,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Ja'Marr Chase anytime TD (CIN @ BAL)",
           "price": 120,
           "prob": 0.444,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "George Kittle anytime TD (SF @ ATL)",
           "price": 123,
           "prob": 0.44,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Woody Marks anytime TD (NYG @ HOU)",
           "price": -120,
           "prob": 0.544,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Jahmyr Gibbs 2+ TDs (GB @ DET)",
           "price": 160,
           "prob": 0.391,
-          "result": "pending"
+          "result": "loss"
         }
       ]
     },
@@ -2259,7 +2259,7 @@
       "stake": 0.0025828274833577993,
       "market_prob": 0.41204842367521644,
       "book": "bet365",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "BET",
       "confidence": 0.7936507936507936,
@@ -2276,7 +2276,7 @@
       "stake": 0.0,
       "market_prob": 0.4279403644395361,
       "book": "ESPN listing",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.7936507936507936,
@@ -2293,7 +2293,7 @@
       "stake": 0.0,
       "market_prob": 0.43795620437956206,
       "book": "range +110 to +128",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.7936507936507936,
