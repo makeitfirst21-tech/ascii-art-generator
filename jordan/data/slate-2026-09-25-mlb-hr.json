@@ -1,0 +1,19 @@
+{
+  "date": "2026-09-25",
+  "sport": "mlb",
+  "bankroll": 1000,
+  "context": "Anytime HR. P = play x (1 - prod over PAs of (1 - r)), r = season HR/PA x pitcher x park/weather factor. Nor'easter: Fenway (24-26mph in) and Yankee Stadium (17-22mph gusts) doubleheaders excluded. CBP: 15mph wind blowing in, ~70F. Nats Park: upper 60s, N 15mph, dry. Rate Field: mid-60s, light ENE. Lineups not yet posted at 3pm ET; final weekend, clinched teams may rest regulars.",
+  "known": ["starting_pitchers", "weather_park", "platoon_splits", "travel_rest"],
+  "candidates": [
+    {"description": "Kyle Schwarber HR (TB @ PHI)", "price": 265, "prob": 0.245, "sport": "mlb", "book": "FanDuel",
+     "notes": "r 0.072 vs RHP x wind-in 0.85 x temp 0.97 over 4.6 PA. vs Freddy Peralta (3 HR in 22 career PA, small sample). Phillies need 1 win to clinch. +260 DK, +252 consensus."},
+    {"description": "Ronald Acuna Jr. HR (ATL @ MIA)", "price": 400, "prob": 0.235, "sport": "mlb", "book": "Hard Rock Bet",
+     "notes": "r ~0.055 (season rate assumed, not verified; blended 80/20 with 7 HR in 20 Sept games) x Eury Perez 1.2 (6 HR in 18.1 Sept IP; righties 14 of his 20 HR) x loanDepot 0.93, 4.6 PA; x0.93 for early-exit risk on a clinched team."},
+    {"description": "Pete Alonso HR (NYM @ WSH)", "price": 330, "prob": 0.247, "sport": "mlb", "price_verified": false,
+     "notes": "41 HR, r 0.061 x Young 1.14 (1.31 HR/9) for 2.8 PA, x Nats pen 1.1 for 1.5 PA, x0.96 cool air. 9 HR in last 26 games. Price reported, book unknown."},
+    {"description": "Junior Caminero HR (TB @ PHI)", "price": 420, "prob": 0.14, "sport": "mlb", "price_verified": false,
+     "notes": "41 HR, r 0.060, but 2.7 PA vs Cristopher Sanchez (elite LHP groundballer, factor ~0.6) and wind in. Rays clinched #1 seed; chasing 100 RBI. Price reported, book unknown."},
+    {"description": "Bryce Harper HR (TB @ PHI)", "price": 430, "prob": 0.156, "sport": "mlb", "price_verified": false,
+     "notes": "28 HR, r 0.047 vs RHP x wind-in 0.85 x 0.97 over 4.3 PA. Price reported, book unknown."}
+  ]
+}

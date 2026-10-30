@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-24",
+  "sport": "nfl",
+  "bankroll": 1000,
+  "context": "ATL @ GB, TNF 8:15 ET. GB -6.5 (opened -7 / -320, money on ATL; -5.5 on Kalshi), total 43.5 (range 42.5-44.5). Implied: GB 25.0, ATL 18.5. Team TDs ~ implied/9: GB 2.78, ATL 2.06. P(ATD) = 1 - exp(-teamTDs x share). Lambeau 62F, 2mph, dry. GB out: Jacobs (exempt), Jayden Reed (neck), OL Banks + Bako-Bewele. ATL: Penix Jr. debut; Brian Robinson Jr. full practice, no designation; Ebukam out.",
+  "known": ["qb_status", "injury_report", "ol_dl_availability", "weather", "snap_share", "rest_travel", "key_numbers"],
+  "candidates": [
+    {"description": "Bijan Robinson anytime TD (ATL @ GB)", "price": -154, "prob": 0.50, "sport": "nfl", "book": "Caesars",
+     "notes": "share 0.33 of 2.06 ATL TDs. 48 touches in 2 games, but Brian Robinson Jr. healthy and took 33 snaps to Bijan's 35 in W2. ATL had zero red-zone snaps in W2. Also -155 FD, -160 DK, -165 MGM."},
+    {"description": "Christian Watson anytime TD (ATL @ GB)", "price": 155, "prob": 0.43, "sport": "nfl", "price_verified": false,
+     "notes": "share 0.21 of 2.78 GB TDs. 40% of GB end-zone targets, 30% RZ target share, 3 TDs in 2 games (regress it). Reed out; two OL out pushes GB toward the pass. Price reported +155/+160, book unknown."},
+    {"description": "Tucker Kraft anytime TD (ATL @ GB)", "price": 200, "prob": 0.30, "sport": "nfl", "book": "FanDuel",
+     "notes": "share 0.13. GB 12/13 personnel at top-6 rates; Jonnu Smith splits TE red-zone work."},
+    {"description": "Drake London anytime TD (ATL @ GB)", "price": 195, "prob": 0.32, "sport": "nfl", "price_verified": false,
+     "notes": "share 0.19 of 2.06. Penix-London history is the upside; ATL offense produced no red-zone snaps in W2. Book unknown."},
+    {"description": "Kaleb Johnson anytime TD (ATL @ GB)", "price": 180, "prob": 0.28, "sport": "nfl", "price_verified": false,
+     "known": ["qb_status", "injury_report", "ol_dl_availability", "weather", "rest_travel", "key_numbers"],
+     "notes": "share 0.12: three-way committee (W2 snaps Brooks 27, Lloyd 16, Johnson 16); goal-line split unknown. Books set his carries at 10.5. Two GB OL out. Price 'around +180', book unknown."},
+    {"description": "MarShawn Lloyd anytime TD (ATL @ GB)", "price": 165, "prob": 0.26, "sport": "nfl", "price_verified": false,
+     "known": ["qb_status", "injury_report", "ol_dl_availability", "weather", "rest_travel", "key_numbers"],
+     "notes": "share 0.11. Depth-chart starter but 16 snaps in W2 (30 in W1); scored a receiving TD in W2. Price backed out of an article's 37.7%, book unknown."}
+  ]
+}

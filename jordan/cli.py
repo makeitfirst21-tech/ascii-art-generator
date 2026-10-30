@@ -1,0 +1,700 @@
+"""Command line for Jordan.
+
+    python3 -m jordan brief
+    python3 -m jordan devig -110 -110
+    python3 -m jordan ev --prob 0.55 --price -110 --bankroll 5000
+    python3 -m jordan sgp ticket.json
+    python3 -m jordan market snapshots.json
+    python3 -m jordan stacks nfl
+    python3 -m jordan record 57 43
+"""
+
+import argparse
+import json
+import sys
+from datetime import datetime
+
+from . import (card, correlation, ledger, market, odds, parlay, persona,
+               research, simulate)
+
+
+def _load(path):
+    if path == "-":
+        return json.load(sys.stdin)
+    with open(path) as fh:
+        return json.load(fh)
+
+
+def _pair_key(key):
+    """'0-1' -> (0, 1)"""
+    a, b = str(key).replace(",", "-").split("-")
+    return (int(a), int(b))
+
+
+# ------------------------------------------------------------------ commands
+
+
+def cmd_brief(args):
+    print(persona.brief())
+    return 0
+
+
+def cmd_devig(args):
+    prices = [float(p) for p in args.prices]
+    method = args.method or odds.recommended_devig(prices)
+    probs = odds.devig(prices, method)
+    print("Market : %s" % "  ".join(odds.fmt_american(p) for p in prices))
+    print("Hold   : %.2f%%" % (100 * odds.hold(prices)))
+    print("Method : %s%s" % (method, "" if args.method else "  (auto-selected)"))
+    print()
+    for price, prob in zip(prices, probs):
+        print("  %-8s implied %6.2f%%   fair %6.2f%%   fair price %s"
+              % (odds.fmt_american(price), 100 * odds.american_to_prob(price),
+                 100 * prob, odds.fmt_american(odds.prob_to_american(prob))))
+    if args.method is None:
+        print()
+        print("All methods, for comparison:")
+        for name in ("multiplicative", "additive", "power", "shin"):
+            got = odds.devig(prices, name)
+            print("  %-15s %s" % (name, "  ".join("%.2f%%" % (100 * g) for g in got)))
+        cons = odds.conservative_probs(prices)
+        print("  %-15s %s   <- pessimistic on every side at once;"
+              % ("conservative", "  ".join("%.2f%%" % (100 * g) for g in cons)))
+        print("  %-15s    these do not sum to 100%% and are not meant to."
+              % "")
+        print()
+        check = odds.survives_every_devig(prices, 0)
+        print("First side at %s survives every method: %s (worst EV %+.2f%%)"
+              % (odds.fmt_american(prices[0]),
+                 "yes" if check["survives"] else "no", check["worst_ev"]))
+    return 0
+
+
+def cmd_ev(args):
+    prob, price = args.prob, args.price
+    ev = odds.ev_percent(prob, price)
+    fair = odds.prob_to_american(prob)
+    print("Price      : %s" % odds.fmt_american(price))
+    print("Your prob  : %.2f%%   (break-even at this price: %.2f%%)"
+          % (100 * prob, 100 * odds.breakeven_prob(price)))
+    print("Fair price : %s   (you are getting %+.0f cents)"
+          % (odds.fmt_american(fair), odds.edge_in_cents(prob, price)))
+    print("EV         : %+.2f%% per unit staked" % ev)
+    print("Full Kelly : %.2f%% of bankroll" % (100 * odds.kelly_fraction(prob, price)))
+    stake = odds.kelly_stake(prob, price, args.bankroll,
+                             multiplier=args.kelly, cap=args.cap)
+    print("Stake      : %.2f  (%.0f%% Kelly, %.0f%% cap, bankroll %.2f)"
+          % (stake, 100 * args.kelly, 100 * args.cap, args.bankroll))
+    if ev <= 0:
+        print()
+        print("No bet. You need %.2f%% to break even here and you have %.2f%%."
+              % (100 * odds.breakeven_prob(price), 100 * prob))
+    elif ev < 2.0:
+        print()
+        print("Thin. A sub-2% edge is inside the error bar of almost any model.")
+    return 0
+
+
+def cmd_sgp(args):
+    spec = _load(args.ticket)
+    legs = [simulate.leg_from_spec(s) for s in spec["legs"]]
+    rels = {_pair_key(k): v for k, v in (spec.get("relationships") or {}).items()}
+    over = {_pair_key(k): float(v) for k, v in (spec.get("overrides") or {}).items()}
+    stability = {s.get("label", "leg"): s.get("stability", 0.6) for s in spec["legs"]}
+    signals = {s.get("label", "leg"): s.get("signal", 0.0) for s in spec["legs"]}
+
+    report = parlay.analyse_parlay(
+        legs,
+        offered_price=spec.get("offered_price"),
+        sport=spec.get("sport", "nfl"),
+        overrides=over,
+        relationships=rels,
+        bankroll=spec.get("bankroll", 100.0),
+        trials=args.trials,
+        seed=args.seed,
+        stability=stability,
+        signals=signals,
+        devig_method=spec.get("devig_method", "power"))
+    print(report.render())
+
+    if args.search and len(legs) > 2:
+        print()
+        print("ALTERNATIVE CONSTRUCTIONS (searching every subset)")
+        print("-" * 78)
+        best, all_reports = parlay.best_subset(
+            legs, sport=spec.get("sport", "nfl"), overrides=over,
+            relationships=rels, trials=max(args.trials // 4, 4000),
+            bankroll=spec.get("bankroll", 100.0))
+        for rep in all_reports[:6]:
+            print("  %-52s EV %+7.2f%%  %s"
+                  % (" + ".join(l.label for l in rep.legs)[:52],
+                     rep.ev_pct, rep.verdict))
+        print()
+        if best and best.ev_pct <= 0:
+            print("  Jordan's build: none of them. Every construction on this board is")
+            print("  -EV, and the least bad one is still a losing bet. Pass the game.")
+        elif best and len(best.legs) < len(legs):
+            print("  Jordan's build: %s" % " + ".join(l.label for l in best.legs))
+            print("  Shorter tickets win this search most of the time. Every leg you")
+            print("  add multiplies the vig and adds a projection you can be wrong about.")
+        elif best:
+            print("  Jordan's build: the ticket as submitted -- no subset prices better.")
+    print()
+    print(persona.DISCLAIMER)
+    return 0
+
+
+def cmd_market(args):
+    data = _load(args.snapshots)
+    tracker = market.MarketTracker(data.get("name", "market"),
+                                   devig_method=data.get("devig_method", "power"))
+    for snap in data["snapshots"]:
+        tracker.add(snap["book"], snap["price"],
+                    timestamp=snap.get("timestamp"),
+                    limit=snap.get("limit"),
+                    opposite=snap.get("opposite"),
+                    ticket_pct=snap.get("ticket_pct"),
+                    handle_pct=snap.get("handle_pct"))
+
+    print("=" * 78)
+    print(("MARKET: %s" % tracker.name).center(78))
+    print("=" * 78)
+    consensus = tracker.sharp_consensus()
+    if consensus:
+        print("Sharp consensus fair : %s  (%.2f%%)"
+              % (odds.fmt_american(tracker.consensus_price()), 100 * consensus))
+    best = tracker.best_available()
+    if best:
+        print("Best available       : %s at %s"
+              % (odds.fmt_american(best.price), best.book))
+    print()
+
+    print("SIGNALS")
+    print("-" * 78)
+    signals = tracker.all_signals()
+    if not signals:
+        print("  Nothing worth flagging. A quiet market is the normal state.")
+    for sig in signals:
+        print("  [%s] %-22s %s" % (sig.bar(), sig.kind, sig.message))
+    print()
+
+    outliers = tracker.outliers(args.threshold)
+    print("+EV OUTLIERS (books behind the consensus)")
+    print("-" * 78)
+    if not outliers:
+        print("  None past the %.1f%% threshold. This is the usual answer."
+              % (100 * args.threshold))
+    for o in outliers:
+        print("  %-14s %-7s vs fair %-7s   EV %+.2f%%"
+              % (o["book"], odds.fmt_american(o["price"]),
+                 odds.fmt_american(o["fair_price"]), o["ev_pct"]))
+    if data.get("bet_price") is not None:
+        print()
+        clv = tracker.closing_line_value(data["bet_price"], data.get("closing_price"))
+        if clv:
+            print("CLOSING LINE VALUE")
+            print("-" * 78)
+            print("  Bet %s vs close %s  ->  %+.0f cents, %s"
+                  % (odds.fmt_american(clv["bet_price"]),
+                     odds.fmt_american(clv["closing_price"]),
+                     clv["cents"],
+                     "beat the close" if clv["beat_close"] else "lost to the close"))
+            print("  Implied long-run ROI at this CLV: %+.2f%%" % clv["roi_estimate"])
+    print("=" * 78)
+    return 0
+
+
+def cmd_stacks(args):
+    sport = args.sport.lower()
+    print("=" * 78)
+    print(("CORRELATION PRIORS -- %s" % sport.upper()).center(78))
+    print("=" * 78)
+    book = correlation.PRIOR_BOOKS.get(sport)
+    if not book:
+        print("No priors for %r. Have: %s"
+              % (sport, ", ".join(sorted(correlation.PRIOR_BOOKS))))
+        return 1
+    for (a, b, rel), rho in sorted(book.items(), key=lambda kv: -abs(kv[1])):
+        print("  %+.2f  %-18s x %-18s (%s)" % (rho, a, b, rel))
+    print()
+    print("STACKS THAT WORK")
+    print("-" * 78)
+    for sp, name, why in correlation.POSITIVE_STACKS:
+        if sp == sport:
+            print("  + %s" % name)
+            print("      %s" % why)
+    print()
+    print("STACKS THE BOOK IS HAPPY TO SELL YOU")
+    print("-" * 78)
+    for sp, name, why in correlation.NEGATIVE_STACKS:
+        if sp == sport:
+            print("  - %s" % name)
+            print("      %s" % why)
+    print("=" * 78)
+    return 0
+
+
+def cmd_keys(args):
+    from . import keynumbers
+    print("=" * 78)
+    print("NFL KEY NUMBERS".center(78))
+    print("=" * 78)
+    print("Final margins are not smooth. A half point is worth what the number")
+    print("next to it is worth, and nothing else.")
+    print()
+    print("  margin   share of games   key    half point worth")
+    print("  " + "-" * 60)
+    for row in keynumbers.key_number_report(favorite_share=args.favorite_share):
+        if row["mass"] < 0.02 and not row["key"]:
+            continue
+        print("  %6d   %12.1f%%   %-5s  %.3f prob (~%.0f cents)"
+              % (row["margin"], 100 * row["mass"], "YES" if row["key"] else "",
+                 row["half_point_prob"], row["half_point_cents"]))
+    print()
+    if args.buy is not None:
+        spread = args.buy
+        push = keynumbers.half_point_value(spread, favorite_share=args.favorite_share)
+        res = keynumbers.buy_points(args.win_prob, push, args.price, args.bought_price)
+        print("BUYING THE HALF POINT off %g" % spread)
+        print("-" * 78)
+        print("  Push probability at %g ....... %.3f" % (spread, push))
+        print("  EV at %-7s ................ %+.4f per unit"
+              % (odds.fmt_american(args.price), res["ev_before"]))
+        print("  EV at %-7s ................ %+.4f per unit"
+              % (odds.fmt_american(args.bought_price), res["ev_after"]))
+        print("  Gain ......................... %+.4f" % res["gain"])
+        if res["breakeven_price"]:
+            print("  Break-even price for the buy .. %s"
+                  % odds.fmt_american(res["breakeven_price"]))
+        print()
+        print("  %s" % ("Worth it." if res["worth_it"]
+                        else "Not worth it at that price. Pass the buy."))
+    print("=" * 78)
+    return 0
+
+
+def cmd_middle(args):
+    res = market.middle(args.low_line, args.low_price, args.high_line,
+                        args.high_price, sport=args.sport,
+                        favorite_share=args.favorite_share)
+    if not res:
+        print("Not a middle: the high line must sit above the low line.")
+        return 1
+    print("Middle %g / %g  (%g points wide)" % (args.low_line, args.high_line,
+                                                res["width"]))
+    print("Priced from : %s" % res["priced_from"])
+    print("Lands inside: %.2f%%   (break-even needs %.2f%%)"
+          % (100 * res["middle_prob"], 100 * (res["breakeven_middle_prob"] or 0)))
+    print("EV          : %+.2f%% of total outlay" % res["ev_pct"])
+    if res["key_numbers_spanned"]:
+        print("Key numbers : %s  (%.1f%% of games land there)"
+              % (", ".join(str(n) for n in res["key_numbers_spanned"]),
+                 100 * res["key_number_mass"]))
+    else:
+        print("Key numbers : none spanned -- this gap is mostly dead space")
+    print()
+    print("Verdict     : %s" % ("worth it" if res["worth_it"] else
+                                "not worth it; the vig on the losing side outweighs "
+                                "the middle"))
+    return 0
+
+
+def _known_list(raw):
+    if not raw:
+        return []
+    return [k.strip() for k in raw.replace(",", " ").split() if k.strip()]
+
+
+def cmd_checklist(args):
+    print(research.render_checklist(args.sport, _known_list(args.known)))
+    return 0
+
+
+def cmd_card(args):
+    spec = _load(args.slate)
+    cands = [card.Candidate.from_spec(s) for s in spec["candidates"]]
+    known = spec.get("known") or _known_list(args.known)
+    sport = spec.get("sport") or args.sport
+    date = spec.get("date") or args.date or datetime.now().strftime("%Y-%m-%d")
+    built = card.build(cands, date, sport, known,
+                       bankroll=spec.get("bankroll", args.bankroll))
+    print(built.render())
+
+    if args.log or args.log_all:
+        led = ledger.Ledger(args.ledger)
+        bankroll = spec.get("bankroll", args.bankroll)
+        to_log = built.candidates if args.log_all else [built.pick]
+        logged = []
+        for c in to_log:
+            headline = c is built.pick
+            stake = built.stake / bankroll if (headline and bankroll) else 0.0
+            note = built.verdict if headline else "also considered; forecast only"
+            if not c.price_verified:
+                note += "; price was an estimate"
+            logged.append(led.add("jordan", c.sport if c.sport != "generic" else sport,
+                                  c.description, c.price, c.prob, stake=stake,
+                                  date=date, market_prob=c.market_prob, book=c.book,
+                                  notes=note, confidence=c.conf["completeness"]))
+        led.save()
+        print()
+        ids = ", ".join("#%d" % e.id for e in logged)
+        print("Logged %d forecast%s (%s) in %s. Grade each with:"
+              % (len(logged), "" if len(logged) == 1 else "s", ids, args.ledger))
+        print("  python3 -m jordan grade <id> --result win|loss|push --closing <price>")
+    print()
+    print(persona.DISCLAIMER)
+    return 0
+
+
+def cmd_pick(args):
+    led = ledger.Ledger(args.ledger)
+    market_prob = None
+    if args.market:
+        prices = [float(x) for x in args.market]
+        market_prob = odds.devig(prices, odds.recommended_devig(prices))[0]
+    entry = led.add(args.author, args.sport, args.description, args.price,
+                    args.prob, stake=args.stake, date=args.date,
+                    market_prob=market_prob, book=args.book, notes=args.notes)
+    led.save()
+    print("Logged pick #%d for %s:" % (entry.id, entry.author))
+    print("  %s at %s -- %.1f%% (break-even %.1f%%, EV %+.2f%%)"
+          % (entry.description, odds.fmt_american(entry.price), 100 * entry.prob,
+             100 * odds.breakeven_prob(entry.price), entry.ev_pct))
+    if market_prob is not None:
+        print("  Market says %.1f%% -- you are claiming %+.1f points."
+              % (100 * market_prob, 100 * (entry.prob - market_prob)))
+    if entry.ev_pct <= 0:
+        print("  Note: that is -EV at the price you logged.")
+    return 0
+
+
+def cmd_grade(args):
+    led = ledger.Ledger(args.ledger)
+    entry = led.grade(args.id, args.result, args.closing)
+    led.save()
+    print("Pick #%d (%s): %s" % (entry.id, entry.author, entry.result.upper()))
+    print("  %s at %s, called %.1f%%"
+          % (entry.description, odds.fmt_american(entry.price), 100 * entry.prob))
+    if entry.graded:
+        loss = -(entry.outcome * __import__("math").log(max(entry.prob, 1e-6))
+                 + (1 - entry.outcome) * __import__("math").log(max(1 - entry.prob, 1e-6)))
+        print("  Brier contribution %.4f, log loss %.4f"
+              % ((entry.prob - entry.outcome) ** 2, loss))
+    if entry.clv() is not None:
+        print("  CLV %+.0f cents (%s the close)"
+              % (entry.clv(), "beat" if entry.clv() > 0 else "lost to"))
+    print("  Units: %+.2f" % entry.profit())
+    return 0
+
+
+def cmd_picks(args):
+    led = ledger.Ledger(args.ledger)
+    picks = led.picks
+    if args.author:
+        picks = [p for p in picks if p.author == args.author]
+    if args.pending:
+        picks = [p for p in picks if p.result == "pending"]
+    if not picks:
+        print("No picks logged yet in %s." % args.ledger)
+        return 0
+    print("%-4s %-11s %-8s %-6s %-34s %8s %7s %s"
+          % ("#", "date", "author", "sport", "pick", "price", "prob", "result"))
+    print("-" * 96)
+    for p in picks[-args.limit:]:
+        print("%-4d %-11s %-8s %-6s %-34s %8s %6.1f%% %s"
+              % (p.id, p.date, p.author, p.sport, p.description[:34],
+                 odds.fmt_american(p.price), 100 * p.prob, p.result))
+    return 0
+
+
+def cmd_scoreboard(args):
+    led = ledger.Ledger(args.ledger)
+    authors = [args.author] if args.author else led.authors()
+    if not authors:
+        print("Nothing logged yet. Add picks with `jordan pick`.")
+        return 0
+    width = 78
+    print("=" * width)
+    print("SCOREBOARD".center(width))
+    print("=" * width)
+    print("Forecasts are graded on probability, not on who got lucky.")
+    print("Brier: lower is better, 0.250 = saying 50% to everything.")
+    print("Skill: vs the de-vigged market on the same games. Positive = real edge.")
+    print("-" * width)
+    print("%-10s %6s %8s %8s %8s %8s %8s %8s"
+          % ("author", "n", "record", "units", "ROI", "brier", "logloss", "skill"))
+    print("-" * width)
+    stats = {}
+    for a in authors:
+        r = ledger.record(led.by_author(a))
+        stats[a] = r
+        print("%-10s %6d %8s %8s %8s %8s %8s %8s"
+              % (a, r["n"],
+                 "%d-%d" % (r["wins"], r["losses"]),
+                 "%+.2f" % r["units"],
+                 "%+.1f%%" % r["roi_pct"] if r["roi_pct"] is not None else "-",
+                 "%.4f" % r["brier"] if r["brier"] is not None else "-",
+                 "%.4f" % r["log_loss"] if r["log_loss"] is not None else "-",
+                 "%+.3f" % r["skill"] if r["skill"] is not None else "-"))
+    print()
+    for a in authors:
+        r = stats[a]
+        if not r["n"]:
+            continue
+        print("%s:" % a)
+        print("  Win rate %.1f%% -- 95%% interval %.1f%% to %.1f%%, break-even "
+              "%.1f%% at -110" % (r["win_pct"], r["ci_low"], r["ci_high"], 52.38))
+        if r["ci_low"] > 52.38:
+            print("  Even the low end clears break-even. That is a real edge.")
+        else:
+            print("  The interval still contains break-even. This record proves "
+                  "nothing yet.")
+        if r["avg_clv"] is not None:
+            print("  Average CLV %+.1f cents, beat the close %.0f%% of the time."
+                  % (r["avg_clv"], r["clv_beat_rate"]))
+        if r["skill"] is not None:
+            if r["skill"] > 0:
+                print("  Beating the market's own probability by %.1f%% on Brier."
+                      % (100 * r["skill"]))
+            else:
+                print("  Not beating the market's own probability (%.1f%%). The "
+                      "market is doing the work." % (100 * r["skill"]))
+        print()
+
+    if len(authors) == 2:
+        a, b = authors
+        gap = ledger.bootstrap_brier_gap(led.by_author(a), led.by_author(b))
+        print("HEAD TO HEAD")
+        print("-" * width)
+        if gap is None:
+            print("  Not enough graded picks on both sides yet (need 3+ each).")
+        else:
+            print("  %s brier %.4f (%d picks) vs %s brier %.4f (%d picks)"
+                  % (a, gap["a_brier"], gap["n_a"], b, gap["b_brier"], gap["n_b"]))
+            print("  %s is the better forecaster in %.1f%% of resamples."
+                  % (a, gap["a_better_pct"]))
+            print("  %s" % ("That is conclusive." if gap["conclusive"] else
+                            "That is NOT conclusive -- anything between 20% and "
+                            "80% means the sample is still too small to say."))
+    print("=" * width)
+    return 0
+
+
+def cmd_calibration(args):
+    led = ledger.Ledger(args.ledger)
+    authors = [args.author] if args.author else led.authors()
+    for a in authors:
+        rows = ledger.calibration(led.by_author(a), bins=args.bins)
+        print("CALIBRATION -- %s" % a)
+        print("-" * 70)
+        print("  When you say X%, does it happen X% of the time?")
+        print()
+        print("  %-14s %5s %9s %9s %8s" % ("band", "n", "stated", "actual", "gap"))
+        for r in rows:
+            if not r["n"]:
+                continue
+            print("  %-14s %5d %8.1f%% %8.1f%% %+7.1f%%"
+                  % ("%.0f-%.0f%%" % (100 * r["lo"], 100 * r["hi"]), r["n"],
+                     100 * r["stated"], 100 * r["actual"], 100 * r["gap"]))
+        graded = [p for p in led.by_author(a) if p.graded]
+        if not graded:
+            print("  Nothing graded yet.")
+        print()
+    return 0
+
+
+def cmd_record(args):
+    r = parlay.record_grade(args.wins, args.losses, args.pushes)
+    print("Record      : %d-%d (%d bets)" % (args.wins, args.losses, r["n"]))
+    if r["n"]:
+        print("Win rate    : %.1f%%" % r["win_pct"])
+        print("95%% interval: %.1f%% - %.1f%%" % (r["ci_low"], r["ci_high"]))
+        print("Break-even  : %.2f%% at -110" % r["breakeven_pct"])
+        print()
+        print(r["note"])
+    return 0
+
+
+def cmd_arb(args):
+    res = market.arbitrage(args.price_a, args.price_b, args.bankroll)
+    if not res:
+        print("No arbitrage: the two prices imply %.2f%%, which is over 100%%."
+              % (100 * (odds.american_to_prob(args.price_a)
+                        + odds.american_to_prob(args.price_b))))
+        return 1
+    print("Arbitrage found: %.3f%% guaranteed" % res["profit_pct"])
+    print("  Stake %.2f on %s" % (res["stake_a"], odds.fmt_american(args.price_a)))
+    print("  Stake %.2f on %s" % (res["stake_b"], odds.fmt_american(args.price_b)))
+    print("  Returns %.2f on a %.2f outlay" % (res["guaranteed_return"], args.bankroll))
+    print()
+    print("Worth knowing: books void obvious arbs, and consistently taking them is")
+    print("the fastest way to get limited. Treat it as a signal that one of the two")
+    print("prices is stale -- the stale side is usually the better standalone bet.")
+    return 0
+
+
+def cmd_parlay(args):
+    """Quick hold check on a straight parlay -- no model needed."""
+    prices = [float(p) for p in args.prices]
+    markets = [[p, -p if p > 0 else abs(p)] for p in prices]
+    print("Legs        : %s" % "  ".join(odds.fmt_american(p) for p in prices))
+    print("Parlay pays : %s" % odds.fmt_american(odds.parlay_american(prices)))
+    print("Effective hold on this ticket: %.2f%%"
+          % (100 * odds.parlay_hold(markets)))
+    print()
+    print("For comparison, one leg at %s holds %.2f%%."
+          % (odds.fmt_american(prices[0]), 100 * odds.hold(markets[0])))
+    print("Vig compounds. That is the entire business model of the parlay.")
+    return 0
+
+
+# -------------------------------------------------------------------- parser
+
+
+def build_parser():
+    p = argparse.ArgumentParser(
+        prog="jordan",
+        description="Jordan -- betting analysis: markets, models, correlation, EV.",
+        epilog="Jordan's default answer is 'pass'. " + persona.DISCLAIMER)
+    sub = p.add_subparsers(dest="command")
+
+    s = sub.add_parser("brief", help="who Jordan is and how he thinks")
+    s.set_defaults(func=cmd_brief)
+
+    s = sub.add_parser("devig", help="strip the vig off a market")
+    s.add_argument("prices", nargs="+", help="american prices, all sides")
+    s.add_argument("--method", choices=sorted(odds.DEVIG_METHODS),
+                   help="default: auto-selected by market shape")
+    s.set_defaults(func=cmd_devig)
+
+    s = sub.add_parser("ev", help="EV and stake for a probability and a price")
+    s.add_argument("--prob", type=float, required=True, help="your true probability")
+    s.add_argument("--price", type=float, required=True, help="american price offered")
+    s.add_argument("--bankroll", type=float, default=100.0)
+    s.add_argument("--kelly", type=float, default=0.25, help="Kelly multiplier")
+    s.add_argument("--cap", type=float, default=0.02, help="max fraction of bankroll")
+    s.set_defaults(func=cmd_ev)
+
+    s = sub.add_parser("sgp", help="full same-game-parlay analysis from a JSON ticket")
+    s.add_argument("ticket", help="path to ticket JSON, or - for stdin")
+    s.add_argument("--trials", type=int, default=40000)
+    s.add_argument("--seed", type=int, default=None)
+    s.add_argument("--search", action="store_true",
+                   help="also search every subset for a better construction")
+    s.set_defaults(func=cmd_sgp)
+
+    s = sub.add_parser("market", help="signals and +EV outliers from price snapshots")
+    s.add_argument("snapshots", help="path to snapshots JSON, or - for stdin")
+    s.add_argument("--threshold", type=float, default=0.02,
+                   help="minimum probability edge to flag (default 0.02)")
+    s.set_defaults(func=cmd_market)
+
+    s = sub.add_parser("stacks", help="correlation priors and stack guidance")
+    s.add_argument("sport", nargs="?", default="nfl", help="nfl, nba or mlb")
+    s.set_defaults(func=cmd_stacks)
+
+    s = sub.add_parser("keys", help="NFL key numbers and the price of a half point")
+    s.add_argument("--favorite-share", type=float, default=0.60,
+                   help="share of a margin that goes to the favourite (default 0.60)")
+    s.add_argument("--buy", type=float, default=None,
+                   help="spread you are buying off, e.g. -3")
+    s.add_argument("--win-prob", type=float, default=0.48,
+                   help="your win probability at the original number")
+    s.add_argument("--price", type=float, default=-110)
+    s.add_argument("--bought-price", type=float, default=-130)
+    s.set_defaults(func=cmd_keys)
+
+    s = sub.add_parser("middle", help="price a middle properly")
+    s.add_argument("low_line", type=float)
+    s.add_argument("low_price", type=float)
+    s.add_argument("high_line", type=float)
+    s.add_argument("high_price", type=float)
+    s.add_argument("--sport", default="nfl")
+    s.add_argument("--favorite-share", type=float, default=0.60)
+    s.set_defaults(func=cmd_middle)
+
+    s = sub.add_parser("card", help="build the daily card from a slate of candidates")
+    s.add_argument("slate", help="path to slate JSON, or - for stdin")
+    s.add_argument("--date", default=None)
+    s.add_argument("--sport", default="generic")
+    s.add_argument("--known", default="", help="comma-separated checklist keys you have")
+    s.add_argument("--bankroll", type=float, default=1000.0)
+    s.add_argument("--log-all", action="store_true",
+                   help="log every candidate as a forecast, not just the headline "
+                        "-- seven graded forecasts a day calibrate seven times faster")
+    s.add_argument("--log", action="store_true", help="log the forecast to the ledger")
+    s.add_argument("--ledger", default=ledger.DEFAULT_PATH)
+    s.set_defaults(func=cmd_card)
+
+    s = sub.add_parser("checklist", help="what you need to know before betting a sport")
+    s.add_argument("sport", nargs="?", default="nfl")
+    s.add_argument("--known", default="", help="comma-separated keys you have checked")
+    s.set_defaults(func=cmd_checklist)
+
+    s = sub.add_parser("pick", help="log a pick (yours or Jordan's)")
+    s.add_argument("--author", required=True, help="e.g. you, jordan")
+    s.add_argument("--sport", required=True)
+    s.add_argument("--description", "--desc", required=True, dest="description")
+    s.add_argument("--price", type=float, required=True)
+    s.add_argument("--prob", type=float, required=True,
+                   help="your probability, strictly between 0 and 1")
+    s.add_argument("--stake", type=float, default=1.0, help="units")
+    s.add_argument("--market", nargs="+", default=None,
+                   help="the two-way market, for the skill score")
+    s.add_argument("--book", default=None)
+    s.add_argument("--date", default=None)
+    s.add_argument("--notes", default=None)
+    s.add_argument("--ledger", default=ledger.DEFAULT_PATH)
+    s.set_defaults(func=cmd_pick)
+
+    s = sub.add_parser("grade", help="settle a logged pick")
+    s.add_argument("id", type=int)
+    s.add_argument("--result", required=True, choices=["win", "loss", "push"])
+    s.add_argument("--closing", type=float, default=None, help="closing price, for CLV")
+    s.add_argument("--ledger", default=ledger.DEFAULT_PATH)
+    s.set_defaults(func=cmd_grade)
+
+    s = sub.add_parser("picks", help="list logged picks")
+    s.add_argument("--author", default=None)
+    s.add_argument("--pending", action="store_true")
+    s.add_argument("--limit", type=int, default=30)
+    s.add_argument("--ledger", default=ledger.DEFAULT_PATH)
+    s.set_defaults(func=cmd_picks)
+
+    s = sub.add_parser("scoreboard", help="head-to-head forecast scoring")
+    s.add_argument("--author", default=None)
+    s.add_argument("--ledger", default=ledger.DEFAULT_PATH)
+    s.set_defaults(func=cmd_scoreboard)
+
+    s = sub.add_parser("calibration", help="are your stated probabilities honest?")
+    s.add_argument("--author", default=None)
+    s.add_argument("--bins", type=int, default=5)
+    s.add_argument("--ledger", default=ledger.DEFAULT_PATH)
+    s.set_defaults(func=cmd_calibration)
+
+    s = sub.add_parser("record", help="what a win-loss record actually proves")
+    s.add_argument("wins", type=int)
+    s.add_argument("losses", type=int)
+    s.add_argument("pushes", type=int, nargs="?", default=0)
+    s.set_defaults(func=cmd_record)
+
+    s = sub.add_parser("arb", help="check two prices for arbitrage")
+    s.add_argument("price_a", type=float)
+    s.add_argument("price_b", type=float)
+    s.add_argument("--bankroll", type=float, default=1000.0)
+    s.set_defaults(func=cmd_arb)
+
+    s = sub.add_parser("parlay", help="effective hold on a straight parlay")
+    s.add_argument("prices", nargs="+")
+    s.set_defaults(func=cmd_parlay)
+
+    return p
+
+
+def main(argv=None):
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    if not getattr(args, "command", None):
+        parser.print_help()
+        return 0
+    return args.func(args)

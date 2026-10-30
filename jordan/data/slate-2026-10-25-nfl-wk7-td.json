@@ -1,0 +1,160 @@
+{
+ "date": "2026-10-25",
+ "sport": "nfl",
+ "bankroll": 1000,
+ "context": "Week 7 Sunday. Team TDs ~ implied/9; P = 1 - exp(-teamTDs x share). Line movement not checked. Priced 1:40 AM ET; inactives not yet posted.",
+ "candidates": [
+  {
+   "description": "Justin Jefferson anytime TD (IND @ MIN)",
+   "price": 165,
+   "prob": 0.429,
+   "sport": "nfl",
+   "book": "FanDuel",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers",
+    "ol_dl_availability"
+   ],
+   "notes": "implied 24.00, share 0.21, lambda 0.56. Full practice Thu/Fri, no designation; Kyler Murray QB; Darrisaw (LT) back. 3 TD in 4 games; IND allowed 5 WR rec TDs. +170 NoVig, +140 Fanatics, Kalshi 35%. Market = +145 consensus.",
+   "market": [
+    145,
+    -196
+   ]
+  },
+  {
+   "description": "Woody Marks anytime TD (NYG @ HOU)",
+   "price": -120,
+   "prob": 0.59,
+   "sport": "nfl",
+   "book": "FanDuel",
+   "known": [
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 26.75, share 0.30, lambda 0.89. Montgomery OUT; Ryans: Marks 'will carry the load'. 3.5 ypc on 58 carries, 2 TD. NYG run D poor. HOU QB not verified. -111 NoVig, -135 ESPN, -140 Fanatics.",
+   "market": [
+    -130,
+    -102
+   ]
+  },
+  {
+   "description": "Ja'Marr Chase anytime TD (CIN @ BAL)",
+   "price": 120,
+   "prob": 0.483,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 23.75, share 0.25, lambda 0.66. Lamar OUT, Huntley 3rd start (BAL 143 pass ypg w/ Huntley). +105 Fanatics/bet365."
+  },
+  {
+   "description": "Derrick Henry anytime TD (CIN @ BAL)",
+   "price": -200,
+   "prob": 0.663,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 25.75, share 0.38, lambda 1.09. Huntley starting, run-heavier. -230 Fanatics."
+  },
+  {
+   "description": "Christian McCaffrey anytime TD (SF @ ATL)",
+   "price": -205,
+   "prob": 0.695,
+   "sport": "nfl",
+   "book": "Fanatics",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 26.75, share 0.40, lambda 1.19. Mike Evans and Deebo Samuel OUT. -213 NoVig, -235 BetMGM."
+  },
+  {
+   "description": "Bijan Robinson anytime TD (SF @ ATL)",
+   "price": -220,
+   "prob": 0.683,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 23.00, share 0.45, lambda 1.15. Brian Robinson Jr. OUT (hamstring). -240 Fanatics."
+  },
+  {
+   "description": "George Kittle anytime TD (SF @ ATL)",
+   "price": 123,
+   "prob": 0.48,
+   "sport": "nfl",
+   "book": "WynnBET",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 26.75, share 0.22, lambda 0.65. Evans, Deebo out. +115 BetMGM, -105 Fanatics."
+  },
+  {
+   "description": "Jahmyr Gibbs anytime TD (GB @ DET)",
+   "price": -330,
+   "prob": 0.741,
+   "sport": "nfl",
+   "book": "various",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 28.25, share 0.43, lambda 1.35. 7 rush TD in 5 games. -340 Fanatics, -375 BetMGM."
+  },
+  {
+   "description": "Kyren Williams anytime TD (LAR @ LV)",
+   "price": -175,
+   "prob": 0.647,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 26.00, share 0.36, lambda 1.04. Adams OUT 6-10 wks; Puka Q (calf, no Friday practice). -205 Fanatics."
+  }
+ ]
+}
