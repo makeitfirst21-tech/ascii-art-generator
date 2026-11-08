@@ -3309,6 +3309,340 @@
           "result": "pending"
         }
       ]
+    },
+    {
+      "id": 160,
+      "date": "2026-11-08",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "15-leg all-75%+ parlay (Week 9 QB/RB/WR/TE boards)",
+      "price": 1357.0,
+      "prob": 0.0686,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "fair price; no book price. Correlated sim (Burrow-Chase .5, Dak-Lamb .5). Javonte Williams (78%, no posted line) left off as the 16th.",
+      "confidence": null,
+      "legs": [
+        {
+          "leg": "Jahmyr Gibbs 50+ rush yds",
+          "prob": 0.911,
+          "game": "DET @ MIA",
+          "result": "pending"
+        },
+        {
+          "leg": "Bijan Robinson 50+ rush yds",
+          "prob": 0.903,
+          "game": "CIN @ ATL",
+          "result": "pending"
+        },
+        {
+          "leg": "Kenneth Walker III 50+ rush yds",
+          "prob": 0.888,
+          "game": "NYJ @ KC",
+          "result": "pending"
+        },
+        {
+          "leg": "George Kittle 30+ rec yds",
+          "prob": 0.868,
+          "game": "LV @ SF",
+          "result": "pending"
+        },
+        {
+          "leg": "Jordan Love 200+ pass yds",
+          "prob": 0.864,
+          "game": "GB @ NE",
+          "result": "pending"
+        },
+        {
+          "leg": "Joe Burrow 200+ pass yds",
+          "prob": 0.855,
+          "game": "CIN @ ATL",
+          "result": "pending"
+        },
+        {
+          "leg": "Brock Bowers 30+ rec yds",
+          "prob": 0.843,
+          "game": "LV @ SF",
+          "result": "pending"
+        },
+        {
+          "leg": "Trey McBride 30+ rec yds",
+          "prob": 0.821,
+          "game": "ARI @ SEA",
+          "result": "pending"
+        },
+        {
+          "leg": "Puka Nacua 50+ rec yds",
+          "prob": 0.811,
+          "game": "LAR @ WSH",
+          "result": "pending"
+        },
+        {
+          "leg": "Colston Loveland 30+ rec yds",
+          "prob": 0.792,
+          "game": "TB @ CHI",
+          "result": "pending"
+        },
+        {
+          "leg": "Tyler Warren 30+ rec yds",
+          "prob": 0.788,
+          "game": "DAL @ IND",
+          "result": "pending"
+        },
+        {
+          "leg": "Jared Goff 200+ pass yds",
+          "prob": 0.786,
+          "game": "DET @ MIA",
+          "result": "pending"
+        },
+        {
+          "leg": "Dak Prescott 200+ pass yds",
+          "prob": 0.772,
+          "game": "DAL @ IND",
+          "result": "pending"
+        },
+        {
+          "leg": "CeeDee Lamb 50+ rec yds",
+          "prob": 0.768,
+          "game": "DAL @ IND",
+          "result": "pending"
+        },
+        {
+          "leg": "Ja'Marr Chase 50+ rec yds",
+          "prob": 0.768,
+          "game": "CIN @ ATL",
+          "result": "pending"
+        }
+      ]
+    },
+    {
+      "id": 161,
+      "date": "2026-11-08",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Brock Bowers anytime TD (LV @ SF)",
+      "price": 115.0,
+      "prob": 0.425,
+      "stake": 0.0,
+      "market_prob": 0.4347452530286107,
+      "book": "Fanatics",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "ticket leg; forecast only. implied 20.75, share 0.24, lambda 0.55. SportsInteraction +140; LV trailing script; SF pass D got Bosa back.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 162,
+      "date": "2026-11-08",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Travis Kelce anytime TD (NYJ @ KC)",
+      "price": 145.0,
+      "prob": 0.414,
+      "stake": 0.0,
+      "market_prob": 0.38134501417160527,
+      "book": "Bleacher Nation listing",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "ticket leg; forecast only. implied 28.25, share 0.17, lambda 0.53. Kalshi ~41%; 1+ rec TD model 26.5% per Bleacher Nation.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 163,
+      "date": "2026-11-08",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Mike Gesicki anytime TD (CIN @ ATL, Madrid)",
+      "price": 220.0,
+      "prob": 0.389,
+      "stake": 0.0,
+      "market_prob": 0.2692243783641941,
+      "book": "SI listing",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "ticket leg; forecast only. implied 27.75, share 0.16, lambda 0.49. SI: scored in 6 of 7 games; CIN TE usage high.",
+      "confidence": null,
+      "legs": []
+    },
+    {
+      "id": 164,
+      "date": "2026-11-08",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Home-run 4-leg TD ticket: Ja'Marr Chase anytime TD, Jameson Williams anytime TD, Brock Bowers anytime TD, Travis Kelce anytime TD",
+      "price": 2736.0,
+      "prob": 0.0357,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "Cross-game, no correlation. Book payout +2736 ($1 -> $28.36). Jordan joint 3.57% (fair +2700); market joint 2.69%.",
+      "confidence": null,
+      "legs": [
+        {
+          "leg": "Ja'Marr Chase anytime TD (CIN @ ATL, Madrid)",
+          "prob": 0.537,
+          "price": -115.0,
+          "result": "pending"
+        },
+        {
+          "leg": "Jameson Williams anytime TD (DET @ MIA)",
+          "prob": 0.378,
+          "price": 188.0,
+          "result": "pending"
+        },
+        {
+          "leg": "Brock Bowers anytime TD (LV @ SF)",
+          "prob": 0.425,
+          "price": 115.0,
+          "result": "pending"
+        },
+        {
+          "leg": "Travis Kelce anytime TD (NYJ @ KC)",
+          "prob": 0.414,
+          "price": 145.0,
+          "result": "pending"
+        }
+      ]
+    },
+    {
+      "id": 165,
+      "date": "2026-11-08",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Grand-slam 5-leg TD ticket: Ja'Marr Chase anytime TD, Jameson Williams anytime TD, Brock Bowers anytime TD, Travis Kelce anytime TD, Mike Gesicki anytime TD",
+      "price": 8976.0,
+      "prob": 0.0143,
+      "stake": 0.0,
+      "market_prob": null,
+      "book": null,
+      "result": "pending",
+      "closing_price": null,
+      "notes": "Chase+Gesicki same offense, x1.03. Book payout +8976 ($1 -> $90.76). Jordan joint 1.43% (fair +6888); market joint 0.72%.",
+      "confidence": null,
+      "legs": [
+        {
+          "leg": "Ja'Marr Chase anytime TD (CIN @ ATL, Madrid)",
+          "prob": 0.537,
+          "price": -115.0,
+          "result": "pending"
+        },
+        {
+          "leg": "Jameson Williams anytime TD (DET @ MIA)",
+          "prob": 0.378,
+          "price": 188.0,
+          "result": "pending"
+        },
+        {
+          "leg": "Brock Bowers anytime TD (LV @ SF)",
+          "prob": 0.425,
+          "price": 115.0,
+          "result": "pending"
+        },
+        {
+          "leg": "Travis Kelce anytime TD (NYJ @ KC)",
+          "prob": 0.414,
+          "price": 145.0,
+          "result": "pending"
+        },
+        {
+          "leg": "Mike Gesicki anytime TD (CIN @ ATL, Madrid)",
+          "prob": 0.389,
+          "price": 220.0,
+          "result": "pending"
+        }
+      ]
+    },
+    {
+      "id": 166,
+      "date": "2026-11-08",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Packers ML (GB @ NE)",
+      "price": 145.0,
+      "prob": 0.4,
+      "stake": 0.0,
+      "market_prob": 0.4003612281757977,
+      "book": "ABC7 listing",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "NO BET",
+      "confidence": 0.6825396825396826,
+      "legs": []
+    },
+    {
+      "id": 167,
+      "date": "2026-11-08",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Giants ML (NYG @ PHI)",
+      "price": -162.0,
+      "prob": 0.62,
+      "stake": 0.0,
+      "market_prob": 0.593369754159424,
+      "book": "VegasInsider listing",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "also considered; forecast only",
+      "confidence": 0.6825396825396826,
+      "legs": []
+    },
+    {
+      "id": 168,
+      "date": "2026-11-08",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Colts ML (DAL @ IND)",
+      "price": 215.0,
+      "prob": 0.34,
+      "stake": 0.0,
+      "market_prob": 0.2912330880095309,
+      "book": "bet365 (via SBR)",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "also considered; forecast only",
+      "confidence": 0.6825396825396826,
+      "legs": []
+    },
+    {
+      "id": 169,
+      "date": "2026-11-08",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Browns ML (CLE @ NO)",
+      "price": 136.0,
+      "prob": 0.41,
+      "stake": 0.0,
+      "market_prob": 0.4066302458405761,
+      "book": "ESPN listing",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "also considered; forecast only",
+      "confidence": 0.6825396825396826,
+      "legs": []
+    },
+    {
+      "id": 170,
+      "date": "2026-11-08",
+      "author": "jordan",
+      "sport": "nfl",
+      "description": "Panthers ML (DEN @ CAR)",
+      "price": 130.0,
+      "prob": 0.42,
+      "stake": 0.0,
+      "market_prob": 0.41700735895339325,
+      "book": "ESPN listing",
+      "result": "pending",
+      "closing_price": null,
+      "notes": "also considered; forecast only",
+      "confidence": 0.6825396825396826,
+      "legs": []
     }
   ]
 }
