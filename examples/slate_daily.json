@@ -1,0 +1,24 @@
+{
+  "_what": "A day's slate. Every candidate is something you could bet, with YOUR probability attached. Jordan ranks them, picks one to forecast, and decides separately whether it is a bet.",
+  "_run": "python3 -m jordan card examples/slate_daily.json --log",
+
+  "date": "2026-09-09",
+  "sport": "nfl",
+  "bankroll": 1000,
+
+  "_known": "Checklist keys you have actually checked. Run `python3 -m jordan checklist nfl` to see them all. What you leave out raises the edge Jordan demands before betting.",
+  "known": ["qb_status", "injury_report", "line_movement", "key_numbers",
+            "weather", "pace_tendency", "snap_share", "rest_travel"],
+
+  "candidates": [
+    {"description": "SEA -3.5 vs NE", "price": -110, "prob": 0.5144,
+     "market": [-110, -110], "book": "pinnacle",
+     "notes": "cover prob from de-vigged ML minus the 1/2/3 margin mass"},
+    {"description": "SEA ML", "price": -180, "prob": 0.6164,
+     "market": [-180, 150], "book": "circa"},
+    {"description": "Under 45.5", "price": -108, "prob": 0.545,
+     "market": [-108, -112], "book": "circa"},
+    {"description": "NE +3.5", "price": -110, "prob": 0.4856,
+     "market": [-110, -110], "book": "draftkings"}
+  ]
+}

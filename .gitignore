@@ -4,3 +4,11 @@
 *.md
 __pycache__/
 *.pyc
+
+# Jordan ships its own documentation -- the blanket *.md rule above would eat it
+!jordan/*.md
+!examples/*.md
+
+# The pick ledger is tracked so its history survives session resets; only the
+# half-written temp file from an interrupted save is ignored.
+jordan_ledger.json.tmp

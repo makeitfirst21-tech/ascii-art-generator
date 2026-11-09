@@ -1,0 +1,53 @@
+{
+ "date": "2026-10-25",
+ "sport": "nfl",
+ "bankroll": 1000,
+ "known": [
+  "qb_status",
+  "injury_report",
+  "ol_dl_availability",
+  "snap_share",
+  "line_movement",
+  "rest_travel",
+  "key_numbers"
+ ],
+ "context": "Week 7 moneylines priced 12:45 PM ET.",
+ "candidates": [
+  {
+   "description": "Bengals ML (CIN @ BAL)",
+   "price": 133,
+   "prob": 0.48,
+   "sport": "nfl",
+   "book": "bet365",
+   "market": [
+    133,
+    -158
+   ],
+   "notes": "Lamar OUT (Huntley 3rd start; BAL 143 pass ypg, 5.9 ypa under Huntley vs 241/10.1 with Lamar; Huntley lost to CLE). BAL opened -180, now -150/-158; ESPN shows CIN -105. Burrow full go."
+  },
+  {
+   "description": "Falcons ML (SF @ ATL)",
+   "price": 124,
+   "prob": 0.46,
+   "sport": "nfl",
+   "book": "ESPN listing",
+   "market": [
+    124,
+    -148
+   ],
+   "notes": "SF without Bosa, Evans, Deebo; short week after MNF. Already steamed from +185 to +124."
+  },
+  {
+   "description": "Chiefs ML (KC @ SEA)",
+   "price": 120,
+   "prob": 0.45,
+   "sport": "nfl",
+   "book": "range +110 to +128",
+   "market": [
+    120,
+    -140
+   ],
+   "notes": "KC undefeated; SEA best pass D. Price range across books."
+  }
+ ]
+}

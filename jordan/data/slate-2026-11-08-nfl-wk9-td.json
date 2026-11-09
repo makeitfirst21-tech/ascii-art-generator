@@ -1,0 +1,202 @@
+{
+ "date": "2026-11-08",
+ "sport": "nfl",
+ "bankroll": 1000,
+ "context": "Week 9 Sunday. Team TDs ~ implied/9; P = 1 - exp(-teamTDs x share). Priced ~1:45 AM ET from Friday final injury reports; inactives not yet posted. Madrid game 9:30 AM ET.",
+ "candidates": [
+  {
+   "description": "Jahmyr Gibbs anytime TD (DET @ MIA)",
+   "price": -400,
+   "prob": 0.736,
+   "sport": "nfl",
+   "book": "Fanatics",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 28.50, share 0.42, lambda 1.33. off the injury report (shoulder cleared); Montgomery gone, Gibbs is the bell cow; rush line 100.5. Kalshi 76%, Dimers 70.5%."
+  },
+  {
+   "description": "Christian McCaffrey anytime TD (LV @ SF)",
+   "price": -275,
+   "prob": 0.708,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 30.75, share 0.36, lambda 1.23. cleared (hamstring), workload may be managed; Evans, Deebo, Kirk OUT. LV run D 2nd-worst (146/game). Fanatics -320, SI -263."
+  },
+  {
+   "description": "Bijan Robinson anytime TD (CIN @ ATL, Madrid)",
+   "price": -235,
+   "prob": 0.693,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 24.75, share 0.43, lambda 1.18. Brian Robinson OUT, only healthy back; 780 rush yds leads NFL. bet365 -310, other BetMGM page -275. Dimers 65.2%."
+  },
+  {
+   "description": "Kenneth Walker III anytime TD (NYJ @ KC)",
+   "price": -190,
+   "prob": 0.645,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 28.25, share 0.33, lambda 1.04. KC -10 vs Jets (Garrett Wilson OUT); rush line 90.5. BetMGM page implies 71%. Clean weather."
+  },
+  {
+   "description": "Javonte Williams anytime TD (DAL @ IND)",
+   "price": -190,
+   "prob": 0.637,
+   "sport": "nfl",
+   "book": "BetMGM (from 65.4% implied)",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 28.50, share 0.32, lambda 1.01. 80% of DAL backfield carries; DAL implied 28.5. Price reconstructed from BetMGM's stated 65.4%. Price reconstructed from a stated probability, not read off a book.",
+   "price_verified": false
+  },
+  {
+   "description": "Kyren Williams anytime TD (LAR @ WSH)",
+   "price": -145,
+   "prob": 0.581,
+   "sport": "nfl",
+   "book": "Fanatics",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 27.00, share 0.29, lambda 0.87. Stafford elbow soreness (full practice, no designation) -> run-leaning; Corum scored too last game. DK -155, Fanatics -145. Kalshi 58%."
+  },
+  {
+   "description": "Jonathan Taylor anytime TD (DAL @ IND)",
+   "price": -139,
+   "prob": 0.612,
+   "sport": "nfl",
+   "book": "BetMGM (from 58.1% implied)",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 23.00, share 0.37, lambda 0.95. DAL run D worst (152.8/game), worst 3rd-down D. Steichen: no workload limit despite trade rumors. Only 12 touches in 42-7 loss last week. Kalshi 54%. Price reconstructed from a stated probability, not read off a book.",
+   "price_verified": false
+  },
+  {
+   "description": "Ja'Marr Chase anytime TD (CIN @ ATL, Madrid)",
+   "price": -115,
+   "prob": 0.537,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 27.75, share 0.25, lambda 0.77. 11-141-1 last week; total 52.5 highest on slate."
+  },
+  {
+   "description": "George Kittle anytime TD (LV @ SF)",
+   "price": -118,
+   "prob": 0.512,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 30.75, share 0.21, lambda 0.72. Evans, Deebo, Kirk all OUT -> top target; LV allows 2.8 pass TD/game last 4. Fanatics -120."
+  },
+  {
+   "description": "D'Andre Swift anytime TD (TB @ CHI, SNF)",
+   "price": -175,
+   "prob": 0.654,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 26.50, share 0.36, lambda 1.06. 10 rush TDs in 8 games; Monangai (turf toe) may return and take some work."
+  },
+  {
+   "description": "Josh Jacobs anytime TD (GB @ NE)",
+   "price": -135,
+   "prob": 0.601,
+   "sport": "nfl",
+   "book": "FanDuel",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 21.75, share 0.38, lambda 0.92. Dimers 48%; Stevenson -135 on the other side; line moved toward NE."
+  },
+  {
+   "description": "Jameson Williams anytime TD (DET @ MIA)",
+   "price": 188,
+   "prob": 0.378,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "known": [
+    "qb_status",
+    "injury_report",
+    "weather",
+    "snap_share",
+    "rest_travel",
+    "key_numbers"
+   ],
+   "notes": "implied 28.50, share 0.15, lambda 0.47. 2 TD vs GB in Week 7; St. Brown questionable (ribs) -> more looks if limited. Fanatics +150, Kalshi 37%."
+  }
+ ]
+}

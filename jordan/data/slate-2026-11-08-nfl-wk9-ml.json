@@ -1,0 +1,76 @@
+{
+ "date": "2026-11-08",
+ "sport": "nfl",
+ "bankroll": 1000,
+ "known": [
+  "qb_status",
+  "injury_report",
+  "weather",
+  "line_movement",
+  "rest_travel",
+  "key_numbers"
+ ],
+ "context": "Week 9 moneylines priced ~2:30 AM ET from Friday final injury reports; inactives not posted.",
+ "candidates": [
+  {
+   "description": "Colts ML (DAL @ IND)",
+   "price": 215,
+   "prob": 0.34,
+   "book": "bet365 (via SBR)",
+   "market": [
+    215,
+    -265
+   ],
+   "notes": "IND home +5.5. DAL run D worst (152.8/game) and worst 3rd-down D (51.4%); DAL lost at home to ARI/Minshew in OT. Against: IND lost 42-7 to JAX, sold DeForest Buckner to SF. ESPN shows +190/-230.",
+   "sport": "nfl"
+  },
+  {
+   "description": "Packers ML (GB @ NE)",
+   "price": 145,
+   "prob": 0.4,
+   "book": "ABC7 listing",
+   "market": [
+    140,
+    -166
+   ],
+   "notes": "Opened NE -140/GB +115, steamed to NE -166/-175 -- respect the move. Love line 276.5, clean weather.",
+   "sport": "nfl"
+  },
+  {
+   "description": "Browns ML (CLE @ NO)",
+   "price": 136,
+   "prob": 0.41,
+   "book": "ESPN listing",
+   "market": [
+    136,
+    -162
+   ],
+   "notes": "Shedeur Sanders starts (Watson cleared but benched). NO worst run D by EPA. bet365 has CLE +123.",
+   "sport": "nfl"
+  },
+  {
+   "description": "Panthers ML (DEN @ CAR)",
+   "price": 130,
+   "prob": 0.42,
+   "book": "ESPN listing",
+   "market": [
+    130,
+    -155
+   ],
+   "notes": "DEN rising after a big win; CAR run D 3rd-worst (140.7). bet365 CAR +127.",
+   "sport": "nfl"
+  },
+  {
+   "description": "Giants ML (NYG @ PHI)",
+   "price": -162,
+   "prob": 0.62,
+   "book": "VegasInsider listing",
+   "market": [
+    -162,
+    136
+   ],
+   "notes": "PHI: Hurts on IR (blood clots), 3rd QB Joe Milton, six-game skid, DeVonta Smith OUT. NYG: Skattebo doubtful, Tracy and Dart on IR, McCarthy at QB. Gusts to 26 mph possible.",
+   "sport": "nfl"
+  }
+ ]
+}

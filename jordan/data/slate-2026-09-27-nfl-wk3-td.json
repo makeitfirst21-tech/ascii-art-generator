@@ -1,0 +1,33 @@
+{
+  "date": "2026-09-27",
+  "sport": "nfl",
+  "bankroll": 1000,
+  "context": "Week 3 Sunday. Implied: BUF 28.6 (-7, 50), BAL 28.25 (-3.5, 53, Rio 4:25 ET), KC 28.0 (-10.5 at MIA, 45.5), DAL 24.75. Team TDs ~ implied/9. P = 1 - exp(-teamTDs x share). DAL out: CB Durant, S Hooker, S Locke, LB Overshown. BAL out: LT Stanley, WR Flowers, WR Lane (IR). BUF: 68F, NNE 13 gust 21, dry; Moore/Coleman Q. MIA warm, dry. Rio weather not checked. Teams checked: Walker on KC (two sources), Moore on BUF, J. Williams on DAL.",
+  "known": ["qb_status", "injury_report", "ol_dl_availability", "snap_share", "line_movement", "rest_travel", "key_numbers"],
+  "candidates": [
+    {"description": "Mark Andrews anytime TD (DAL vs BAL, Rio)", "price": 148, "prob": 0.46, "sport": "nfl", "book": "BetRivers",
+     "market": [125, -167],
+     "notes": "share 0.20 of 3.14 BAL TDs: Flowers + Lane out leave Andrews and Bateman; DAL missing 3 DBs + a LB and has allowed 2 TE TDs. Market = +125 consensus with 7% overround synthesised. Also +135 FD, +150 LetsBet, +115 low."},
+    {"description": "James Cook anytime TD (LAC @ BUF)", "price": -185, "prob": 0.615, "sport": "nfl", "book": "Fanatics",
+     "known": ["qb_status", "injury_report", "ol_dl_availability", "snap_share", "line_movement", "rest_travel", "key_numbers", "weather"],
+     "notes": "share 0.30 of 3.18 BUF TDs; Allen vultures at the goal line."},
+    {"description": "Derrick Henry anytime TD (DAL vs BAL, Rio)", "price": -225, "prob": 0.635, "sport": "nfl", "book": "Fanatics",
+     "notes": "share 0.33 of 3.14; LT Stanley out trims the run game."},
+    {"description": "Kenneth Walker III anytime TD (KC @ MIA)", "price": -225, "prob": 0.61, "sport": "nfl", "price_verified": false,
+     "known": ["qb_status", "injury_report", "ol_dl_availability", "snap_share", "line_movement", "rest_travel", "key_numbers", "weather"],
+     "notes": "share 0.30 of 3.11 KC TDs; 290 rush yds in 2 games, stuffed 3x at the 1 last week; MIA run D among worst. Book not named."},
+    {"description": "Josh Allen anytime TD (LAC @ BUF)", "price": -154, "prob": 0.50, "sport": "nfl", "price_verified": false,
+     "known": ["qb_status", "injury_report", "ol_dl_availability", "snap_share", "line_movement", "rest_travel", "key_numbers", "weather"],
+     "notes": "share 0.22 of 3.18. Price backed out of a stated 60.6%, book not named."},
+    {"description": "Javonte Williams anytime TD (DAL vs BAL, Rio)", "price": -143, "prob": 0.53, "sport": "nfl", "price_verified": false,
+     "notes": "share 0.28 of 2.75 DAL TDs. Price from a stated 58.8%, book not named."},
+    {"description": "CeeDee Lamb anytime TD (DAL vs BAL, Rio)", "price": 120, "prob": 0.42, "sport": "nfl", "price_verified": false,
+     "notes": "share 0.20 of 2.75. Price from a stated 45.5%, book not named."},
+    {"description": "Travis Kelce anytime TD (KC @ MIA)", "price": 140, "prob": 0.33, "sport": "nfl", "price_verified": false,
+     "known": ["qb_status", "injury_report", "ol_dl_availability", "snap_share", "line_movement", "rest_travel", "key_numbers", "weather"],
+     "notes": "share 0.13 of 3.11. Price from a stated 41.7%, book not named."},
+    {"description": "Dalton Kincaid anytime TD (LAC @ BUF)", "price": 190, "prob": 0.32, "sport": "nfl", "price_verified": false,
+     "known": ["qb_status", "injury_report", "ol_dl_availability", "snap_share", "line_movement", "rest_travel", "key_numbers", "weather"],
+     "notes": "share 0.12 of 3.18. 19/10 quoted by a UK site; US book not named."}
+  ]
+}

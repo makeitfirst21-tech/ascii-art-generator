@@ -1,0 +1,94 @@
+{
+ "date": "2026-10-22",
+ "sport": "nfl",
+ "bankroll": 1000,
+ "known": [
+  "qb_status",
+  "injury_report",
+  "ol_dl_availability",
+  "weather",
+  "snap_share",
+  "line_movement",
+  "rest_travel",
+  "key_numbers"
+ ],
+ "context": "TNF NE @ CHI 8:15 ET. CHI -3 (opened -2.5), total 50.5 (opened 47.5-49.5). Implied CHI 26.75, NE 23.75. 58-60F, clear, wind 3-6 mph. Team TDs ~ implied/9. Priced 2:50 PM ET.",
+ "candidates": [
+  {
+   "description": "D'Andre Swift anytime TD (NE @ CHI)",
+   "price": -155,
+   "prob": 0.657,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 26.75, share 0.36, lambda 1.07. Monangai OUT (final report). 26 RZ carries = 41.9% share with Monangai active; 6 rush TD on 94 carries. Caleb Williams vultures some. Market = -160 consensus (bet365), -170 Fanatics.",
+   "market": [
+    -160,
+    120
+   ]
+  },
+  {
+   "description": "Rhamondre Stevenson anytime TD (NE @ CHI)",
+   "price": -105,
+   "prob": 0.44,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 23.75, share 0.22, lambda 0.58. Three-way backfield; both NE starting guards out. -115 bet365."
+  },
+  {
+   "description": "A.J. Brown anytime TD (NE @ CHI)",
+   "price": 135,
+   "prob": 0.361,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 23.75, share 0.17, lambda 0.45. Confirmed on NE across books. CHI CB T. Stevenson Q. +125 bet365."
+  },
+  {
+   "description": "Rome Odunze anytime TD (NE @ CHI)",
+   "price": 175,
+   "prob": 0.36,
+   "sport": "nfl",
+   "book": "bet365",
+   "notes": "implied 26.75, share 0.15, lambda 0.45. NE missing 3 CBs (Davis, Canada, Prunty)."
+  },
+  {
+   "description": "Luther Burden III anytime TD (NE @ CHI)",
+   "price": 175,
+   "prob": 0.32,
+   "sport": "nfl",
+   "book": "bet365",
+   "notes": "implied 26.75, share 0.13, lambda 0.39. +165 elsewhere. NE missing 3 CBs."
+  },
+  {
+   "description": "Colston Loveland anytime TD (NE @ CHI)",
+   "price": 190,
+   "prob": 0.32,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 26.75, share 0.13, lambda 0.39. +170 bet365."
+  },
+  {
+   "description": "Hunter Henry anytime TD (NE @ CHI)",
+   "price": 240,
+   "prob": 0.252,
+   "sport": "nfl",
+   "book": "BetMGM",
+   "notes": "implied 23.75, share 0.11, lambda 0.29. +210 bet365."
+  },
+  {
+   "description": "Caleb Williams anytime TD (NE @ CHI)",
+   "price": 350,
+   "prob": 0.212,
+   "sport": "nfl",
+   "book": "DraftKings",
+   "notes": "implied 26.75, share 0.08, lambda 0.24. Back from hamstring."
+  },
+  {
+   "description": "TreVeyon Henderson anytime TD (NE @ CHI)",
+   "price": 310,
+   "prob": 0.211,
+   "sport": "nfl",
+   "book": "bet365",
+   "notes": "implied 23.75, share 0.09, lambda 0.24. Three-way backfield."
+  }
+ ]
+}
