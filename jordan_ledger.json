@@ -2310,7 +2310,7 @@
       "stake": 0.0,
       "market_prob": 0.3244418880540676,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "NO BET -- the edge is all disagreement",
       "confidence": 0.6666666666666666,
@@ -2327,7 +2327,7 @@
       "stake": 0.0,
       "market_prob": 0.5438496039698445,
       "book": "BetMGM (from 58.1% implied)",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only; price was an estimate",
       "confidence": 0.6666666666666666,
@@ -2344,7 +2344,7 @@
       "stake": 0.0,
       "market_prob": 0.5371282253299192,
       "book": "FanDuel",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -2361,7 +2361,7 @@
       "stake": 0.0,
       "market_prob": 0.5951417004048584,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -2378,7 +2378,7 @@
       "stake": 0.0,
       "market_prob": 0.5,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -2395,7 +2395,7 @@
       "stake": 0.0,
       "market_prob": 0.7752353305972784,
       "book": "Fanatics",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -2412,7 +2412,7 @@
       "stake": 0.0,
       "market_prob": 0.6552965992694346,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -2429,7 +2429,7 @@
       "stake": 0.0,
       "market_prob": 0.61224762668806,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -2446,7 +2446,7 @@
       "stake": 0.0,
       "market_prob": 0.5529604963050816,
       "book": "Fanatics",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -2463,7 +2463,7 @@
       "stake": 0.0,
       "market_prob": 0.61224762668806,
       "book": "BetMGM (from 65.4% implied)",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only; price was an estimate",
       "confidence": 0.6666666666666666,
@@ -2480,7 +2480,7 @@
       "stake": 0.0,
       "market_prob": 0.6853366897419761,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -2497,7 +2497,7 @@
       "stake": 0.0,
       "market_prob": 0.5060689431946916,
       "book": "BetMGM",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6666666666666666,
@@ -2514,7 +2514,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. line 276.5; GB +3 dog -> passing script; NE 13th (217 ypg). Normal, sd 70. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2531,7 +2531,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. lines 270.5-276.5; ATL 19th (223 ypg); total 52.5, highest on slate. Normal, sd 70. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2548,7 +2548,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. lines 258.5-261.5; MIA 16th (221 ypg); DET -7 blowout haircut. Normal, sd 70. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2565,7 +2565,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. lines 258.5-259.5; IND held QBs <185 ypg last 4; DAL -5.5. Normal, sd 70. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2582,7 +2582,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. lines 243.5-250; 305/308/247 since hamstring; CHI -6. Normal, sd 70. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2599,7 +2599,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. lines 246.5-252.5; WSH 4th-most QB fantasy pts; elbow soreness, <=33 att last 3; gusts ~21 mph early. Normal, sd 70. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2616,7 +2616,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. line 245.5; LV allowed 279 pass ypg, 2.8 TD last 4; Evans/Deebo/Kirk OUT; SF -10 blowout haircut. Normal, sd 70. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2633,7 +2633,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. lines 244.5-245.5; KC -10 blowout haircut. Normal, sd 70. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2650,7 +2650,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. no line found (estimate); ATL +3 dog in a 52.5 total. Normal, sd 70. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2667,45 +2667,45 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "fair price; no book price. Built for the user's QB request.",
+      "notes": "fair price; no book price. Built for the user's QB request. 6 of 7 legs hit. Lost on Jared Goff 200+ pass yds (170).",
       "confidence": null,
       "legs": [
         {
           "leg": "Jordan Love 200+ pass yds",
           "prob": 0.864,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Joe Burrow 200+ pass yds",
           "prob": 0.855,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Jared Goff 200+ pass yds",
           "prob": 0.786,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Dak Prescott 200+ pass yds",
           "prob": 0.772,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Caleb Williams 200+ pass yds",
           "prob": 0.731,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Matthew Stafford 200+ pass yds",
           "prob": 0.72,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Brock Purdy 200+ pass yds",
           "prob": 0.714,
-          "result": "pending"
+          "result": "win"
         }
       ]
     },
@@ -2720,7 +2720,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. line 100.5; shoulder cleared, off report. Lognormal, sigma 0.45. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2737,7 +2737,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. lines 92.5-96.5; Brian Robinson OUT; leads NFL 780 yds. Lognormal, sigma 0.45. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2754,7 +2754,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. line 90.5; KC -10 run-out script. Lognormal, sigma 0.45. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2771,7 +2771,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. no line (estimate); 80% of DAL RB carries. Lognormal, sigma 0.45. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2788,7 +2788,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. lines 60.5-61.5, FTN proj 88; DAL worst run D (152.8/game, 5.0 ypc); 12 touches in last week's blowout. Lognormal, sigma 0.45. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2805,7 +2805,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. line 63.5; 728 yds (4th). Lognormal, sigma 0.45. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2822,7 +2822,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. lines 59.5-63.5; TB allows fewest RB rush yds; Monangai may return. Lognormal, sigma 0.45. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2839,7 +2839,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. attempts 13.5-14.5, ~4.3 ypc. Lognormal, sigma 0.45. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2856,7 +2856,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. no line; LV run D 2nd-worst (146/game); hamstring, workload may be managed. Lognormal, sigma 0.45. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2873,7 +2873,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. line 53.5; NYG run D 26th (128/game); ~1/3 snaps last week; Joe Milton at QB. Lognormal, sigma 0.45. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2890,45 +2890,45 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "fair price; no book price. Kyren over Swift to keep the two SNF backs apart.",
+      "notes": "fair price; no book price. Kyren over Swift to keep the two SNF backs apart. 5 of 7 legs hit. Lost on Jonathan Taylor 50+ rush yds (46), Kyren Williams 50+ rush yds (45).",
       "confidence": null,
       "legs": [
         {
           "leg": "Jahmyr Gibbs 50+ rush yds",
           "prob": 0.911,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Bijan Robinson 50+ rush yds",
           "prob": 0.903,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Kenneth Walker III 50+ rush yds",
           "prob": 0.888,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Javonte Williams 50+ rush yds",
           "prob": 0.777,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Jonathan Taylor 50+ rush yds",
           "prob": 0.74,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Bucky Irving 50+ rush yds",
           "prob": 0.7,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Kyren Williams 50+ rush yds",
           "prob": 0.655,
-          "result": "pending"
+          "result": "loss"
         }
       ]
     },
@@ -2943,7 +2943,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. line 92.5; short aDOT with Stafford's elbow; wind early. Lognormal, sigma 0.60. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2960,7 +2960,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. proj 81.5; Pickens questionable (hamstring). Lognormal, sigma 0.60. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2977,7 +2977,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. proj 78.5; 11-141-1 last week. Lognormal, sigma 0.60. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -2994,7 +2994,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. no line; 624 yds in 7; ATL likely trailing. Lognormal, sigma 0.60. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3011,7 +3011,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. proj 92.5 before Darnold was ruled out; Drew Lock starts. Lognormal, sigma 0.60. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3028,7 +3028,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. no line; questionable (ribs), expected to play. Lognormal, sigma 0.60. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3045,7 +3045,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. no line; LAC 7th vs pass (198 ypg); Stroud 153 last game. Lognormal, sigma 0.60. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3062,7 +3062,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. no line; Shedeur Sanders starts for CLE. Lognormal, sigma 0.60. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3079,45 +3079,45 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
-      "notes": "fair price; no book price. ",
+      "notes": "fair price; no book price.  7 of 7 legs hit.",
       "confidence": null,
       "legs": [
         {
           "leg": "Puka Nacua 50+ rec yds",
           "prob": 0.811,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "CeeDee Lamb 50+ rec yds",
           "prob": 0.768,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Ja'Marr Chase 50+ rec yds",
           "prob": 0.768,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Drake London 50+ rec yds",
           "prob": 0.729,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Jaxon Smith-Njigba 50+ rec yds",
           "prob": 0.716,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Amon-Ra St. Brown 50+ rec yds",
           "prob": 0.684,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Nico Collins 50+ rec yds",
           "prob": 0.626,
-          "result": "pending"
+          "result": "win"
         }
       ]
     },
@@ -3132,7 +3132,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. no line; Evans, Deebo, Kirk OUT; 8-88 last game. Lognormal, sigma 0.65. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3149,7 +3149,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. no line; 73 yds last game; LV likely trailing. Lognormal, sigma 0.65. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3166,7 +3166,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. no line; leads TEs in targets (86); Minshew first start. Lognormal, sigma 0.65. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3183,7 +3183,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. line 52.5. Lognormal, sigma 0.65. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3200,7 +3200,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. Covers proj 52. Lognormal, sigma 0.65. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3217,7 +3217,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. no line; 4-48-1 last game. Lognormal, sigma 0.65. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3234,7 +3234,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. line 45.5; KC -10 blowout haircut. Lognormal, sigma 0.65. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3251,7 +3251,7 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "no book price for the alt; fair price. line 41.5; CIN allows 2nd-most TE yds (621 in 7). Lognormal, sigma 0.65. Logged ~2:15 AM ET, before inactives.",
       "confidence": null,
@@ -3268,45 +3268,45 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "fair price; no book price. ",
+      "notes": "fair price; no book price.  6 of 7 legs hit. Lost on Tucker Kraft 30+ rec yds (1).",
       "confidence": null,
       "legs": [
         {
           "leg": "George Kittle 30+ rec yds",
           "prob": 0.868,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Brock Bowers 30+ rec yds",
           "prob": 0.843,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Trey McBride 30+ rec yds",
           "prob": 0.821,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Colston Loveland 30+ rec yds",
           "prob": 0.792,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Tyler Warren 30+ rec yds",
           "prob": 0.788,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Tucker Kraft 30+ rec yds",
           "prob": 0.722,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Travis Kelce 30+ rec yds",
           "prob": 0.708,
-          "result": "pending"
+          "result": "win"
         }
       ]
     },
@@ -3321,100 +3321,100 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "fair price; no book price. Correlated sim (Burrow-Chase .5, Dak-Lamb .5). Javonte Williams (78%, no posted line) left off as the 16th.",
+      "notes": "fair price; no book price. Correlated sim (Burrow-Chase .5, Dak-Lamb .5). Javonte Williams (78%, no posted line) left off as the 16th. 14 of 15 legs hit. Lost on Jared Goff 200+ pass yds (170).",
       "confidence": null,
       "legs": [
         {
           "leg": "Jahmyr Gibbs 50+ rush yds",
           "prob": 0.911,
           "game": "DET @ MIA",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Bijan Robinson 50+ rush yds",
           "prob": 0.903,
           "game": "CIN @ ATL",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Kenneth Walker III 50+ rush yds",
           "prob": 0.888,
           "game": "NYJ @ KC",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "George Kittle 30+ rec yds",
           "prob": 0.868,
           "game": "LV @ SF",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Jordan Love 200+ pass yds",
           "prob": 0.864,
           "game": "GB @ NE",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Joe Burrow 200+ pass yds",
           "prob": 0.855,
           "game": "CIN @ ATL",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Brock Bowers 30+ rec yds",
           "prob": 0.843,
           "game": "LV @ SF",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Trey McBride 30+ rec yds",
           "prob": 0.821,
           "game": "ARI @ SEA",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Puka Nacua 50+ rec yds",
           "prob": 0.811,
           "game": "LAR @ WSH",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Colston Loveland 30+ rec yds",
           "prob": 0.792,
           "game": "TB @ CHI",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Tyler Warren 30+ rec yds",
           "prob": 0.788,
           "game": "DAL @ IND",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Jared Goff 200+ pass yds",
           "prob": 0.786,
           "game": "DET @ MIA",
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Dak Prescott 200+ pass yds",
           "prob": 0.772,
           "game": "DAL @ IND",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "CeeDee Lamb 50+ rec yds",
           "prob": 0.768,
           "game": "DAL @ IND",
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Ja'Marr Chase 50+ rec yds",
           "prob": 0.768,
           "game": "CIN @ ATL",
-          "result": "pending"
+          "result": "win"
         }
       ]
     },
@@ -3429,7 +3429,7 @@
       "stake": 0.0,
       "market_prob": 0.4347452530286107,
       "book": "Fanatics",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "ticket leg; forecast only. implied 20.75, share 0.24, lambda 0.55. SportsInteraction +140; LV trailing script; SF pass D got Bosa back.",
       "confidence": null,
@@ -3446,7 +3446,7 @@
       "stake": 0.0,
       "market_prob": 0.38134501417160527,
       "book": "Bleacher Nation listing",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "ticket leg; forecast only. implied 28.25, share 0.17, lambda 0.53. Kalshi ~41%; 1+ rec TD model 26.5% per Bleacher Nation.",
       "confidence": null,
@@ -3463,7 +3463,7 @@
       "stake": 0.0,
       "market_prob": 0.2692243783641941,
       "book": "SI listing",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "ticket leg; forecast only. implied 27.75, share 0.16, lambda 0.49. SI: scored in 6 of 7 games; CIN TE usage high.",
       "confidence": null,
@@ -3480,34 +3480,34 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "Cross-game, no correlation. Book payout +2736 ($1 -> $28.36). Jordan joint 3.57% (fair +2700); market joint 2.69%.",
+      "notes": "Cross-game, no correlation. Book payout +2736 ($1 -> $28.36). Jordan joint 3.57% (fair +2700); market joint 2.69%. 3 of 4 legs hit. Lost on Jameson Williams anytime TD (no TD; DET TD was Gibbs only).",
       "confidence": null,
       "legs": [
         {
           "leg": "Ja'Marr Chase anytime TD (CIN @ ATL, Madrid)",
           "prob": 0.537,
           "price": -115.0,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Jameson Williams anytime TD (DET @ MIA)",
           "prob": 0.378,
           "price": 188.0,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Brock Bowers anytime TD (LV @ SF)",
           "prob": 0.425,
           "price": 115.0,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Travis Kelce anytime TD (NYJ @ KC)",
           "prob": 0.414,
           "price": 145.0,
-          "result": "pending"
+          "result": "win"
         }
       ]
     },
@@ -3522,40 +3522,40 @@
       "stake": 0.0,
       "market_prob": null,
       "book": null,
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
-      "notes": "Chase+Gesicki same offense, x1.03. Book payout +8976 ($1 -> $90.76). Jordan joint 1.43% (fair +6888); market joint 0.72%.",
+      "notes": "Chase+Gesicki same offense, x1.03. Book payout +8976 ($1 -> $90.76). Jordan joint 1.43% (fair +6888); market joint 0.72%. 3 of 5 legs hit. Lost on Jameson Williams anytime TD (no TD; DET TD was Gibbs only), Mike Gesicki anytime TD (no TD).",
       "confidence": null,
       "legs": [
         {
           "leg": "Ja'Marr Chase anytime TD (CIN @ ATL, Madrid)",
           "prob": 0.537,
           "price": -115.0,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Jameson Williams anytime TD (DET @ MIA)",
           "prob": 0.378,
           "price": 188.0,
-          "result": "pending"
+          "result": "loss"
         },
         {
           "leg": "Brock Bowers anytime TD (LV @ SF)",
           "prob": 0.425,
           "price": 115.0,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Travis Kelce anytime TD (NYJ @ KC)",
           "prob": 0.414,
           "price": 145.0,
-          "result": "pending"
+          "result": "win"
         },
         {
           "leg": "Mike Gesicki anytime TD (CIN @ ATL, Madrid)",
           "prob": 0.389,
           "price": 220.0,
-          "result": "pending"
+          "result": "loss"
         }
       ]
     },
@@ -3570,7 +3570,7 @@
       "stake": 0.0,
       "market_prob": 0.4003612281757977,
       "book": "ABC7 listing",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "NO BET",
       "confidence": 0.6825396825396826,
@@ -3587,7 +3587,7 @@
       "stake": 0.0,
       "market_prob": 0.593369754159424,
       "book": "VegasInsider listing",
-      "result": "pending",
+      "result": "win",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6825396825396826,
@@ -3604,7 +3604,7 @@
       "stake": 0.0,
       "market_prob": 0.2912330880095309,
       "book": "bet365 (via SBR)",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6825396825396826,
@@ -3621,7 +3621,7 @@
       "stake": 0.0,
       "market_prob": 0.4066302458405761,
       "book": "ESPN listing",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6825396825396826,
@@ -3638,7 +3638,7 @@
       "stake": 0.0,
       "market_prob": 0.41700735895339325,
       "book": "ESPN listing",
-      "result": "pending",
+      "result": "loss",
       "closing_price": null,
       "notes": "also considered; forecast only",
       "confidence": 0.6825396825396826,
